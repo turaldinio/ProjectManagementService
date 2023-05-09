@@ -11,8 +11,10 @@
         <module>ManagingProjectTasksAndTheirLifecycle</module>
         <module>ManagingTeamsWithinProject</module>
         <module>Authentication</module>
-        <module>ProjectManagementSystem-Web</module>
-        <module>ProjectManagementSystem-Dto</module>
+        <module>ProjectManagementSystem-web</module>
+        <module>ProjectManagementSystem-dto</module>
+        <module>ProjectManagementSystem-buisness</module>
+        <module>ProjectManagementSystem-Buisness/ProjectManagementSystem-service</module>
     </modules>
     <version>${revision}${changelist}</version>
 
