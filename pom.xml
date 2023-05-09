@@ -6,16 +6,12 @@
     <artifactId>ProjectManagementSystem</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ManagingCompanyEmployees</module>
-        <module>ProjectAndLifecycleManagement</module>
-        <module>ManagingProjectTasksAndTheirLifecycle</module>
-        <module>ManagingTeamsWithinProject</module>
-        <module>Authentication</module>
         <module>ProjectManagementSystem-web</module>
         <module>ProjectManagementSystem-dto</module>
-        <module>ProjectManagementSystem-buisness</module>
-        <module>ProjectManagementSystem-Buisness/ProjectManagementSystem-service</module>
-        <module>ProjectManagementSystem-buisness/ProjectManagementSystem-repository</module>
+        <module>ProjectManagementSystem-business</module>
+        <module>ProjectManagementSystem-business/ProjectManagementSystem-service</module>
+        <module>ProjectManagementSystem-business/ProjectManagementSystem-repository</module>
+        <module>ProjectManagementSystem-business/ProjectManagementSystem-model</module>
     </modules>
     <version>${revision}${changelist}</version>
 

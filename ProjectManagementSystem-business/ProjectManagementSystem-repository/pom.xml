@@ -5,10 +5,9 @@
         <groupId>com.digital</groupId>
         <artifactId>ProjectManagementSystem</artifactId>
         <version>${revision}${changelist}</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ManagingCompanyEmployees</artifactId>
+    <artifactId>ProjectManagementSystem-repository</artifactId>
 
-    <dependencies>
-    </dependencies>
 </project>
