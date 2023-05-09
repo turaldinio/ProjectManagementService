@@ -1,6 +1,7 @@
 <h2>Система управления проектами </h2>
 
-![t (1)](https://github.com/turaldinio/ProjectManagementService/assets/65041919/cb39086e-b0a1-4302-8429-1e138c51a49a)
+
+![Диаграмма без названия (1)](https://github.com/turaldinio/ProjectManagementService/assets/65041919/47330525-8d52-4b45-bc54-82f331011650)
 
 
 
