@@ -11,4 +11,12 @@
 
     <artifactId>ProjectManagementSystem-app</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.digital</groupId>
+            <artifactId>ProjectManagementSystem-Service</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

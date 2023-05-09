@@ -12,6 +12,7 @@
         <module>ProjectManagementSystem-business/ProjectManagementSystem-service</module>
         <module>ProjectManagementSystem-business/ProjectManagementSystem-repository</module>
         <module>ProjectManagementSystem-business/ProjectManagementSystem-model</module>
+        <module>ProjectManagementSystem-exception</module>
     </modules>
     <version>${revision}${changelist}</version>
 
@@ -26,7 +27,35 @@
     <dependencies>
     </dependencies>
 
+
     <build>
-        <finalName>ProjectManagementSystem</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.digital.ProjectManagementSystem</mainClass>
+                                </manifest>
+                            </archive>
+                            <finalName>management_system</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
