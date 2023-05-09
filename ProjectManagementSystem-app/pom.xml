@@ -9,6 +9,6 @@
         <version>${revision}${changelist}</version>
     </parent>
 
-    <artifactId>ProjectManagementSystem-web</artifactId>
+    <artifactId>ProjectManagementSystem-app</artifactId>
 
 </project>

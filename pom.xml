@@ -6,7 +6,7 @@
     <artifactId>ProjectManagementSystem</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ProjectManagementSystem-web</module>
+        <module>ProjectManagementSystem-app</module>
         <module>ProjectManagementSystem-dto</module>
         <module>ProjectManagementSystem-business</module>
         <module>ProjectManagementSystem-business/ProjectManagementSystem-service</module>
