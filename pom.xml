@@ -11,6 +11,8 @@
     <module>ManagingProjectTasksAndTheirLifecycle</module>
     <module>ManagingTeamsWithinProject</module>
     <module>Authentication</module>
+      <module>ProjectManagmentSystemWeb</module>
+      <module>ProjectManagementSystemWeb</module>
   </modules>
   <version>${revision}${changelist}</version>
 
