@@ -5,6 +5,9 @@
   <groupId>com.digital</groupId>
   <artifactId>ProjectManagementSystem</artifactId>
   <packaging>pom</packaging>
+  <modules>
+    <module>ManagingCompanyEmployees</module>
+  </modules>
   <version>${revision}${changelist}</version>
 
   <properties>
