@@ -1,4 +1,4 @@
-package com.digital.repository;
+package com.digital.ProjectManagementSystem.repository;
 
 public interface TeamRepository {
 }

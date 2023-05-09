@@ -13,6 +13,7 @@
         <module>ProjectManagementSystem-business/ProjectManagementSystem-repository</module>
         <module>ProjectManagementSystem-business/ProjectManagementSystem-model</module>
         <module>ProjectManagementSystem-exception</module>
+        <module>ProjectManagementSystem-web</module>
     </modules>
     <version>${revision}${changelist}</version>
 
