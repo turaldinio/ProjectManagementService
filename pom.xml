@@ -7,6 +7,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>ManagingCompanyEmployees</module>
+    <module>ProjectAndLifecycleManagement</module>
   </modules>
   <version>${revision}${changelist}</version>
 
