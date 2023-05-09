@@ -15,6 +15,7 @@
         <module>ProjectManagementSystem-dto</module>
         <module>ProjectManagementSystem-buisness</module>
         <module>ProjectManagementSystem-Buisness/ProjectManagementSystem-service</module>
+        <module>ProjectManagementSystem-buisness/ProjectManagementSystem-repository</module>
     </modules>
     <version>${revision}${changelist}</version>
 
