@@ -9,6 +9,7 @@
     <module>ManagingCompanyEmployees</module>
     <module>ProjectAndLifecycleManagement</module>
     <module>ManagingProjectTasksAndTheirLifecycle</module>
+    <module>ManagingTeamsWithinProject</module>
   </modules>
   <version>${revision}${changelist}</version>
 

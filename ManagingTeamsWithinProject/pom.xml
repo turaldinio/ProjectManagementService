@@ -6,6 +6,7 @@
         <artifactId>ProjectManagementSystem</artifactId>
         <version>${revision}${changelist}</version>
     </parent>
+    <artifactId>ManagingTeamsWithinProject</artifactId>
 
-    <artifactId>ManagingProjectTasksAndTheirLifecycle</artifactId>
+
 </project>
