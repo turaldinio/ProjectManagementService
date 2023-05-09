@@ -10,6 +10,7 @@
     <module>ProjectAndLifecycleManagement</module>
     <module>ManagingProjectTasksAndTheirLifecycle</module>
     <module>ManagingTeamsWithinProject</module>
+    <module>Authentication</module>
   </modules>
   <version>${revision}${changelist}</version>
 
