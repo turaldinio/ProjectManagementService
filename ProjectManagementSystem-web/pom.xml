@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.digital</groupId>
-            <artifactId>management_system-parent</artifactId>
+            <artifactId>management_system-service</artifactId>
             <version>${revision}${changelist}</version>
         </dependency>
     </dependencies>

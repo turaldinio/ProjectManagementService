@@ -9,5 +9,30 @@
         <version>${revision}${changelist}</version>
     </parent>
 
+    <build>
+        <finalName>management_system-sample</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <finalName>management_system-sample-exec</finalName>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.digital.projectmanagement.app.application.config.ApplicationConfig
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+
     <artifactId>management_system-app</artifactId>
 </project>
