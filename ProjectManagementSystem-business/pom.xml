@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>ProjectManagementSystem-business</artifactId>
-
+    <packaging>pom</packaging>
 
 
 </project>
