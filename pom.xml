@@ -9,9 +9,6 @@
         <module>ProjectManagementSystem-app</module>
         <module>ProjectManagementSystem-dto</module>
         <module>ProjectManagementSystem-business</module>
-        <module>ProjectManagementSystem-business/ProjectManagementSystem-service</module>
-        <module>ProjectManagementSystem-business/ProjectManagementSystem-repository</module>
-        <module>ProjectManagementSystem-business/ProjectManagementSystem-model</module>
         <module>ProjectManagementSystem-web</module>
     </modules>
     <version>${revision}${changelist}</version>
@@ -29,33 +26,34 @@
 
 
     <build>
+        <finalName>management_system</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <archive>
-                                <manifest>
-                                    <mainClass>com.digital.projectmanagement.app.application.config.ApplicationConfig
-                                    </mainClass>
-                                </manifest>
-                            </archive>
-                            <finalName>management_system</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                        </configuration>
-                    </execution>
-                </executions>
+                                <executions>
+                                    <execution>
+                                        <id>make-assembly</id>
+                                        <phase>package</phase>
+                                        <goals>
+                                            <goal>single</goal>
+                                        </goals>
+                                    </execution>
+                                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.digital.projectmanagement.app.application.config.ApplicationConfig
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+
             </plugin>
         </plugins>
     </build>

@@ -11,6 +11,11 @@
 
     <artifactId>ProjectManagementSystem-business</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>ProjectManagementSystem-model</module>
+        <module>ProjectManagementSystem-service</module>
+        <module>ProjectManagementSystem-repository</module>
+    </modules>
 
 
 </project>
