@@ -12,6 +12,15 @@
 
     <artifactId>management_system-dto</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.digital</groupId>
+            <artifactId>management_system-common</artifactId>
+            <version>${revision}${changelist}</version>
+
+        </dependency>
+    </dependencies>
+
 
 
 </project>

@@ -12,6 +12,13 @@
 
     <artifactId>management_system-model</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.digital</groupId>
+            <artifactId>management_system-common</artifactId>
+            <version>${revision}${changelist}</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
