@@ -47,7 +47,8 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.digital.ProjectManagementSystem</mainClass>
+                                    <mainClass>com.digital.projectmanagement.app.application.config.ApplicationConfig
+                                    </mainClass>
                                 </manifest>
                             </archive>
                             <finalName>management_system</finalName>
