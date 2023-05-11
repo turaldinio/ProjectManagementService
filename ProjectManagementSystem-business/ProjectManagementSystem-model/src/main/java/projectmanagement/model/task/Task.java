@@ -1,4 +1,4 @@
 package projectmanagement.model.task;
 
-public class TaskDto {
+public class Task {
 }

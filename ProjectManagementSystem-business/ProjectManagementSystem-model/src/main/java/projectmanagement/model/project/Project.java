@@ -1,4 +1,4 @@
 package projectmanagement.model.project;
 
-public class ProjectDto {
+public class Project {
 }

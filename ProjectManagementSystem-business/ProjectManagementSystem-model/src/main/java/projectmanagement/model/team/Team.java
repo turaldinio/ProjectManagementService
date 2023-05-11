@@ -1,4 +1,4 @@
 package projectmanagement.model.team;
 
-public class TeamDto {
+public class Team {
 }
