@@ -7,6 +7,6 @@
         <version>${revision}${changelist}</version>
     </parent>
 
-    <artifactId>management_system-enums</artifactId>
+    <artifactId>management_system-common</artifactId>
 
 </project>
