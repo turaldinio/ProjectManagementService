@@ -12,6 +12,7 @@
         <module>ProjectManagementSystem-dto</module>
         <module>ProjectManagementSystem-business</module>
         <module>ProjectManagementSystem-web</module>
+        <module>ProjectManagementSystem-enums</module>
     </modules>
 
     <properties>
