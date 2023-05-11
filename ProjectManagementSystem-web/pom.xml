@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.digital</groupId>
-        <artifactId>ProjectManagementSystem</artifactId>
+        <artifactId>management_system-parent</artifactId>
         <version>${revision}${changelist}</version>
 
     </parent>
 
-    <artifactId>ProjectManagementSystem-web</artifactId>
+    <artifactId>management_system-web</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.digital</groupId>
-            <artifactId>ProjectManagementSystem-service</artifactId>
+            <artifactId>management_system-parent</artifactId>
             <version>${revision}${changelist}</version>
         </dependency>
     </dependencies>

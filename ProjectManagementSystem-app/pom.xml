@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.digital</groupId>
-        <artifactId>ProjectManagementSystem</artifactId>
+        <artifactId>management_system-parent</artifactId>
         <version>${revision}${changelist}</version>
     </parent>
 
-    <artifactId>ProjectManagementSystem-app</artifactId>
+    <artifactId>management_system-app</artifactId>
 </project>

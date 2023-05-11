@@ -3,10 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.digital</groupId>
-        <artifactId>ProjectManagementSystem-business</artifactId>
+        <artifactId>management_system-business</artifactId>
         <version>${revision}${changelist}</version>
+
     </parent>
 
-    <artifactId>ProjectManagementSystem-repository</artifactId>
+    <artifactId>management_system-repository</artifactId>
 
 </project>
