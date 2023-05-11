@@ -14,8 +14,8 @@
     <dependencies>
         <dependency>
             <groupId>com.digital</groupId>
-            <artifactId>ProjectManagementSystem-Service</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <artifactId>ProjectManagementSystem-service</artifactId>
+            <version>${revision}${changelist}</version>
         </dependency>
     </dependencies>
 
