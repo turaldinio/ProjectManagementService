@@ -7,7 +7,13 @@
         <version>${revision}${changelist}</version>
 
     </parent>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.digital</groupId>
+            <artifactId>management_system-model</artifactId>
+            <version>${revision}${changelist}</version>
+        </dependency>
+    </dependencies>
     <artifactId>management_system-repository</artifactId>
 
 </project>
