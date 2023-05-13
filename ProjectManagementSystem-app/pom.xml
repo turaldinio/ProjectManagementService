@@ -8,7 +8,14 @@
         <artifactId>pm-parent</artifactId>
         <version>${revision}${changelist}</version>
     </parent>
+<dependencies>
+    <dependency>
+        <groupId>com.digital</groupId>
+        <artifactId>pm-web</artifactId>
+        <version>${revision}${changelist}</version>
 
+    </dependency>
+</dependencies>
     <build>
         <finalName>pm-sample</finalName>
         <plugins>
