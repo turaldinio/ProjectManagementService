@@ -6,12 +6,12 @@
 
     <parent>
         <groupId>com.digital</groupId>
-        <artifactId>management_system-parent</artifactId>
+        <artifactId>pm-parent</artifactId>
         <version>${revision}${changelist}</version>
 
     </parent>
 
-    <artifactId>management_system-business</artifactId>
+    <artifactId>pm-business</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>ProjectManagementSystem-model</module>

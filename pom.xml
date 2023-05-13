@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.digital</groupId>
-    <artifactId>management_system-parent</artifactId>
+    <artifactId>pm-parent</artifactId>
     <packaging>pom</packaging>
     <version>${revision}${changelist}</version>
 
@@ -28,7 +28,7 @@
 
 
     <build>
-        <finalName>management_system-sample</finalName>
+        <finalName>pm-sample</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -44,13 +44,13 @@
 <!--                    </execution>-->
 <!--                </executions>-->
                 <configuration>
-                    <finalName>management_system-sample-exec</finalName>
+                    <finalName>pm-sample-exec</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.digital.projectmanagement.app.application.config.ApplicationConfig
+                            <mainClass>com.digital.pm.app.ApplicationConfig
                             </mainClass>
                         </manifest>
                     </archive>

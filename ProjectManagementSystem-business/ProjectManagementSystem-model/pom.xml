@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.digital</groupId>
-        <artifactId>management_system-business</artifactId>
+        <artifactId>pm-business</artifactId>
         <version>${revision}${changelist}</version>
 
     </parent>
 
-    <artifactId>management_system-model</artifactId>
+    <artifactId>pm-model</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.digital</groupId>
-            <artifactId>management_system-common</artifactId>
+            <artifactId>pm-common</artifactId>
             <version>${revision}${changelist}</version>
         </dependency>
     </dependencies>
