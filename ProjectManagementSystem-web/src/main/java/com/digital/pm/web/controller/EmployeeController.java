@@ -1,12 +1,17 @@
 package com.digital.pm.web.controller;
 
+import com.digital.pm.dto.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 
 public class EmployeeController {
     private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService){
-        this.employeeService=employeeService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+
+    }
+
+    EmployeeDto create() {
 
     }
 

@@ -1,17 +1,17 @@
 package com.digital.pm.repository;
 
-import com.digital.pm.dto.EmployeeDto;
+import pm.model.Employee;
 
 import java.util.List;
 
 public interface DataStorage {
-    EmployeeDto create();
+    Employee create();
 
-    EmployeeDto update();
+    Employee update();
 
-    EmployeeDto getById(int id);
+    Employee getById(int id);
 
-    List<EmployeeDto> getAll();
+    List<Employee> getAll();
 
     void deleteById(int id);
 }
