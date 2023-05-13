@@ -13,6 +13,11 @@
         <groupId>com.digital</groupId>
         <artifactId>pm-web</artifactId>
         <version>${revision}${changelist}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.digital</groupId>
+        <artifactId>pm-service</artifactId>
+        <version>${revision}${changelist}</version>
 
     </dependency>
 </dependencies>
