@@ -9,7 +9,6 @@ public class Employee {
     private String post;
     private String account;
     private String email;
-
     private EmployeeStatus status;
 
 }
