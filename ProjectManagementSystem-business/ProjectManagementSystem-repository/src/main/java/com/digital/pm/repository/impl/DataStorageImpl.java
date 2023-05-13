@@ -1,28 +1,28 @@
 package com.digital.pm.repository.impl;
 
-import com.digital.pm.dto.EmployeeDto;
 import com.digital.pm.repository.DataStorage;
+import pm.model.Employee;
 
 import java.util.List;
 
 public class DataStorageImpl implements DataStorage {
     @Override
-    public EmployeeDto create() {
+    public Employee create() {
         return null;
     }
 
     @Override
-    public EmployeeDto update() {
+    public Employee update() {
         return null;
     }
 
     @Override
-    public EmployeeDto getById(int id) {
+    public Employee getById(int id) {
         return null;
     }
 
     @Override
-    public List<EmployeeDto> getAll() {
+    public List<Employee> getAll() {
         return null;
     }
 
