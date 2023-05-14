@@ -2,12 +2,12 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
+import com.digital.pm.dto.employee.EmployeeDto;
 import pm.model.Employee;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EmployeeMapper {
-    private AtomicInteger atomicInteger = new AtomicInteger();
 
     public Employee create(CreateEmployeeDto createEmployeeDto) {
 
@@ -20,7 +20,21 @@ public class EmployeeMapper {
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
-                id(atomicInteger.incrementAndGet()).
+                build();
+
+
+    }
+
+    public EmployeeDto map(Employee employee) {
+        return EmployeeDto.
+                builder().
+                id(employee.getId()).
+                fullName(employee.getFirsName() + " " +
+                        employee.getLastName() + " " +
+                        employee.getPatronymic()).
+                post(employee.getPost()).
+                account(employee.getAccount()).
+                email(employee.getEmail()).
                 build();
 
 

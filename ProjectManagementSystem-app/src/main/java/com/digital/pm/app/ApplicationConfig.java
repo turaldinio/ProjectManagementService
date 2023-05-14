@@ -13,12 +13,12 @@ public class ApplicationConfig {
                 lastName("Романов").
                 firstName("Сергей").
                 patronymic("Иванович").
-                post("Team-lid").
+                post("junior developer").
                 account("sergRom98").
                 email("romaniv@mail.ru").
                 build();
 
-        var employeeDto=employeeController.create(createEmployeeDto);
+        var employeeDto = employeeController.create(createEmployeeDto);
 
 
     }
