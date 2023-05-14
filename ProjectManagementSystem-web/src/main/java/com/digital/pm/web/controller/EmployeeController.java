@@ -18,6 +18,13 @@ public class EmployeeController {
 
 
     }
+    public EmployeeDto update(int employeeId,CreateEmployeeDto createEmployeeDto) {
+        return employeeService.update(employeeId,createEmployeeDto);
+
+
+    }
+
+
 
 
 }

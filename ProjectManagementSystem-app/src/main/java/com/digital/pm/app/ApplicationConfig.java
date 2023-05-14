@@ -28,7 +28,7 @@ public class ApplicationConfig {
                 build();
 
         var employeeDto = employeeController.create(createEmployeeDto);
-        var employeeDto1 = employeeController.create(createEmployeeDto1);
+        var employeeDto1 = employeeController.update(0,createEmployeeDto1);
 
         System.out.println(employeeDto+" is created");
         System.out.println(employeeDto1+" is created");
