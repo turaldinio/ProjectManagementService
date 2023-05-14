@@ -14,4 +14,5 @@ public interface EmployeeService {
 
     List<EmployeeDto> getAll();
 
+    EmployeeDto deleteById(int id);
 }

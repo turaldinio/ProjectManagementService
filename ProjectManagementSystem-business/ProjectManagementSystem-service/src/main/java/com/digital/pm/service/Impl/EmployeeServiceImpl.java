@@ -53,4 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.map(listEmployee);
 
     }
+
+    @Override
+    public EmployeeDto deleteById(int id) {
+        var employee=dataStorage.deleteById(id);
+        return employeeMapper.map(employee);
+    }
 }
