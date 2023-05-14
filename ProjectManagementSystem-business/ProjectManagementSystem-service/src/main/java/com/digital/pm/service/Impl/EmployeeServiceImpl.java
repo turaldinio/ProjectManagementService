@@ -49,14 +49,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDto> getAll() {
-        var listEmployee=dataStorage.getAll();
+        var listEmployee = dataStorage.getAll();
         return employeeMapper.map(listEmployee);
 
     }
 
     @Override
     public EmployeeDto deleteById(int id) {
-        var employee=dataStorage.deleteById(id);
-        return employeeMapper.map(employee);
+        try {
+            var employee = dataStorage.deleteById(id);
+            return employeeMapper.map(employee);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

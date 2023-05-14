@@ -2,12 +2,9 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import pm.model.Employee;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,12 +14,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class DataStorageImpl implements DataStorage {
-    private AtomicInteger atomicInteger = new AtomicInteger();
+    private final AtomicInteger atomicInteger = new AtomicInteger();
     private final Path filePath = Path.of("ProjectManagementSystem-business/ProjectManagementSystem-repository/src/main/resources/data.txt");
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+    private final FileReader fileReader;
+    private final FileWriter fileWriter;
 
     public DataStorageImpl() {
         try {
@@ -42,7 +40,7 @@ public class DataStorageImpl implements DataStorage {
     @Override
     public Employee create(Employee employee) {
         try {
-            employee.setId(getEmployeeId());
+            employee.setId(getLastEmployeeId());
         } catch (IOException e) {
             throw new RuntimeException("error reading id field from file");
         }
@@ -111,8 +109,16 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public void deleteById(int id) {
+    public Employee deleteById(int id) throws Exception {
+        var all = getAll();
+        Gson gson = new Gson();
+            var currentEmployee = getById(id);
+            all.remove(currentEmployee);
 
+            Files.write(filePath, all.stream().
+                    map(gson::toJson).collect(Collectors.toList()));
+
+            return currentEmployee;
     }
 
     private Employee writeObject(Employee employee) {
@@ -127,7 +133,7 @@ public class DataStorageImpl implements DataStorage {
         return employee;
     }
 
-    public int getEmployeeId() throws IOException {
+    public int getLastEmployeeId() throws IOException {
         if (!fileReader.ready()) {
             return 0;
         } else {

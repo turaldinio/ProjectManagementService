@@ -14,5 +14,5 @@ public interface DataStorage {
 
     List<Employee> getAll();
 
-    void deleteById(int id);
+    Employee deleteById(int id) throws Exception;
 }

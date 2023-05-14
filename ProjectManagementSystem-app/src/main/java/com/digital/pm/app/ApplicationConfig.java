@@ -59,6 +59,6 @@ public class ApplicationConfig {
 //        System.out.println("----------getById-------------");
 //        System.out.println(employeeController.getById(98));
 
-        employeeController.getAll().forEach(System.out::println);
+        System.out.println(employeeController.deleteById(2)+" has been deleted");
     }
 }
