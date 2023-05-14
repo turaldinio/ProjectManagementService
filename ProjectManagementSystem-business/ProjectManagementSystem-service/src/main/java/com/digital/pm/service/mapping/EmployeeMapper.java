@@ -35,6 +35,7 @@ public class EmployeeMapper {
                 post(employee.getPost()).
                 account(employee.getAccount()).
                 email(employee.getEmail()).
+                status(EmployeeStatus.ACTIVE).
                 build();
 
 

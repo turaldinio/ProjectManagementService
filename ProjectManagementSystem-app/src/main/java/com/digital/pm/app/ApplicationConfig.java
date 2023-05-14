@@ -18,7 +18,21 @@ public class ApplicationConfig {
                 email("romaniv@mail.ru").
                 build();
 
+        CreateEmployeeDto createEmployeeDto1 = CreateEmployeeDto.
+                builder().
+                lastName("Иванов").
+                firstName("Евгений").
+                patronymic("Романович").
+                post("junior developer").
+                account("ivanka").
+                email("omtom@bk.ru").
+                build();
+
         var employeeDto = employeeController.create(createEmployeeDto);
+        var employeeDto1 = employeeController.create(createEmployeeDto1);
+
+        System.out.println(employeeDto+" is created");
+        System.out.println(employeeDto1+" is created");
 
 
     }

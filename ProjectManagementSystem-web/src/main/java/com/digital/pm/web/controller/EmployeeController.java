@@ -13,10 +13,10 @@ public class EmployeeController {
 
     }
 
-   public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
-        employeeService.create(createEmployeeDto);
+    public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+        return employeeService.create(createEmployeeDto);
 
-        return null;
+
     }
 
 

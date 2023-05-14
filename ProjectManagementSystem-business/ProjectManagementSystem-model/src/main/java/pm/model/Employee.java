@@ -3,9 +3,11 @@ package pm.model;
 import com.digital.pm.common.enums.EmployeeStatus;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class Employee {
     private int id;
     private String firsName;
@@ -15,5 +17,6 @@ public class Employee {
     private String account;
     private String email;
     private EmployeeStatus status;
+
 
 }

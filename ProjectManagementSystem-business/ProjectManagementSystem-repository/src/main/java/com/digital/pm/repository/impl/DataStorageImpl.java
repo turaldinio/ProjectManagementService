@@ -14,29 +14,31 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataStorageImpl implements DataStorage {
     private AtomicInteger atomicInteger = new AtomicInteger();
-    private String filePath = "src/main/resources/data.txt";
+    private final String filePath = "ProjectManagementSystem-business/ProjectManagementSystem-repository/src/main/resources/data.txt";
     private FileReader fileReader;
     private FileWriter fileWriter;
 
     public DataStorageImpl() {
-        if (Files.notExists(Path.of(filePath))) {
-            try {
+        try {
+            if (Files.notExists(Path.of(filePath))) {
                 Files.createFile(Path.of(filePath));
-
-                fileReader = new FileReader(filePath);
-                fileWriter = new FileWriter(filePath);
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+            fileReader = new FileReader(filePath);
+            fileWriter = new FileWriter(filePath);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
     }
+
 
     @Override
     public Employee create(Employee employee) {
         employee.setId(atomicInteger.incrementAndGet());
-        // TODO: 14.05.2023 логика сериализации
-        return null;
+        return writeObject(employee);
+
+
     }
 
     @Override
@@ -57,5 +59,26 @@ public class DataStorageImpl implements DataStorage {
     @Override
     public void deleteById(int id) {
 
+    }
+
+    private Employee writeObject(Employee employee) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+
+        stringBuilder.append(employee.getId()).append(" ").
+                append(employee.getFirsName()).append(" ").
+                append(employee.getLastName()).append(" ").
+                append(employee.getPatronymic()).append(" ").
+                append(employee.getPost()).append(" ").
+                append(employee.getAccount()).append(" ").
+                append(employee.getEmail()).append(" ");
+        try {
+            fileWriter.write(stringBuilder.toString());
+            fileWriter.write("\n");
+            fileWriter.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return employee;
     }
 }
