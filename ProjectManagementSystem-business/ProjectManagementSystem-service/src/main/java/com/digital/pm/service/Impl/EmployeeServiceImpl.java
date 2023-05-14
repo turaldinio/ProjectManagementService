@@ -8,6 +8,8 @@ import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import pm.model.Employee;
 
+import java.util.List;
+
 
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeMapper employeeMapper;
@@ -43,5 +45,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<EmployeeDto> getAll() {
+        var listEmployee=dataStorage.getAll();
+        return employeeMapper.map(listEmployee);
+
     }
 }

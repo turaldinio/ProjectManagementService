@@ -5,7 +5,9 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import pm.model.Employee;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class EmployeeMapper {
 
@@ -38,6 +40,20 @@ public class EmployeeMapper {
                 status(EmployeeStatus.ACTIVE).
                 build();
 
+
+    }
+
+    public List<EmployeeDto> map(List<Employee> employeeList) {
+        return employeeList.
+                stream().
+                map(x -> EmployeeDto.
+                        builder().id(x.getId()).
+                        fullName(x.getFirsName() + " " + x.getLastName() + " " + x.getPatronymic()).
+                        post(x.getPost()).
+                        account(x.getAccount()).
+                        email(x.getEmail()).
+                        status(EmployeeStatus.ACTIVE).
+                        build()).collect(Collectors.toList());
 
     }
 }

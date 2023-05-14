@@ -5,6 +5,8 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.Impl.EmployeeServiceImpl;
 
+import java.util.List;
+
 public class EmployeeController {
     private EmployeeService employeeService;
 
@@ -29,7 +31,7 @@ public class EmployeeController {
             return employeeService.getById(id);
     }
 
-    public EmployeeDto getAll(){
+    public List<EmployeeDto> getAll(){
         return employeeService.getAll();
     }
 
