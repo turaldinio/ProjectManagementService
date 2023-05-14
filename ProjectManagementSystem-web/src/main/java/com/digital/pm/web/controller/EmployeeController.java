@@ -29,5 +29,8 @@ public class EmployeeController {
             return employeeService.getById(id);
     }
 
+    public EmployeeDto getAll(){
+        return employeeService.getAll();
+    }
 
 }
