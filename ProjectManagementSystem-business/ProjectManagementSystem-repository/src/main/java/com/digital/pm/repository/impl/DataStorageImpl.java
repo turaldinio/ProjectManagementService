@@ -2,13 +2,19 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import pm.model.Employee;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -90,7 +96,18 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public List<Employee> getAll() {
-        return null;
+        Gson gson = new Gson();
+        try {
+            var list = Files.readAllLines(filePath);
+            Type listOfMyClassObject = new TypeToken<ArrayList<Employee>>() {
+            }.getType();
+
+            return gson.fromJson(list.toString(), listOfMyClassObject);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

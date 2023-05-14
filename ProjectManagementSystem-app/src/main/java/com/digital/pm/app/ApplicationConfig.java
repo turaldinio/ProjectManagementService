@@ -37,21 +37,21 @@ public class ApplicationConfig {
                 email("ilushka93@mail.ru").
                 build();
 
-        System.out.println("----------CREATE-------------");
-
-        var firstDto = employeeController.create(first);
-        var secondDto = employeeController.create(second);
-
-        System.out.println(firstDto + " is created");
-        System.out.println(secondDto + " is created");
-
-        System.out.println("----------UPDATE-------------");
-
-        var thirdDto = employeeController.update(1, third);
-        System.out.println(thirdDto + " is updated");
-
-        System.out.println("----------getById-------------");
-        System.out.println(employeeController.getById(98));
+//        System.out.println("----------CREATE-------------");
+//
+//        var firstDto = employeeController.create(first);
+//        var secondDto = employeeController.create(second);
+//
+//        System.out.println(firstDto + " is created");
+//        System.out.println(secondDto + " is created");
+//
+//        System.out.println("----------UPDATE-------------");
+//
+//        var thirdDto = employeeController.update(1, third);
+//        System.out.println(thirdDto + " is updated");
+//
+//        System.out.println("----------getById-------------");
+//        System.out.println(employeeController.getById(98));
 
     }
 }
