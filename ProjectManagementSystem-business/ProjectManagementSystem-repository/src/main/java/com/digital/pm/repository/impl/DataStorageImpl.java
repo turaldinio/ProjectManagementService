@@ -3,7 +3,7 @@ package com.digital.pm.repository.impl;
 import com.digital.pm.repository.DataStorage;
 import pm.model.Employee;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class DataStorageImpl implements DataStorage {
                 Files.createFile(Path.of(filePath));
             }
             fileReader = new FileReader(filePath);
-            fileWriter = new FileWriter(filePath);
+            fileWriter = new FileWriter(filePath,true);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -35,7 +35,11 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public Employee create(Employee employee) {
-        employee.setId(atomicInteger.incrementAndGet());
+        try {
+            employee.setId(getEmployeeId());
+        } catch (IOException e) {
+            throw new RuntimeException("error reading id field from file");
+        }
         return writeObject(employee);
 
 
@@ -62,23 +66,26 @@ public class DataStorageImpl implements DataStorage {
     }
 
     private Employee writeObject(Employee employee) {
-        StringBuilder stringBuilder = new StringBuilder();
 
-
-        stringBuilder.append(employee.getId()).append(" ").
-                append(employee.getFirsName()).append(" ").
-                append(employee.getLastName()).append(" ").
-                append(employee.getPatronymic()).append(" ").
-                append(employee.getPost()).append(" ").
-                append(employee.getAccount()).append(" ").
-                append(employee.getEmail()).append(" ");
         try {
-            fileWriter.write(stringBuilder.toString());
+            fileWriter.write(employee.toString());
             fileWriter.write("\n");
             fileWriter.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return employee;
+    }
+
+    public int getEmployeeId() throws IOException {
+        if (!fileReader.ready()) {
+            return 0;
+        } else {
+            var list = Files.readAllLines(Path.of(filePath));
+            atomicInteger.set(Integer.parseInt(list.get(list.size() - 1).split(" ")[0]));
+
+            return atomicInteger.incrementAndGet();
+        }
+
     }
 }
