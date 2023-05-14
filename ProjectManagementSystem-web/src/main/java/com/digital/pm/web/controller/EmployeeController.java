@@ -35,4 +35,7 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
+    public EmployeeDto deleteById(int id){
+return employeeService.deleteById(id);
+    }
 }

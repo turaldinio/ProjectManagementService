@@ -4,9 +4,7 @@ import com.digital.pm.common.enums.EmployeeStatus;
 import lombok.*;
 
 @Builder
-@Getter
-@Setter
-
+@Data
 public class Employee {
     private int id;
     private String firsName;
@@ -17,16 +15,5 @@ public class Employee {
     private String email;
     private EmployeeStatus status;
 
-    @Override
-    public String toString() {
-        return
-                id + " " +
-                        firsName + " " +
-                        lastName + " " +
-                        patronymic + " " +
-                        post + " " +
-                        account + " " +
-                        email + " " +
-                        status;
-    }
+
 }
