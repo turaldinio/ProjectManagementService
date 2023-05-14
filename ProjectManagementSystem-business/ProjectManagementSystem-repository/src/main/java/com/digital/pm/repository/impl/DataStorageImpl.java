@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,7 +25,7 @@ public class DataStorageImpl implements DataStorage {
                 Files.createFile(Path.of(filePath));
             }
             fileReader = new FileReader(filePath);
-            fileWriter = new FileWriter(filePath,true);
+            fileWriter = new FileWriter(filePath, true);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -46,8 +47,20 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee update() {
-        return null;
+    public Employee update(int employeeId, Employee employee) {
+        try {
+            var list = Files.readAllLines(Path.of(filePath));
+
+            for (int a = 0; a < list.size(); a++) {
+                if (Integer.parseInt(list.get(a).split(" ")[0]) == employeeId) {
+                    list.set(a, employee.toString());
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return employee;
     }
 
     @Override

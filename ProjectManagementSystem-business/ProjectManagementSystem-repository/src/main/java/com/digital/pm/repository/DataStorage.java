@@ -7,7 +7,7 @@ import java.util.List;
 public interface DataStorage {
     Employee create(Employee employee);
 
-    Employee update();
+    Employee update(int employeeId,Employee employee);
 
     Employee getById(int id);
 
