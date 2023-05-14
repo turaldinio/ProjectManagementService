@@ -1,7 +1,8 @@
 <h2>Система управления проектами </h2>
 
 
-![Диаграмма без названия (1)](https://github.com/turaldinio/ProjectManagementService/assets/65041919/47330525-8d52-4b45-bc54-82f331011650)
+![Диаграмма без названия drawio](https://github.com/turaldinio/ProjectManagementService/assets/65041919/239f1c0f-1fa5-4bea-a896-97020da0aa91)
+
 
 
 
