@@ -1,5 +1,0 @@
-0 Сергей Романов Иванович junior developer sergRom98 romaniv@mail.ru ACTIVE
-1 Илья Маминов Дмитриевич teamlead ilUshEk93 ilushka93@mail.ru ACTIVE
-2 Сергей Романов Иванович junior developer sergRom98 romaniv@mail.ru ACTIVE
-3 Евгений Иванов Романович junior developer ivanka omtom@bk.ru ACTIVE
-4 Сергей Романов Иванович junior developer sergRom98 romaniv@mail.ru ACTIVE

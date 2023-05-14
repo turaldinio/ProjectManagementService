@@ -45,17 +45,17 @@ public class ApplicationConfig {
         System.out.println(firstDto + " is created");
         System.out.println(secondDto + " is created");
 
-        System.out.println("----------UPDATE-------------");
-
-        var thirdDto = employeeController.update(1, third);
-
-        System.out.println(thirdDto + " is updated");
-
-
-        System.out.println("----------CREATE-------------");
-
-        var fourDto = employeeController.create(first);
-        System.out.println(fourDto + " is created");
-
+//        System.out.println("----------UPDATE-------------");
+//
+//        var thirdDto = employeeController.update(1, third);
+//
+//        System.out.println(thirdDto + " is updated");
+//
+//
+//        System.out.println("----------CREATE-------------");
+//
+//        var fourDto = employeeController.create(first);
+//        System.out.println(fourDto + " is created");
+//
     }
 }

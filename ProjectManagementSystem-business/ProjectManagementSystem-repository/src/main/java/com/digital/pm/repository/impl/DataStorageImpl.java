@@ -1,6 +1,8 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.repository.DataStorage;
+import com.google.gson.Gson;
+import netscape.javascript.JSObject;
 import pm.model.Employee;
 
 import java.io.FileReader;
@@ -81,9 +83,9 @@ public class DataStorageImpl implements DataStorage {
     }
 
     private Employee writeObject(Employee employee) {
-
+        Gson gson = new Gson();
         try {
-            fileWriter.write(employee.toString());
+            fileWriter.write(gson.toJson(employee));
             fileWriter.write("\n");
             fileWriter.flush();
         } catch (Exception e) {
@@ -96,8 +98,11 @@ public class DataStorageImpl implements DataStorage {
         if (!fileReader.ready()) {
             return 0;
         } else {
+            var gson = new Gson();
             var list = Files.readAllLines(filePath);
-            atomicInteger.set(Integer.parseInt(list.get(list.size() - 1).split(" ")[0]));
+            var object = gson.fromJson(list.get(list.size() - 1), Employee.class);
+
+            atomicInteger.set(object.getId());
 
             return atomicInteger.incrementAndGet();
         }
