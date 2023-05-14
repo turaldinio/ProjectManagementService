@@ -2,7 +2,6 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
-import netscape.javascript.JSObject;
 import pm.model.Employee;
 
 import java.io.FileReader;
@@ -10,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,13 +47,18 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public Employee update(int employeeId, Employee employee) {
-        employee.setId(employeeId);
+        Gson gson = new Gson();
         try {
             var list = Files.readAllLines(filePath);
 
             for (int a = 0; a < list.size(); a++) {
-                if (Integer.parseInt(list.get(a).split(" ")[0]) == employeeId) {
-                    list.set(a, employee.toString());
+                var employeeFromJList = gson.fromJson(list.get(a), Employee.class);
+
+                if (employeeFromJList.getId() == employeeId) {
+                    employee.setId(employeeId);
+                    var employeeFromArgument = gson.toJson(employee);
+
+                    list.set(a, employeeFromArgument);
                 }
             }
             Files.write(filePath, list);

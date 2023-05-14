@@ -1,0 +1,4 @@
+{"id":0,"firsName":"Сергей","lastName":"Романов","patronymic":"Иванович","post":"junior developer","account":"sergRom98","email":"romaniv@mail.ru","status":"ACTIVE"}
+{"id":1,"firsName":"Илья","lastName":"Маминов","patronymic":"Дмитриевич","post":"teamlead","account":"ilUshEk93","email":"ilushka93@mail.ru","status":"ACTIVE"}
+{"id":2,"firsName":"Сергей","lastName":"Романов","patronymic":"Иванович","post":"junior developer","account":"sergRom98","email":"romaniv@mail.ru","status":"ACTIVE"}
+{"id":3,"firsName":"Евгений","lastName":"Иванов","patronymic":"Романович","post":"junior developer","account":"ivanka","email":"omtom@bk.ru","status":"ACTIVE"}
