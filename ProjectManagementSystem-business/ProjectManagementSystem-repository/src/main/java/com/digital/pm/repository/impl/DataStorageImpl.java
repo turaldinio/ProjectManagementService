@@ -71,8 +71,21 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee getById(int id) {
-        return null;
+    public Employee getById(int id) throws Exception {
+        try {
+            Gson gson = new Gson();
+            var list = Files.readAllLines(filePath);
+            for (String line : list) {
+                var currentEmployee = gson.fromJson(line, Employee.class);
+                if (currentEmployee.getId() == id) {
+                    return currentEmployee;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        throw new Exception(String.format("the employee with %s id is not found", id));
+
     }
 
     @Override

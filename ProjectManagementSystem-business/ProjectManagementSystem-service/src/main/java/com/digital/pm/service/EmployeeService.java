@@ -7,4 +7,7 @@ public interface EmployeeService {
     EmployeeDto create(CreateEmployeeDto createEmployeeDto);
 
     EmployeeDto update(int employeeId, CreateEmployeeDto createEmployeeDto);
+
+    EmployeeDto getById(int id) ;
+
 }

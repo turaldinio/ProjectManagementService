@@ -10,7 +10,7 @@ public interface DataStorage {
 
     Employee update(int employeeId, Employee employee);
 
-    Employee getById(int id);
+    Employee getById(int id) throws Exception;
 
     List<Employee> getAll();
 

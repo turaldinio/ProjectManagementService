@@ -18,13 +18,15 @@ public class EmployeeController {
 
 
     }
-    public EmployeeDto update(int employeeId,CreateEmployeeDto createEmployeeDto) {
-        return employeeService.update(employeeId,createEmployeeDto);
+
+    public EmployeeDto update(int employeeId, CreateEmployeeDto createEmployeeDto) {
+        return employeeService.update(employeeId, createEmployeeDto);
 
 
     }
 
-
-
+    public EmployeeDto getById(int id) {
+            return employeeService.getById(id);
+    }
 
 }

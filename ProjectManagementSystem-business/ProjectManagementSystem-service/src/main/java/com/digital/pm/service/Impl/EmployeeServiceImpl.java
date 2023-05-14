@@ -33,4 +33,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.map(dataStorage.update(employeeId, employee));
 
     }
+
+    @Override
+    public EmployeeDto getById(int id) {
+        try {
+            var foundEmployee = dataStorage.getById(id);
+            return employeeMapper.map(foundEmployee);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
