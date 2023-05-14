@@ -1,4 +1,4 @@
-package com.digital.pm.dto;
+package com.digital.pm.dto.project;
 
 import com.digital.pm.common.enums.ProjectStatus;
 
