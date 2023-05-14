@@ -1,17 +1,13 @@
-package pm.model;
+package com.digital.pm.dto.employee;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import lombok.Data;
 
-@Data
-public class Employee {
-    private int id;
-    private String firsName;
+public class CreateEmployeeDto {
+    private String firstName;
     private String lastName;
     private String patronymic;
     private String post;
     private String account;
     private String email;
-    private EmployeeStatus status;
 
 }

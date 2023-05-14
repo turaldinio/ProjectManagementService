@@ -1,6 +1,6 @@
 package com.digital.pm.web.controller;
 
-import com.digital.pm.dto.EmployeeDto;
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.Impl.EmployeeServiceImpl;
 

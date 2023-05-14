@@ -1,7 +1,9 @@
-package com.digital.pm.dto;
+package com.digital.pm.dto.employee;
 
 import com.digital.pm.common.enums.EmployeeStatus;
+import lombok.Data;
 
+@Data
 public class EmployeeDto {
     private int id;
     private String fullName;

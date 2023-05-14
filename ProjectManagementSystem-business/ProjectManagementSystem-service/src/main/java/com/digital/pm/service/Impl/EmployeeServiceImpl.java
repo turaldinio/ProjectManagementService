@@ -1,6 +1,6 @@
 package com.digital.pm.service.Impl;
 
-import com.digital.pm.dto.EmployeeDto;
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.repository.DataStorage;
 import com.digital.pm.repository.impl.DataStorageImpl;
 import com.digital.pm.service.EmployeeService;
