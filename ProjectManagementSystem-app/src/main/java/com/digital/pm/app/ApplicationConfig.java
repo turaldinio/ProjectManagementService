@@ -7,7 +7,7 @@ public class ApplicationConfig {
     private static final EmployeeController employeeController = new EmployeeController();
 
     public static void main(String[] args) {
-        CreateEmployeeDto createEmployeeDto = CreateEmployeeDto.
+        CreateEmployeeDto first = CreateEmployeeDto.
                 builder().
                 lastName("Романов").
                 firstName("Сергей").
@@ -17,7 +17,7 @@ public class ApplicationConfig {
                 email("romaniv@mail.ru").
                 build();
 
-        CreateEmployeeDto createEmployeeDto1 = CreateEmployeeDto.
+        CreateEmployeeDto second = CreateEmployeeDto.
                 builder().
                 lastName("Иванов").
                 firstName("Евгений").
@@ -27,12 +27,35 @@ public class ApplicationConfig {
                 email("omtom@bk.ru").
                 build();
 
-        var employeeDto = employeeController.create(createEmployeeDto);
-        var employeeDto1 = employeeController.update(0,createEmployeeDto1);
+        CreateEmployeeDto third = CreateEmployeeDto.
+                builder().
+                lastName("Маминов").
+                firstName("Илья").
+                patronymic("Дмитриевич").
+                post("teamlead").
+                account("ilUshEk93").
+                email("ilushka93@mail.ru").
+                build();
 
-        System.out.println(employeeDto+" is created");
-        System.out.println(employeeDto1+" is created");
+        System.out.println("----------CREATE-------------");
 
+        var firstDto = employeeController.create(first);
+        var secondDto = employeeController.create(second);
+
+        System.out.println(firstDto + " is created");
+        System.out.println(secondDto + " is created");
+
+        System.out.println("----------UPDATE-------------");
+
+        var thirdDto = employeeController.update(1, third);
+
+        System.out.println(thirdDto + " is updated");
+
+
+        System.out.println("----------CREATE-------------");
+
+        var fourDto = employeeController.create(first);
+        System.out.println(fourDto + " is created");
 
     }
 }

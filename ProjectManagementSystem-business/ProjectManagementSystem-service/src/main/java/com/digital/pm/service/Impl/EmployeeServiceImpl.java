@@ -26,4 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     }
+
+    @Override
+    public EmployeeDto update(int employeeId, CreateEmployeeDto createEmployeeDto) {
+        Employee employee = employeeMapper.create(createEmployeeDto);
+        return employeeMapper.map(dataStorage.update(employeeId, employee));
+
+    }
 }
