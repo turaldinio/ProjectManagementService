@@ -1,5 +1,6 @@
 package com.digital.pm.web.controller;
 
+import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.Impl.EmployeeServiceImpl;
@@ -12,8 +13,8 @@ public class EmployeeController {
 
     }
 
-    EmployeeDto create() {
-        employeeService.create();
+   public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+        employeeService.create(createEmployeeDto);
 
         return null;
     }

@@ -1,8 +1,9 @@
 package com.digital.pm.service;
 
+import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 
 public interface EmployeeService {
-    EmployeeDto create();
+    EmployeeDto create(CreateEmployeeDto createEmployeeDto);
 
 }
