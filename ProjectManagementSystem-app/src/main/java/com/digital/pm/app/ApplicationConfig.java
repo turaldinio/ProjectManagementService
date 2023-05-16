@@ -49,7 +49,7 @@ public class ApplicationConfig {
                 build();
 
 
-        printResult(employeeController.create(first));
+        printResult(employeeController.getById(1));
 
 
     }
