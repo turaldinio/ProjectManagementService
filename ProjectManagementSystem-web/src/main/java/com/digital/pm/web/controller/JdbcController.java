@@ -14,8 +14,12 @@ public class JdbcController {
     private String user;
     private String password;
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url,user,password);
+    public Connection getConnection()  {
+        try {
+            return DriverManager.getConnection(url,user,password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

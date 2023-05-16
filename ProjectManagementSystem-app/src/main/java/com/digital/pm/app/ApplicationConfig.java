@@ -14,15 +14,8 @@ public class ApplicationConfig {
     private static final JdbcController jdbcController = new JdbcController(
             "jdbc:mysql://localhost:3306/digital", "root", "root"
     );
-    private static final EmployeeController employeeController;
+    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
 
-    static {
-        try {
-            employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
     public static void main(String[] args) {
@@ -57,7 +50,7 @@ public class ApplicationConfig {
                 build();
 
 
-        var createResult=employeeController.create(first);
+        var createResult = employeeController.create(first);
 
 
     }
