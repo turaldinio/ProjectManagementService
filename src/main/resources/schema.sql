@@ -44,6 +44,7 @@ create table project
 
 create table team
 (
+    id bigint primary key auto_increment,
     employee_id bigint not null,
     project_id  bigint not null,
     role_id     int    not null,
