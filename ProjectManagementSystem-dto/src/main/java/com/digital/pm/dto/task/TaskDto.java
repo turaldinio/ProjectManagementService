@@ -6,7 +6,7 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import java.util.Date;
 
 public class TaskDto {
-    private int id;
+    private long id;
     private String name;
     private String description;
 

@@ -7,7 +7,7 @@ import com.digital.pm.dto.project.ProjectDto;
 import java.util.Map;
 
 public class TeamDto {
-    private int id;
+    private long id;
     private Map<EmployeeDto, Roles> employees;
 
     private ProjectDto project;
