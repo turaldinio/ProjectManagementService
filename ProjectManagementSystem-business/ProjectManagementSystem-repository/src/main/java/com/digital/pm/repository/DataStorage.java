@@ -7,11 +7,11 @@ import java.util.List;
 public interface DataStorage {
     Employee create(Employee employee);
 
-    Employee update(int employeeId, Employee employee);
+    Employee update(long employeeId, Employee employee);
 
-    Employee getById(int id) throws Exception;
+    Employee getById(long id) throws Exception;
 
     List<Employee> getAll();
 
-    Employee deleteById(int id) throws Exception;
+    Employee deleteById(long id) throws Exception;
 }

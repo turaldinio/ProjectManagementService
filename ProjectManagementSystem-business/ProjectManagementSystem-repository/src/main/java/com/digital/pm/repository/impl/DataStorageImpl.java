@@ -50,7 +50,7 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee update(int employeeId, Employee employee) {
+    public Employee update(long employeeId, Employee employee) {
         Gson gson = new Gson();
         try {
             var list = Files.readAllLines(filePath);
@@ -75,7 +75,7 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee getById(int id) throws Exception {
+    public Employee getById(long id) throws Exception {
         try {
             Gson gson = new Gson();
             var list = Files.readAllLines(filePath);
@@ -109,7 +109,7 @@ public class DataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee deleteById(int id) throws Exception {
+    public Employee deleteById(long id) throws Exception {
         var all = getAll();
         Gson gson = new Gson();
             var currentEmployee = getById(id);
@@ -133,7 +133,7 @@ public class DataStorageImpl implements DataStorage {
         return employee;
     }
 
-    public int getLastEmployeeId() throws IOException {
+    public long getLastEmployeeId() throws IOException {
         if (!fileReader.ready()) {
             return 0;
         } else {
@@ -141,9 +141,8 @@ public class DataStorageImpl implements DataStorage {
             var list = Files.readAllLines(filePath);
             var object = gson.fromJson(list.get(list.size() - 1), Employee.class);
 
-            atomicInteger.set(object.getId());
+            return object.getId()+1;
 
-            return atomicInteger.incrementAndGet();
         }
 
     }
