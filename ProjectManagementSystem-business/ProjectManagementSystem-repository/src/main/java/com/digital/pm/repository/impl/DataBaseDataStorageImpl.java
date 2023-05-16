@@ -56,7 +56,12 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
     @Override
     public Employee update(long employeeId, Employee employee) {
-        return null;
+        try {
+            deleteById(employeeId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return create(employee);
     }
 
     @Override

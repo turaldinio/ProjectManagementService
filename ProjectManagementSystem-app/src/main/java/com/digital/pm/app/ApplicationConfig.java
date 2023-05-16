@@ -48,9 +48,8 @@ public class ApplicationConfig {
                 email("nikitBelik2001@mail.ru").
                 build();
         System.out.println("-------------CREATE------------");
-        // printResult(employeeController.create(first));
-        // printResult(employeeController.create(second));
-      //  printResult(employeeController.create(third));
+        printResult(employeeController.create(first));
+        printResult(employeeController.create(second));
 
         System.out.println("-------------GETALL------------");
 
@@ -58,6 +57,9 @@ public class ApplicationConfig {
 
         System.out.println("-------------DELETE------------");
         printResult(employeeController.deleteById(1));
+
+        System.out.println("-------------UPDATE------------");
+        printResult(employeeController.update(2,third));
 
 
     }
