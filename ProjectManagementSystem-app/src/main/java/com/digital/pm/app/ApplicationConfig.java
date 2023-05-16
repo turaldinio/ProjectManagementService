@@ -7,7 +7,6 @@ import com.digital.pm.service.Impl.EmployeeServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import com.digital.pm.web.controller.JdbcController;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class ApplicationConfig {
