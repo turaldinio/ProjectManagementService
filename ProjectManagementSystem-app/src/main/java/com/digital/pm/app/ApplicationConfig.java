@@ -50,11 +50,14 @@ public class ApplicationConfig {
         System.out.println("-------------CREATE------------");
         // printResult(employeeController.create(first));
         // printResult(employeeController.create(second));
-        printResult(employeeController.create(third));
+      //  printResult(employeeController.create(third));
 
         System.out.println("-------------GETALL------------");
 
         printResult(employeeController.getAll());
+
+        System.out.println("-------------DELETE------------");
+        printResult(employeeController.deleteById(1));
 
 
     }

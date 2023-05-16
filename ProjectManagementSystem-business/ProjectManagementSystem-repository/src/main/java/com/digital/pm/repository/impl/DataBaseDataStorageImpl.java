@@ -111,6 +111,12 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
     @Override
     public Employee deleteById(long id) throws Exception {
-        return null;
+        var employee = getById(id);
+        try (var delete = connection.prepareStatement("delete from employee where id=?")) {
+            delete.setLong(1, id);
+            delete.executeUpdate();
+        }
+
+        return employee;
     }
 }
