@@ -13,7 +13,7 @@ create table task_status
     id     int primary key auto_increment,
     status varchar(20) not null
 );
-create table employee_role
+create table role
 (
     id   int primary key auto_increment,
     role varchar(20) not null
@@ -38,6 +38,7 @@ create table project
     name      varchar(20) not null,
     text      text,
     status_id int         not null,
+
     foreign key (status_id) references project_status (id)
 );
 
@@ -45,24 +46,27 @@ create table team
 (
     employee_id bigint not null,
     project_id  bigint not null,
-    role_id     int not null,
+    role_id     int    not null,
     foreign key (employee_id) references employee (id),
     foreign key (project_id) references project (id),
-    foreign key (role_id) references employee_role (id)
+    foreign key (role_id) references role (id)
 );
 create table task
 (
     id               bigint primary key auto_increment,
     name             varchar(30) not null,
     description      text,
-    employee_id      bigint not null ,
+    executor_id      bigint,
     labor_costs      int         not null,
     deadline         date        not null,
-    status_id        int not null ,
-    author           varchar(30),
+    status_id        int         not null,
+    author_id        bigint,
     date_of_creation date        not null,
-    update_time date,
-    foreign key (employee_id)references employee(id),
-    foreign key (status_id) references task_status (id)
+    update_time      date,
+    foreign key (executor_id) references employee (id),
+    foreign key (status_id) references task_status (id),
+    foreign key (author_id) references employee (id)
+
 );
+
 
