@@ -19,6 +19,6 @@ public class Task {
     private String author;
 
     private Date dateOfCreation;
-    private Date update;
+    private Date updateTime;
 
 }

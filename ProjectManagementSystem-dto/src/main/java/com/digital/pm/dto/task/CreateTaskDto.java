@@ -13,5 +13,5 @@ public class CreateTaskDto {
 
     private Date deadline;
     private String author;
-    private Date update;
+    private Date updateTime;
 }

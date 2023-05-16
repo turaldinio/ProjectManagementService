@@ -1,3 +1,25 @@
+create table employee_status
+(
+    id     int primary key auto_increment,
+    status varchar(20) not null
+);
+create table project_status
+(
+    id     int primary key auto_increment,
+    status varchar(20) not null
+);
+create table task_status
+(
+    id     int primary key auto_increment,
+    status varchar(20) not null
+);
+create table employee_role
+(
+    id   int primary key auto_increment,
+    role varchar(20) not null
+);
+
+
 create table employee
 (
     id         bigint primary key auto_increment,
@@ -5,40 +27,42 @@ create table employee
     last_name  varchar(20) not null,
     patronymic varchar(20),
     post       varchar(20),
-    `account`    varchar(30) unique,
+    account    varchar(30) unique,
     email      varchar(30),
-    `status`     varchar(15) not null
+    status_id  int         not null,
+    foreign key (status_id) references employee_status (id)
 );
 create table project
 (
-    id     bigint primary key auto_increment,
-    `name`   varchar(20) not null,
-    `text`   text,
-    `status` varchar(20) not null
+    id        bigint primary key auto_increment,
+    name      varchar(20) not null,
+    text      text,
+    status_id int         not null,
+    foreign key (status_id) references project_status (id)
 );
-create table role
-(
-    id int primary key auto_increment,
-    `name` varchar(20) not null
-);
+
 create table team
 (
     employee_id bigint not null,
     project_id  bigint not null,
     role_id     int not null,
-    foreign key (employee_id) references employee(id),
-    foreign key (project_id) references project(id),
-    foreign key (role_id) references role(id)
+    foreign key (employee_id) references employee (id),
+    foreign key (project_id) references project (id),
+    foreign key (role_id) references employee_role (id)
 );
-create table task(
-    id bigint primary key auto_increment,
-    `name` varchar(30)not null ,
-    `description` text,
-    employee_id bigint,
-    labor_costs int not null ,
-    deadline date not null ,
-    `status` varchar (30),
-    author varchar(30),
-    date_of_creation date not null ,
-    `update` date
+create table task
+(
+    id               bigint primary key auto_increment,
+    name             varchar(30) not null,
+    description      text,
+    employee_id      bigint not null ,
+    labor_costs      int         not null,
+    deadline         date        not null,
+    status_id        int not null ,
+    author           varchar(30),
+    date_of_creation date        not null,
+    update_time date,
+    foreign key (employee_id)references employee(id),
+    foreign key (status_id) references task_status (id)
 );
+
