@@ -1,6 +1,6 @@
 services:
   app:
-    image: 'management_system-sample-exec:latest'
+    image: 'pm-sample-exec:latest'
     ports:
       - '8081:8081'
 
