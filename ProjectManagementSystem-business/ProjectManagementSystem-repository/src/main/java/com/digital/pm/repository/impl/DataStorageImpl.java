@@ -38,7 +38,7 @@ public class DataStorageImpl implements DataStorage {
 
 
     @Override
-    public Employee create(Employee employee) {
+    public synchronized Employee create(Employee employee) {
         try {
             employee.setId(getLastEmployeeId());
         } catch (IOException e) {
