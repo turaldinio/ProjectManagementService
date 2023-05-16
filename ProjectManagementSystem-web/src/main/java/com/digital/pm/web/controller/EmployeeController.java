@@ -21,13 +21,13 @@ public class EmployeeController {
 
     }
 
-    public EmployeeDto update(int employeeId, CreateEmployeeDto createEmployeeDto) {
+    public EmployeeDto update(long employeeId, CreateEmployeeDto createEmployeeDto) {
         return employeeService.update(employeeId, createEmployeeDto);
 
 
     }
 
-    public EmployeeDto getById(int id) {
+    public EmployeeDto getById(long id) {
             return employeeService.getById(id);
     }
 
@@ -35,7 +35,7 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
-    public EmployeeDto deleteById(int id){
+    public EmployeeDto deleteById(long id){
 return employeeService.deleteById(id);
     }
 }

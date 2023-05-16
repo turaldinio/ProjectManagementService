@@ -30,14 +30,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto update(int employeeId, CreateEmployeeDto createEmployeeDto) {
+    public EmployeeDto update(long employeeId, CreateEmployeeDto createEmployeeDto) {
         Employee employee = employeeMapper.create(createEmployeeDto);
         return employeeMapper.map(dataStorage.update(employeeId, employee));
 
     }
 
     @Override
-    public EmployeeDto getById(int id) {
+    public EmployeeDto getById(long id) {
         try {
             var foundEmployee = dataStorage.getById(id);
             return employeeMapper.map(foundEmployee);
@@ -55,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto deleteById(int id) {
+    public EmployeeDto deleteById(long id) {
         try {
             var employee = dataStorage.deleteById(id);
             return employeeMapper.map(employee);
