@@ -2,14 +2,28 @@ package com.digital.pm.app;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.service.EmployeeService;
+import com.digital.pm.service.Impl.EmployeeServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import com.digital.pm.web.controller.JdbcController;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ApplicationConfig {
-    private static final EmployeeController employeeController = new EmployeeController();
-    private static final JdbcController jdbcController = new JdbcController();
+    private static final JdbcController jdbcController = new JdbcController(
+            "jdbc:mysql://localhost:3306/digital", "root", "root"
+    );
+    private static final EmployeeController employeeController;
+
+    static {
+        try {
+            employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static void main(String[] args) {
         CreateEmployeeDto first = CreateEmployeeDto.
@@ -41,6 +55,9 @@ public class ApplicationConfig {
                 account("ilUshEk93").
                 email("ilushka93@mail.ru").
                 build();
+
+
+        var createResult=employeeController.create(first);
 
 
     }
