@@ -128,10 +128,13 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
     @Override
     public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
-        // TODO: 17.05.2023 добавтиь поиск по id (его нет, так как long не примитив)
         String request = "select * from employee where ";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
+        if (filterEmployee.getId()!=null){
+            request = request + "id=?";
+            map.put(paramCount++, filterEmployee.getId());
+        }
 
         if (filterEmployee.getLastName() != null) {
             request = request + "last_name=?";
