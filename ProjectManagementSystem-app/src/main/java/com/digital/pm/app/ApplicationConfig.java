@@ -2,7 +2,7 @@ package com.digital.pm.app;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.service.EmployeeService;
+import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.service.Impl.EmployeeServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import com.digital.pm.web.controller.JdbcController;
@@ -40,8 +40,8 @@ public class ApplicationConfig {
 
         CreateEmployeeDto third = CreateEmployeeDto.
                 builder().
-                lastName("Никита").
-                firstName("Белкиов").
+                lastName("Беликов").
+                firstName("Никита").
                 patronymic("Юрьевич").
                 post("junior developer").
                 account("nikita_kabluk").
@@ -59,7 +59,12 @@ public class ApplicationConfig {
         printResult(employeeController.deleteById(1));
 
         System.out.println("-------------UPDATE------------");
-        printResult(employeeController.update(2,third));
+        printResult(employeeController.update(2L, third));
+
+        System.out.println("-------------FILTER------------");
+        var filterEmployee = FilterEmployee.builder().post("junior developer").build();
+
+        printResult(employeeController.searchByFilter(filterEmployee));
 
 
     }

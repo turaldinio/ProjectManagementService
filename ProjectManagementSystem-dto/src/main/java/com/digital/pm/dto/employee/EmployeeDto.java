@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class EmployeeDto {
-    private long id;
+    private Long id;
     private String fullName;
     private String post;
     private String account;

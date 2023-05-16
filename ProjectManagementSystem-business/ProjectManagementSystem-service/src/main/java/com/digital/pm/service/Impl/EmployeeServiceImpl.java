@@ -2,6 +2,7 @@ package com.digital.pm.service.Impl;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.repository.DataStorage;
 import com.digital.pm.repository.impl.DataBaseDataStorageImpl;
 import com.digital.pm.repository.impl.FileDataStorageImpl;
@@ -45,14 +46,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto update(long employeeId, CreateEmployeeDto createEmployeeDto) {
+    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
         Employee employee = employeeMapper.create(createEmployeeDto);
         return employeeMapper.map(dataStorage.update(employeeId, employee));
 
     }
 
     @Override
-    public EmployeeDto getById(long id) {
+    public EmployeeDto getById(Long id) {
         try {
             var foundEmployee = dataStorage.getById(id);
             return employeeMapper.map(foundEmployee);
@@ -70,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto deleteById(long id) {
+    public EmployeeDto deleteById(Long id) {
         try {
             var employee = dataStorage.deleteById(id);
             return employeeMapper.map(employee);
@@ -81,7 +82,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
 
-    public List<EmployeeDto> search(Employee filterEmployee) {
-return dataStorage.search(filterEmployee);
+    @Override
+    public List<EmployeeDto> searchWithFilter(FilterEmployee filterEmployee) {
+        var listEmployee = dataStorage.searchWithFilter(filterEmployee);
+        return employeeMapper.map(listEmployee);
+
     }
 }

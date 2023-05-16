@@ -1,6 +1,7 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,7 +50,7 @@ public class FileDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee update(long employeeId, Employee employee) {
+    public Employee update(Long employeeId, Employee employee) {
         Gson gson = new Gson();
         try {
             var list = Files.readAllLines(filePath);
@@ -74,7 +75,7 @@ public class FileDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee getById(long id) throws Exception {
+    public Employee getById(Long id) throws Exception {
         try {
             Gson gson = new Gson();
             var list = Files.readAllLines(filePath);
@@ -108,7 +109,7 @@ public class FileDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee deleteById(long id) throws Exception {
+    public Employee deleteById(Long id) throws Exception {
         var all = getAll();
         Gson gson = new Gson();
             var currentEmployee = getById(id);
@@ -155,7 +156,7 @@ public class FileDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public List<EmployeeDto> search(Employee filterEmployee) {
+    public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
         return null;
     }
 }

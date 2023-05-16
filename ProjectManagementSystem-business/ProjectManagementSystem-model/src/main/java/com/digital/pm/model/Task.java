@@ -5,7 +5,7 @@ import com.digital.pm.common.enums.TaskStatus;
 import java.util.Date;
 
 public class Task {
-    private long id;
+    private Long id;
     private String name;
     private String description;
 

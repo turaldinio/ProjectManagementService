@@ -2,6 +2,7 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.DataStorage;
 
@@ -55,7 +56,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee update(long employeeId, Employee employee) {
+    public Employee update(Long employeeId, Employee employee) {
         try {
             deleteById(employeeId);
         } catch (Exception e) {
@@ -65,7 +66,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee getById(long id) throws Exception {
+    public Employee getById(Long id) throws Exception {
         try (var select = connection.prepareStatement("select * from employee where employee.id=?")) {
             select.setLong(1, id);
 
@@ -115,7 +116,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public Employee deleteById(long id) throws Exception {
+    public Employee deleteById(Long id) throws Exception {
         var employee = getById(id);
         try (var delete = connection.prepareStatement("delete from employee where id=?")) {
             delete.setLong(1, id);
@@ -126,8 +127,9 @@ public class DataBaseDataStorageImpl implements DataStorage {
     }
 
     @Override
-    public List<Employee> search(Employee filterEmployee) {
-        String request = "select * from employee where";
+    public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
+        // TODO: 17.05.2023 добавтиь поиск по id (его нет, так как long не примитив)
+        String request = "select * from employee where ";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
 
@@ -158,13 +160,13 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
         }
         if (filterEmployee.getStatus() != null) {
-            request = request + "status=?";
+            request = request + "status_id=?";
             map.put(paramCount++, filterEmployee.getStatus());
 
         }
         if (filterEmployee.getPost() != null) {
             request = request + "post=?";
-            map.put(paramCount++, filterEmployee.getPost());
+            map.put(paramCount, filterEmployee.getPost());
 
         }
 
@@ -183,6 +185,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
             while (resultSet.next()) {
                 var employee = Employee.builder().
+                        id(resultSet.getLong("id")).
                         firsName(resultSet.getString("first_name")).
                         lastName(resultSet.getString("last_name")).
                         patronymic(resultSet.getString("patronymic")).
