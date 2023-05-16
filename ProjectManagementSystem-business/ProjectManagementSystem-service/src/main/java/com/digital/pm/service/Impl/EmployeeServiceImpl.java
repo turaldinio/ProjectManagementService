@@ -21,6 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper = new EmployeeMapper();
         dataStorage = new FileDataStorageImpl();
     }
+
     public EmployeeServiceImpl(Connection connection) {
         employeeMapper = new EmployeeMapper();
         dataStorage = new DataBaseDataStorageImpl(connection);
@@ -28,10 +29,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
-        Employee employee = employeeMapper.create(createEmployeeDto);
-        employee = dataStorage.create(employee);
-        return employeeMapper.map(employee);
-
+        try {
+            Employee employee = employeeMapper.create(createEmployeeDto);
+            if (employee == null) {
+                throw new Exception("object creation procedure");
+            }
+            employee = dataStorage.create(employee);
+            return employeeMapper.map(employee);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 

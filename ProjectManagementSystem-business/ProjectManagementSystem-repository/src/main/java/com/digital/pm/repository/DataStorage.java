@@ -5,7 +5,7 @@ import com.digital.pm.model.Employee;
 import java.util.List;
 
 public interface DataStorage {
-    Employee create(Employee employee);
+    Employee create(Employee employee) ;
 
     Employee update(long employeeId, Employee employee);
 

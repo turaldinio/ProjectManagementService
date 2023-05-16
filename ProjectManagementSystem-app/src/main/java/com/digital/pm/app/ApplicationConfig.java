@@ -17,7 +17,6 @@ public class ApplicationConfig {
     private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
 
 
-
     public static void main(String[] args) {
         CreateEmployeeDto first = CreateEmployeeDto.
                 builder().
@@ -50,7 +49,7 @@ public class ApplicationConfig {
                 build();
 
 
-        var createResult = employeeController.create(first);
+        printResult(employeeController.create(first));
 
 
     }
