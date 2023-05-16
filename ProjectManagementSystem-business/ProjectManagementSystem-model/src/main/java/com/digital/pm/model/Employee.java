@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @Data
 public class Employee {
-    private int id;
+    private long id;
     private String firsName;
     private String lastName;
     private String patronymic;
