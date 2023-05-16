@@ -3,11 +3,13 @@ package com.digital.pm.app;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.web.controller.EmployeeController;
+import com.digital.pm.web.controller.JdbcController;
 
 import java.util.List;
 
 public class ApplicationConfig {
     private static final EmployeeController employeeController = new EmployeeController();
+    private static final JdbcController jdbcController = new JdbcController();
 
     public static void main(String[] args) {
         CreateEmployeeDto first = CreateEmployeeDto.
@@ -39,34 +41,6 @@ public class ApplicationConfig {
                 account("ilUshEk93").
                 email("ilushka93@mail.ru").
                 build();
-
-        System.out.println("----------CREATE-------------");
-
-        var firstDto = employeeController.create(first);
-        var secondDto = employeeController.create(second);
-
-        System.out.println(firstDto + " is created");
-        System.out.println(secondDto + " is created");
-
-
-        System.out.println("----------UPDATE-------------");
-
-        var updateResult = employeeController.update(1, third);
-        printResult(updateResult);
-
-        System.out.println("----------getById-------------");
-
-        var getResult = employeeController.getById(2);
-        printResult(getResult);
-
-        System.out.println("----------deleteById-------------");
-
-        var deleteResult = employeeController.deleteById(1);
-        printResult(deleteResult);
-
-        System.out.println("----------getAll-------------");
-        printResult(employeeController.getAll());
-
 
 
     }
