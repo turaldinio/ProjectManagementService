@@ -1,3 +1,5 @@
 .idea
 ProjectManagementSystem.iml
 target
+pm-parent.iml
+ProjectManagementSystem-business/ProjectManagementSystem-repository/src/main/resources/data.txt
