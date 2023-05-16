@@ -25,7 +25,7 @@ create table team
 (
     employee_id bigint not null,
     project_id  bigint not null,
-    role_id     bigint not null,
+    role_id     int not null,
     foreign key (employee_id) references employee(id),
     foreign key (project_id) references project(id),
     foreign key (role_id) references role(id)
