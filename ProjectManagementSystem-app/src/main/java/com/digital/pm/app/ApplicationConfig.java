@@ -47,9 +47,14 @@ public class ApplicationConfig {
                 account("ilUshEk93").
                 email("ilushka93@mail.ru").
                 build();
+        System.out.println("-------------CREATE------------");
+        // printResult(employeeController.create(first));
+        // printResult(employeeController.create(second));
+        printResult(employeeController.create(third));
 
+        System.out.println("-------------GETALL------------");
 
-        printResult(employeeController.getById(1));
+        printResult(employeeController.getAll());
 
 
     }

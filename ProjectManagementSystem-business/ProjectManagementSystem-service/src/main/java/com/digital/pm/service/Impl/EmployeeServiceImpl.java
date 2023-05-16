@@ -31,13 +31,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
         try {
             Employee employee = employeeMapper.create(createEmployeeDto);
-            if (employee == null) {
-                throw new Exception("object creation procedure");
-            }
+
             employee = dataStorage.create(employee);
+            if (employee == null) {
+                throw new Exception("object creation exception");
+            }
             return employeeMapper.map(employee);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         }
 
