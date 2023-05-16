@@ -1,5 +1,6 @@
 package com.digital.pm.repository.impl;
 
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -153,4 +154,8 @@ public class FileDataStorageImpl implements DataStorage {
         }
     }
 
+    @Override
+    public List<EmployeeDto> search(Employee filterEmployee) {
+        return null;
+    }
 }

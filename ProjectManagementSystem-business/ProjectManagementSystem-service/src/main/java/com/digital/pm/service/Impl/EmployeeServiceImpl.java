@@ -80,4 +80,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return null;
     }
+
+    public List<EmployeeDto> search(Employee filterEmployee) {
+return dataStorage.search(filterEmployee);
+    }
 }

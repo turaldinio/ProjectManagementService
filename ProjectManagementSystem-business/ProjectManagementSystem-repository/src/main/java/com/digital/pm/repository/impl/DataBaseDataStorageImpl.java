@@ -1,12 +1,12 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.DataStorage;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DataBaseDataStorageImpl implements DataStorage {
     private final Connection connection;
@@ -123,5 +123,81 @@ public class DataBaseDataStorageImpl implements DataStorage {
         }
 
         return employee;
+    }
+
+    @Override
+    public List<Employee> search(Employee filterEmployee) {
+        String request = "select * from employee where";
+        Map<Integer, Object> map = new HashMap<>();
+        int paramCount = 1;
+
+        if (filterEmployee.getLastName() != null) {
+            request = request + "last_name=?";
+            map.put(paramCount++, filterEmployee.getLastName());
+
+        }
+
+        if (filterEmployee.getFirsName() != null) {
+            request = request + "first_name=?";
+            map.put(paramCount++, filterEmployee.getFirsName());
+
+        }
+        if (filterEmployee.getPatronymic() != null) {
+            request = request + "patronymic=?";
+            map.put(paramCount++, filterEmployee.getPatronymic());
+
+        }
+        if (filterEmployee.getAccount() != null) {
+            request = request + "account=?";
+            map.put(paramCount++, filterEmployee.getAccount());
+
+        }
+        if (filterEmployee.getEmail() != null) {
+            request = request + "email=?";
+            map.put(paramCount++, filterEmployee.getEmail());
+
+        }
+        if (filterEmployee.getStatus() != null) {
+            request = request + "status=?";
+            map.put(paramCount++, filterEmployee.getStatus());
+
+        }
+        if (filterEmployee.getPost() != null) {
+            request = request + "post=?";
+            map.put(paramCount++, filterEmployee.getPost());
+
+        }
+
+        if (request.equals("select * from employee where")) {
+            return getAll();
+        }
+
+        try (var search = connection.prepareStatement(request)) {
+            for (Map.Entry<Integer, Object> pairs : map.entrySet()) {
+                Integer key = pairs.getKey();
+                Object value = pairs.getValue();
+                search.setObject(key, value);
+            }
+            var resultSet = search.executeQuery();
+            List<Employee> list = new ArrayList<>();
+
+            while (resultSet.next()) {
+                var employee = Employee.builder().
+                        firsName(resultSet.getString("first_name")).
+                        lastName(resultSet.getString("last_name")).
+                        patronymic(resultSet.getString("patronymic")).
+                        account(resultSet.getString("account")).
+                        email(resultSet.getString("email")).
+                        post(resultSet.getString("post")).
+                        status(EmployeeStatus.values()[resultSet.getInt("status_id")]).
+                        build();
+                list.add(employee);
+            }
+
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

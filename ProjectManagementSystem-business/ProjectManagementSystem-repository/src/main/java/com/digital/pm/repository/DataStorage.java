@@ -1,5 +1,6 @@
 package com.digital.pm.repository;
 
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Employee;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface DataStorage {
     List<Employee> getAll();
 
     Employee deleteById(long id) throws Exception;
+
+    List<Employee> search(Employee filterEmployee);
 }
