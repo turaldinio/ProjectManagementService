@@ -6,7 +6,7 @@ import com.digital.pm.repository.DataStorage;
 import com.digital.pm.repository.impl.DataStorageImpl;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
-import pm.model.Employee;
+import com.digital.pm.model.Employee;
 
 import java.util.List;
 

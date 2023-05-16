@@ -3,10 +3,9 @@ package com.digital.pm.service.mapping;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import pm.model.Employee;
+import com.digital.pm.model.Employee;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class EmployeeMapper {

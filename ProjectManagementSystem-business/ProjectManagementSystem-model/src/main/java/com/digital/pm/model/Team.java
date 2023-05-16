@@ -1,4 +1,4 @@
-package pm.model;
+package com.digital.pm.model;
 
 import com.digital.pm.common.enums.Roles;
 

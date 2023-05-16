@@ -1,7 +1,6 @@
 package com.digital.pm.repository;
 
-import com.digital.pm.dto.employee.CreateEmployeeDto;
-import pm.model.Employee;
+import com.digital.pm.model.Employee;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.digital.pm.repository.impl;
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import pm.model.Employee;
+import com.digital.pm.model.Employee;
 
 import java.io.FileReader;
 import java.io.FileWriter;
