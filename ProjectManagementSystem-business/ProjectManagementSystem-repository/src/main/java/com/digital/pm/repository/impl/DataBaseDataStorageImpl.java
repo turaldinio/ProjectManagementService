@@ -19,7 +19,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
     public Employee create(Employee employee) {
         try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status_id)" +
                 "values (?,?,?,?,?,?,?,?)")) {
-            long id = getLastId()+1;
+            long id = getLastId() + 1;
             insert.setLong(1, id);
             insert.setString(2, employee.getFirsName());
             insert.setString(3, employee.getLastName());
@@ -31,17 +31,12 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
             insert.execute();
 
-            var select = connection.prepareStatement("select * from employee where employee.id=?");
-            select.setLong(1, id);
+            var result = getById(id);
 
-
-            ResultSet selectResult = select.executeQuery();
-
-            if (selectResult.next()) {
-                selectResult.close();
-                return getById(id);
+            if (result != null) {
+                insert.close();
+                return result;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
