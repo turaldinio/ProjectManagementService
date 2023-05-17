@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset stevedonie:create
+--multiple-tables splitStatements:true endDelimiter:;
 insert into employee_status (status)
 values ('ACTIVE'),
        ('REMOTE');

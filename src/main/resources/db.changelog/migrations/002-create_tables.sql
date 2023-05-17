@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset stevedonie:create
+--multiple-tables splitStatements:true endDelimiter:;
 create table employee_status
 (
     id     int primary key auto_increment,
