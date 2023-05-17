@@ -1,6 +1,5 @@
 package com.digital.pm.repository.impl;
 
-import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
@@ -17,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileDataStorageImpl implements DataStorage {
+public class FileStorageImpl implements DataStorage {
     private final Path filePath = Path.of("ProjectManagementSystem-business/ProjectManagementSystem-repository/src/main/resources/data.txt");
     private final FileReader fileReader;
     private final FileWriter fileWriter;
 
-    public FileDataStorageImpl() {
+    public FileStorageImpl() {
         try {
             if (Files.notExists(Path.of(filePath.toString()))) {
                 createDataStorageFile();
