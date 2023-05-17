@@ -1,7 +1,6 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.dto.employee.FilterEmployee;
-import com.digital.pm.repository.DataStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.digital.pm.model.Employee;
@@ -13,10 +12,12 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class FileStorageImpl implements DataStorage {
+public class FileStorageImpl extends FileStorage {
     private final Path filePath = Path.of("ProjectManagementSystem-business/ProjectManagementSystem-repository/src/main/resources/data.txt");
     private final FileReader fileReader;
     private final FileWriter fileWriter;
@@ -50,16 +51,16 @@ public class FileStorageImpl implements DataStorage {
 
     @Override
     public Employee update(Long employeeId, Employee employee) {
-        Gson gson = new Gson();
+
         try {
             var list = Files.readAllLines(filePath);
 
             for (int a = 0; a < list.size(); a++) {
-                var employeeFromJList = gson.fromJson(list.get(a), Employee.class);
+                var employeeFromJList = getGson().fromJson(list.get(a), Employee.class);
 
                 if (employeeFromJList.getId() == employeeId) {
                     employee.setId(employeeId);
-                    var employeeFromArgument = gson.toJson(employee);
+                    var employeeFromArgument = getGson().toJson(employee);
 
                     list.set(a, employeeFromArgument);
                 }
@@ -159,32 +160,38 @@ public class FileStorageImpl implements DataStorage {
         return getAll().
                 stream().
                 filter(x -> {
-                    if (x.getFirsName().equals(filterEmployee.getFirsName())) {
+                    if (isNotNullObjects(x.getFirsName(), filterEmployee.getFirsName()) &&
+                            x.getFirsName().equals(filterEmployee.getFirsName())) {
                         return true;
                     }
-                    if (x.getLastName().equals(filterEmployee.getLastName())) {
+                    if (isNotNullObjects(x.getLastName(), filterEmployee.getLastName()) &&
+                            x.getLastName().equals(filterEmployee.getLastName())) {
                         return true;
                     }
-                    if (x.getPatronymic().equals(filterEmployee.getPatronymic())) {
+                    if (isNotNullObjects(x.getPatronymic(), filterEmployee.getPatronymic()) && x.getPatronymic().equals(filterEmployee.getPatronymic())) {
                         return true;
                     }
-                    if (x.getEmail().equals(filterEmployee.getEmail())) {
+                    if (isNotNullObjects(x.getEmail(), filterEmployee.getEmail()) && x.getEmail().equals(filterEmployee.getEmail())) {
                         return true;
                     }
-                    if (x.getPost().equals(filterEmployee.getPost())) {
+                    if (isNotNullObjects(x.getPost(), filterEmployee.getPost()) && x.getPost().equals(filterEmployee.getPost())) {
                         return true;
                     }
-                    if (x.getAccount().equals(filterEmployee.getAccount())) {
+                    if (isNotNullObjects(x.getAccount(), filterEmployee.getAccount()) && x.getAccount().equals(filterEmployee.getAccount())) {
                         return true;
                     }
-                    if (x.getStatus().name().equals(filterEmployee.getStatus().name())) {
+                    if (isNotNullObjects(x.getStatus(), filterEmployee.getStatus()) && x.getStatus() == (filterEmployee.getStatus())) {
                         return true;
                     }
-                    if (x.getId().longValue() == filterEmployee.getId().longValue()) {
+                    if (isNotNullObjects(x.getId(), filterEmployee.getId()) && x.getId().longValue() == filterEmployee.getId().longValue()) {
                         return true;
                     }
                     return false;
                 }).collect(Collectors.toList());
 
+    }
+
+    public boolean isNotNullObjects(Object first, Object second) {
+        return Objects.nonNull(first) && Objects.nonNull(second);
     }
 }

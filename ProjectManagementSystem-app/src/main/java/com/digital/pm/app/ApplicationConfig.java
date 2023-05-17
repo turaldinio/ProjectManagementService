@@ -13,7 +13,7 @@ public class ApplicationConfig {
     private static final JdbcController jdbcController = new JdbcController(
             "jdbc:mysql://localhost:3306/digital", "root", "root"
     );
-    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
+    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl());
 
 
     public static void main(String[] args) {
@@ -61,7 +61,7 @@ public class ApplicationConfig {
         printResult(employeeController.update(2L, third));
 
         System.out.println("-------------FILTER------------");
-        var filterEmployee = FilterEmployee.builder().build();
+        var filterEmployee = FilterEmployee.builder().firsName("Сергей").build();
 
         printResult(employeeController.searchByFilter(filterEmployee));
 
