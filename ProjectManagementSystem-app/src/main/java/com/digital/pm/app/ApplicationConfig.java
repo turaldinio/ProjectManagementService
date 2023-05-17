@@ -39,12 +39,12 @@ public class ApplicationConfig {
 
         CreateEmployeeDto third = CreateEmployeeDto.
                 builder().
-                lastName("Беликов").
-                firstName("Никита").
+                lastName("Лахимов").
+                firstName("Илья").
                 patronymic("Юрьевич").
                 post("junior developer").
-                account("nikita_kabluk").
-                email("nikitBelik2001@mail.ru").
+                account("kiOkr3").
+                email("laxiSu32@mail.ru").
                 build();
         System.out.println("-------------CREATE------------");
         printResult(employeeController.create(first));
