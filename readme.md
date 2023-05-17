@@ -35,6 +35,11 @@
 не обнаружен, выбросить Exception исключение
 
 <h3>17.05.23 Добавлена возможность crud действий над сущностью Employee в бд (jdbc)</h3>
+* Добавлен новый метод в EmplyeeService (searchWithFilter),который, принимает на вход объект FilterEmployee, на основании которго, выполняет
+фильтрацию из списка всех сотрудников.
 
+* Разработана схема бд:
+
+![team](https://github.com/turaldinio/ProjectManagementService/assets/65041919/b3471977-f2ef-4e90-bd4a-19ed4fa1d3d8)
 
 
