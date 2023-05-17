@@ -50,7 +50,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
         if (all.isEmpty()) {
             return 0;
         }
-        return all.get(all.size() - 1).getId();
+        return all.get(0).getId();
 
     }
 
@@ -90,7 +90,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
 
     @Override
     public List<Employee> getAll() {
-        try (var select = connection.prepareStatement("select * from employee")) {
+        try (var select = connection.prepareStatement("select * from employee e inner join employee_status es on e.status_id = es.id")) {
             var resultSet = select.executeQuery();
             List<Employee> list = new ArrayList<>();
             while (resultSet.next()) {
@@ -103,7 +103,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
                         account(resultSet.getString("account")).
                         email(resultSet.getString("email")).
                         post(resultSet.getString("post")).
-                        status(EmployeeStatus.values()[resultSet.getInt("status_id")]).
+                        status(EmployeeStatus.valueOf(resultSet.getString("status"))).
                         build();
                 list.add(employee);
             }
@@ -130,7 +130,7 @@ public class DataBaseDataStorageImpl implements DataStorage {
         String request = "select * from employee where ";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
-        if (filterEmployee.getId()!=null){
+        if (filterEmployee.getId() != null) {
             request = request + "id=?";
             map.put(paramCount++, filterEmployee.getId());
         }
