@@ -61,7 +61,7 @@ public class ApplicationConfig {
         printResult(employeeController.update(2L, third));
 
         System.out.println("-------------FILTER------------");
-        var filterEmployee = FilterEmployee.builder().post("junior developer").build();
+        var filterEmployee = FilterEmployee.builder().build();
 
         printResult(employeeController.searchByFilter(filterEmployee));
 

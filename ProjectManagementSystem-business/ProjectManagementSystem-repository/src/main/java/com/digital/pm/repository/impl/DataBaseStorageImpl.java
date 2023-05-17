@@ -127,54 +127,51 @@ public class DataBaseStorageImpl implements DataStorage {
 
     @Override
     public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
-        String request = "select * from employee where ";
+        String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
         if (filterEmployee.getId() != null) {
-            request = request + "id=?";
+            request = request + " and id=?";
             map.put(paramCount++, filterEmployee.getId());
         }
 
         if (filterEmployee.getLastName() != null) {
-            request = request + "last_name=?";
+            request = request + " and last_name=?";
             map.put(paramCount++, filterEmployee.getLastName());
 
         }
 
         if (filterEmployee.getFirsName() != null) {
-            request = request + "first_name=?";
+            request = request + " and first_name=?";
             map.put(paramCount++, filterEmployee.getFirsName());
 
         }
         if (filterEmployee.getPatronymic() != null) {
-            request = request + "patronymic=?";
+            request = request + " and patronymic=?";
             map.put(paramCount++, filterEmployee.getPatronymic());
 
         }
         if (filterEmployee.getAccount() != null) {
-            request = request + "account=?";
+            request = request + " and account=?";
             map.put(paramCount++, filterEmployee.getAccount());
 
         }
         if (filterEmployee.getEmail() != null) {
-            request = request + "email=?";
+            request = request + " and email=?";
             map.put(paramCount++, filterEmployee.getEmail());
 
         }
         if (filterEmployee.getStatus() != null) {
-            request = request + "status_id=?";
+            request = request + " and status_id=?";
             map.put(paramCount++, filterEmployee.getStatus());
 
         }
         if (filterEmployee.getPost() != null) {
-            request = request + "post=?";
+            request = request + " and post=?";
             map.put(paramCount, filterEmployee.getPost());
 
         }
 
-        if (request.equals("select * from employee where")) {
-            return getAll();
-        }
 
         try (var search = connection.prepareStatement(request)) {
             for (Map.Entry<Integer, Object> pairs : map.entrySet()) {
