@@ -112,13 +112,13 @@ public class FileDataStorageImpl implements DataStorage {
     public Employee deleteById(Long id) throws Exception {
         var all = getAll();
         Gson gson = new Gson();
-            var currentEmployee = getById(id);
-            all.remove(currentEmployee);
+        var currentEmployee = getById(id);
+        all.remove(currentEmployee);
 
-            Files.write(filePath, all.stream().
-                    map(gson::toJson).collect(Collectors.toList()));
+        Files.write(filePath, all.stream().
+                map(gson::toJson).collect(Collectors.toList()));
 
-            return currentEmployee;
+        return currentEmployee;
     }
 
     private Employee writeObject(Employee employee) {
@@ -141,7 +141,7 @@ public class FileDataStorageImpl implements DataStorage {
             var list = Files.readAllLines(filePath);
             var object = gson.fromJson(list.get(list.size() - 1), Employee.class);
 
-            return object.getId()+1;
+            return object.getId() + 1;
 
         }
 
@@ -157,6 +157,35 @@ public class FileDataStorageImpl implements DataStorage {
 
     @Override
     public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
-        return null;
+        return getAll().
+                stream().
+                filter(x -> {
+                    if (x.getFirsName().equals(filterEmployee.getFirsName())) {
+                        return true;
+                    }
+                    if (x.getLastName().equals(filterEmployee.getLastName())) {
+                        return true;
+                    }
+                    if (x.getPatronymic().equals(filterEmployee.getPatronymic())) {
+                        return true;
+                    }
+                    if (x.getEmail().equals(filterEmployee.getEmail())) {
+                        return true;
+                    }
+                    if (x.getPost().equals(filterEmployee.getPost())) {
+                        return true;
+                    }
+                    if (x.getAccount().equals(filterEmployee.getAccount())) {
+                        return true;
+                    }
+                    if (x.getStatus().name().equals(filterEmployee.getStatus().name())) {
+                        return true;
+                    }
+                    if (x.getId().longValue() == filterEmployee.getId().longValue()) {
+                        return true;
+                    }
+                    return false;
+                }).collect(Collectors.toList());
+
     }
 }
