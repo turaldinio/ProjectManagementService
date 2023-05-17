@@ -54,11 +54,16 @@ public class ApplicationConfig {
 
         printResult(employeeController.getAll());
 
-        System.out.println("-------------DELETE------------");
-        printResult(employeeController.deleteById(1));
+
+        System.out.println("-------------GETBYID------------");
+
+        printResult(employeeController.getById(2L));
+
+//        System.out.println("-------------DELETE------------");
+//        printResult(employeeController.deleteById(1));
 
         System.out.println("-------------UPDATE------------");
-        printResult(employeeController.update(2L, third));
+        printResult(employeeController.update(1L, third));
 
         System.out.println("-------------FILTER------------");
         var filterEmployee = FilterEmployee.builder().firsName("Сергей").build();

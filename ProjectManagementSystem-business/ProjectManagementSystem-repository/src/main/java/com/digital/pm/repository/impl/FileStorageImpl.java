@@ -12,7 +12,6 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -53,18 +52,18 @@ public class FileStorageImpl extends FileStorage {
     public Employee update(Long employeeId, Employee employee) {
 
         try {
-            var list = Files.readAllLines(filePath);
+            var list = Files.
+                    readAllLines(filePath).
+                    stream().
+                    map(x -> getGson().fromJson(x, Employee.class)).
+                    map(x -> {
+                        if (x.getId().longValue() == employeeId) {
+                            employee.setId(employeeId);
+                            return getGson().toJson(employee);
+                        }
+                        return getGson().toJson(x);
+                    }).toList();
 
-            for (int a = 0; a < list.size(); a++) {
-                var employeeFromJList = getGson().fromJson(list.get(a), Employee.class);
-
-                if (employeeFromJList.getId() == employeeId) {
-                    employee.setId(employeeId);
-                    var employeeFromArgument = getGson().toJson(employee);
-
-                    list.set(a, employeeFromArgument);
-                }
-            }
             Files.write(filePath, list);
 
         } catch (IOException e) {
@@ -77,30 +76,29 @@ public class FileStorageImpl extends FileStorage {
     @Override
     public Employee getById(Long id) throws Exception {
         try {
-            Gson gson = new Gson();
-            var list = Files.readAllLines(filePath);
-            for (String line : list) {
-                var currentEmployee = gson.fromJson(line, Employee.class);
-                if (currentEmployee.getId() == id) {
-                    return currentEmployee;
-                }
-            }
+            return Files.readAllLines(filePath).
+                    stream().
+                    map(x -> getGson().fromJson(x, Employee.class)).
+                    filter(x -> x.getId().longValue() == id).
+                    findFirst().
+                    orElseThrow(() ->
+                            new Exception(String.format("the user with %s id is not found", id)));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        throw new Exception(String.format("the employee with %s id is not found", id));
 
     }
 
     @Override
     public List<Employee> getAll() {
-        Gson gson = new Gson();
+
         try {
             var list = Files.readAllLines(filePath);
             Type listOfMyClassObject = new TypeToken<ArrayList<Employee>>() {
             }.getType();
 
-            return gson.fromJson(list.toString(), listOfMyClassObject);
+            return getGson().fromJson(list.toString(), listOfMyClassObject);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -111,20 +109,19 @@ public class FileStorageImpl extends FileStorage {
     @Override
     public Employee deleteById(Long id) throws Exception {
         var all = getAll();
-        Gson gson = new Gson();
         var currentEmployee = getById(id);
         all.remove(currentEmployee);
 
         Files.write(filePath, all.stream().
-                map(gson::toJson).collect(Collectors.toList()));
+                map(getGson()::toJson).collect(Collectors.toList()));
 
         return currentEmployee;
     }
 
     private Employee writeObject(Employee employee) {
-        Gson gson = new Gson();
+
         try {
-            fileWriter.write(gson.toJson(employee));
+            fileWriter.write(getGson().toJson(employee));
             fileWriter.write("\n");
             fileWriter.flush();
         } catch (Exception e) {
@@ -137,9 +134,8 @@ public class FileStorageImpl extends FileStorage {
         if (!fileReader.ready()) {
             return 0;
         } else {
-            var gson = new Gson();
             var list = Files.readAllLines(filePath);
-            var object = gson.fromJson(list.get(list.size() - 1), Employee.class);
+            var object = getGson().fromJson(list.get(list.size() - 1), Employee.class);
 
             return object.getId() + 1;
 
