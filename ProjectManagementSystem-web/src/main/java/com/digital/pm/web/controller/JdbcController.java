@@ -1,27 +1,19 @@
 package com.digital.pm.web.controller;
 
+import com.digital.pm.service.JdbcService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+
 
 @Data
 @AllArgsConstructor
 public class JdbcController {
-    private String url;
-    private String user;
-    private String password;
+    private JdbcService jdbcService;
 
-    public Connection getConnection()  {
-        try {
-            return DriverManager.getConnection(url,user,password);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public Connection getConnection(String url, String userName, String password) throws SQLException {
+        return jdbcService.getConnection(url, userName, password);
     }
-
-
-
 }
