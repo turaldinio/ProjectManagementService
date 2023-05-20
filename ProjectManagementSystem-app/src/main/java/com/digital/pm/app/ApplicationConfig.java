@@ -13,7 +13,7 @@ public class ApplicationConfig {
     private static final JdbcController jdbcController = new JdbcController(
             "jdbc:mysql://localhost:3306/digital", "root", "root"
     );
-    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl());
+    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
 
 
     public static void main(String[] args) {
