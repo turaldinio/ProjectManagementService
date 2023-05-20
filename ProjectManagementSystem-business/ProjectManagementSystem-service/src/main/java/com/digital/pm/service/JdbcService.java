@@ -4,5 +4,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface JdbcService {
-    Connection getConnection(String url, String userName, String password) throws SQLException;
+    Connection getConnection(String url, String userName, String password) ;
 }

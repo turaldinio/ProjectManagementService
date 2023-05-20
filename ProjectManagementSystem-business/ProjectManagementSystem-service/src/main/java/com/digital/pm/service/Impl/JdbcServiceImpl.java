@@ -8,7 +8,11 @@ import java.sql.SQLException;
 
 public class JdbcServiceImpl implements JdbcService {
     @Override
-    public Connection getConnection(String url, String userName, String password) throws SQLException {
-        return DriverManager.getConnection(url, userName, password);
+    public Connection getConnection(String url, String userName, String password) {
+        try {
+            return DriverManager.getConnection(url, userName, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

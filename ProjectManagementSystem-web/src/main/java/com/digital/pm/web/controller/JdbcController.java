@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class JdbcController {
     private JdbcService jdbcService;
 
-    public Connection getConnection(String url, String userName, String password) throws SQLException {
+    public Connection getConnection(String url, String userName, String password)  {
         return jdbcService.getConnection(url, userName, password);
     }
 }

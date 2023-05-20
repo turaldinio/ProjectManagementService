@@ -4,16 +4,18 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.service.Impl.EmployeeServiceImpl;
+import com.digital.pm.service.Impl.JdbcServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import com.digital.pm.web.controller.JdbcController;
 
 import java.util.List;
 
 public class ApplicationConfig {
-    private static final JdbcController jdbcController = new JdbcController(
-            "jdbc:mysql://localhost:3306/digital", "root", "root"
-    );
-    private static final EmployeeController employeeController = new EmployeeController(new EmployeeServiceImpl(jdbcController.getConnection()));
+    private static final JdbcController jdbcController = new JdbcController(new JdbcServiceImpl());
+    private static final EmployeeController employeeController =
+            new EmployeeController(
+                    new EmployeeServiceImpl(jdbcController.getConnection("jdbc:mysql://localhost:3306/digital",
+                            "root", "password")));
 
 
     public static void main(String[] args) {
