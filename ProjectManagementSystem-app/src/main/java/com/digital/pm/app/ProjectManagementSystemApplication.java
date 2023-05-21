@@ -2,6 +2,8 @@ package com.digital.pm.app;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.service.DataBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @SpringBootApplication
 public class ProjectManagementSystemApplication implements CommandLineRunner {
+    @Autowired
+    private DataBaseService dataBaseService;
+
     public static void main(String[] args) {
         SpringApplication.run(ProjectManagementSystemApplication.class, args);
 
@@ -49,8 +54,8 @@ public class ProjectManagementSystemApplication implements CommandLineRunner {
 
 
         System.out.println("-------------CREATE------------");
-//        printResult(employeeController.create(first));
-//        printResult(employeeController.create(second));
+        printResult(dataBaseService.create(first));
+        printResult(dataBaseService.create(second));
 //
 //        System.out.println("-------------GETALL------------");
 //
@@ -73,11 +78,13 @@ public class ProjectManagementSystemApplication implements CommandLineRunner {
 //        printResult(employeeController.searchByFilter(filterEmployee));
 
     }
+
     public static void printResult(EmployeeDto employeeDto) {
         if (employeeDto != null) {
             System.out.println(employeeDto);
         }
     }
+
     public static void printResult(List<EmployeeDto> employeeDtoList) {
         employeeDtoList.forEach(System.out::println);
     }

@@ -3,17 +3,16 @@ package com.digital.pm.repository.impl;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.model.Employee;
-import com.digital.pm.repository.DataStorage;
+import com.digital.pm.repository.DataBaseRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.*;
 
-public class DataBaseStorageImpl implements DataStorage {
+@RequiredArgsConstructor
+public class DataBaseJdbcImpl implements DataBaseRepository {
     private final Connection connection;
 
-    public DataBaseStorageImpl(Connection connection) {
-        this.connection = connection;
-    }
 
     public Employee create(Employee employee) {
         try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status_id)" +
