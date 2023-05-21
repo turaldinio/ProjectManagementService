@@ -7,9 +7,11 @@ import com.digital.pm.service.Impl.EmployeeServiceImpl;
 import com.digital.pm.service.Impl.JdbcServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import com.digital.pm.web.controller.JdbcController;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+@SpringBootApplication
 public class ApplicationConfig {
     private static final JdbcController jdbcController = new JdbcController(new JdbcServiceImpl());
     private static final EmployeeController employeeController =

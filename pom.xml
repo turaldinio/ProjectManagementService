@@ -24,10 +24,25 @@
         <lombok.version>1.18.24</lombok.version>
         <gson.version>2.10.1</gson.version>
         <mysql_driver>8.0.32</mysql_driver>
+        <spring-boot>3.0.6</spring-boot>
+        <spring>6.0.6</spring>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring}</version>
+
+            </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
