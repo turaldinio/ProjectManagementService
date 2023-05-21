@@ -20,7 +20,7 @@ public class EmployeeMapper {
                 post(createEmployeeDto.getPost()).
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
-                status(EmployeeStatus.ACTIVE).
+                status(createEmployeeDto.getStatus()).
                 build();
 
 
