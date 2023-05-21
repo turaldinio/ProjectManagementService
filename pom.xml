@@ -26,6 +26,8 @@
         <mysql_driver>8.0.32</mysql_driver>
         <spring-boot>3.0.6</spring-boot>
         <spring>6.0.6</spring>
+        <spring-data>3.0.5</spring-data>
+
 
     </properties>
 
@@ -35,6 +37,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>

@@ -36,7 +36,6 @@ public class FileStorageImpl extends FileStorage {
     }
 
 
-    @Override
     public synchronized Employee create(Employee employee) {
         try {
             employee.setId(getLastEmployeeId());
@@ -48,7 +47,6 @@ public class FileStorageImpl extends FileStorage {
 
     }
 
-    @Override
     public Employee update(Long employeeId, Employee employee) {
 
         try {
@@ -73,7 +71,6 @@ public class FileStorageImpl extends FileStorage {
         return employee;
     }
 
-    @Override
     public Employee getById(Long id) throws Exception {
         try {
             return Files.readAllLines(filePath).
@@ -90,7 +87,6 @@ public class FileStorageImpl extends FileStorage {
 
     }
 
-    @Override
     public List<Employee> getAll() {
 
         try {
@@ -106,7 +102,6 @@ public class FileStorageImpl extends FileStorage {
 
     }
 
-    @Override
     public Employee deleteById(Long id) throws Exception {
         var all = getAll();
         var currentEmployee = getById(id);
@@ -151,7 +146,6 @@ public class FileStorageImpl extends FileStorage {
         }
     }
 
-    @Override
     public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
         return getAll().
                 stream().

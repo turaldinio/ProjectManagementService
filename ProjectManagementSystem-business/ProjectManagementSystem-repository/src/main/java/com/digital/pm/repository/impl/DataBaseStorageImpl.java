@@ -8,14 +8,13 @@ import com.digital.pm.repository.DataStorage;
 import java.sql.*;
 import java.util.*;
 
-public class DataBaseStorageImpl implements DataStorage {
+public class DataBaseStorageImpl{
     private final Connection connection;
 
     public DataBaseStorageImpl(Connection connection) {
         this.connection = connection;
     }
 
-    @Override
     public Employee create(Employee employee) {
         try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status_id)" +
                 "values (?,?,?,?,?,?,?,?)")) {
@@ -54,7 +53,6 @@ public class DataBaseStorageImpl implements DataStorage {
 
     }
 
-    @Override
     public Employee update(Long employeeId, Employee employee) {
         try {
             deleteById(employeeId);
@@ -64,7 +62,6 @@ public class DataBaseStorageImpl implements DataStorage {
         return create(employee);
     }
 
-    @Override
     public Employee getById(Long id) throws Exception {
         try (var select = connection.prepareStatement("select * from employee where employee.id=?")) {
             select.setLong(1, id);
@@ -88,7 +85,6 @@ public class DataBaseStorageImpl implements DataStorage {
         return null;
     }
 
-    @Override
     public List<Employee> getAll() {
         try (var select = connection.prepareStatement("select * from employee e inner join employee_status es on e.status_id = es.id")) {
             var resultSet = select.executeQuery();
@@ -114,7 +110,6 @@ public class DataBaseStorageImpl implements DataStorage {
 
     }
 
-    @Override
     public Employee deleteById(Long id) throws Exception {
         var employee = getById(id);
         try (var delete = connection.prepareStatement("delete from employee where id=?")) {
@@ -125,7 +120,6 @@ public class DataBaseStorageImpl implements DataStorage {
         return employee;
     }
 
-    @Override
     public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
         String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();

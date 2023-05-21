@@ -1,4 +1,9 @@
 package com.digital.pm.repository;
 
-public interface TeamRepository {
+import com.digital.pm.model.Team;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TeamRepository extends JpaRepository<Team,Long> {
 }
