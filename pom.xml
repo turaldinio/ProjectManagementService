@@ -86,7 +86,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.digital.pm.app.ApplicationConfig
+                            <mainClass>com.digital.pm.app.ProjectManagementSystemApplication
                             </mainClass>
                         </manifest>
                     </archive>

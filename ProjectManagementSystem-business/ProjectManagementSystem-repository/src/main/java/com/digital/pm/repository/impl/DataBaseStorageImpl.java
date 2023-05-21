@@ -8,7 +8,7 @@ import com.digital.pm.repository.DataStorage;
 import java.sql.*;
 import java.util.*;
 
-public class DataBaseStorageImpl{
+public class DataBaseStorageImpl implements DataStorage {
     private final Connection connection;
 
     public DataBaseStorageImpl(Connection connection) {

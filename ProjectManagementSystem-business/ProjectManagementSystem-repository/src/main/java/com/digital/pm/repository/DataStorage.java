@@ -2,21 +2,19 @@ package com.digital.pm.repository;
 
 import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.model.Employee;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
-public interface DataStorage extends JpaRepository<Employee,Long> {
+
+public interface DataStorage {
     Employee create(Employee employee) ;
 
     Employee update(Long employeeId, Employee employee);
 
-    Employee getById(Long id);
+    Employee getById(Long id) throws Exception;
 
     List<Employee> getAll();
 
-    void deleteById(Long id);
+    Employee deleteById(Long id) throws Exception;
 
     List<Employee> searchWithFilter(FilterEmployee filterEmployee);
 }
