@@ -4,13 +4,15 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.employee.FilterEmployee;
 import com.digital.pm.service.EmployeeService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@AllArgsConstructor
+@Controller
+@RequiredArgsConstructor
 public class EmployeeController {
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
