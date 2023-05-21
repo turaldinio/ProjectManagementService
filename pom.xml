@@ -24,9 +24,8 @@
         <lombok.version>1.18.24</lombok.version>
         <gson.version>2.10.1</gson.version>
         <mysql_driver>8.0.32</mysql_driver>
-        <spring-boot>3.0.6</spring-boot>
-        <spring>6.0.6</spring>
-        <spring-data>3.0.5</spring-data>
+        <spring-boot-starter-jpa>3.0.6</spring-boot-starter-jpa>
+        <spring-core>6.0.6</spring-core>
 
 
     </properties>
@@ -35,19 +34,13 @@
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>${spring-boot}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${spring-data}</version>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring-boot-starter-jpa}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
-                <version>${spring}</version>
-
+                <version>${spring-core}</version>
             </dependency>
 
             <dependency>

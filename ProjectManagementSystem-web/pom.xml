@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot}</version>
+            <version>${spring-boot-starter-jpa}</version>
         </dependency>
         <dependency>
             <groupId>com.digital</groupId>
