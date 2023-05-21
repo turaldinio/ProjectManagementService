@@ -9,19 +9,17 @@ import com.digital.pm.repository.impl.FileStorageImpl;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import com.digital.pm.model.Employee;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.util.List;
 
-
+@Service
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeMapper employeeMapper;
     private final DataStorage dataStorage;
-
-    public EmployeeServiceImpl() {
-        employeeMapper = new EmployeeMapper();
-        dataStorage = new FileStorageImpl();
-    }
 
     public EmployeeServiceImpl(Connection connection) {
         employeeMapper = new EmployeeMapper();
