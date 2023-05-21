@@ -2,6 +2,7 @@ package com.digital.pm.service.Impl;
 
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.mapping.EmployeeMapper;
@@ -16,9 +17,13 @@ import java.util.List;
 public class EmployeeServiceImpl {
     private final EmployeeRepository employeeRepository;
 
-    public Employee create(CreateEmployeeDto createEmployeeDto) {
-        var employee = new EmployeeMapper().create(createEmployeeDto);
-        return employeeRepository.save(employee);
+    public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+        EmployeeMapper employeeMapper = new EmployeeMapper();
+
+        var employee = employeeMapper.create(createEmployeeDto);
+
+        employeeRepository.save(employee);
+        return employeeMapper.map(employee);
     }
 
     public void delete(CreateEmployeeDto createEmployeeDto) {
@@ -30,12 +35,15 @@ public class EmployeeServiceImpl {
         employeeRepository.deleteById(id);
     }
 
-    public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElseThrow();
+    public EmployeeDto getEmployeeById(Long id) {
+        var employee = employeeRepository.findById(id).orElseThrow();
+        EmployeeMapper employeeMapper = new EmployeeMapper();
+        return employeeMapper.map(employee);
     }
 
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeDto> getAll() {
+        EmployeeMapper employeeMapper = new EmployeeMapper();
+        return employeeMapper.map(employeeRepository.findAll());
     }
 
 }

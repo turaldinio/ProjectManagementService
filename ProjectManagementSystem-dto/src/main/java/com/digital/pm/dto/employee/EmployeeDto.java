@@ -8,7 +8,10 @@ import lombok.Data;
 @Builder
 public class EmployeeDto {
     private Long id;
-    private String fullName;
+    private String firstName;
+    private String lastName;
+    private String patronymic;
+
     private String post;
     private String account;
     private String email;

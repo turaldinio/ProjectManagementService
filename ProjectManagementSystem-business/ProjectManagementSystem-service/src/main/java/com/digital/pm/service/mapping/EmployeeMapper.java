@@ -30,9 +30,9 @@ public class EmployeeMapper {
         return EmployeeDto.
                 builder().
                 id(employee.getId()).
-                fullName(employee.getFirsName() + " " +
-                        employee.getLastName() + " " +
-                        employee.getPatronymic()).
+                firstName(employee.getFirsName()).
+                lastName(employee.getLastName()).
+                patronymic(employee.getPatronymic()).
                 post(employee.getPost()).
                 account(employee.getAccount()).
                 email(employee.getEmail()).
@@ -47,8 +47,9 @@ public class EmployeeMapper {
                 stream().
                 map(x -> EmployeeDto.
                         builder().id(x.getId()).
-                        fullName(x.getFirsName() + " " + x.getLastName() + " " + x.getPatronymic()).
-                        post(x.getPost()).
+                        firstName(x.getFirsName()).
+                        lastName(x.getLastName()).
+                        patronymic(x.getPatronymic()).post(x.getPost()).
                         account(x.getAccount()).
                         email(x.getEmail()).
                         status(EmployeeStatus.ACTIVE).
