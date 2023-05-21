@@ -26,6 +26,7 @@
         <mysql_driver>8.0.32</mysql_driver>
         <spring-boot-starter-jpa>3.0.6</spring-boot-starter-jpa>
         <spring-core>6.0.6</spring-core>
+        <liqubase>4.17.2</liqubase>
 
 
     </properties>
@@ -58,6 +59,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql_driver}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liqubase}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
