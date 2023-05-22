@@ -3,18 +3,12 @@ package com.digital.pm.app;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.DataBaseService;
-import com.digital.pm.service.EmployeeService;
-import com.digital.pm.service.Impl.EmployeeServiceImpl;
 import com.digital.pm.web.controller.EmployeeController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

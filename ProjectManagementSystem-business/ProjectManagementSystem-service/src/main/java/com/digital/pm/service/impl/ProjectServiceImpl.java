@@ -1,4 +1,4 @@
-package com.digital.pm.service.Impl;
+package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.common.filters.ProjectFilter;

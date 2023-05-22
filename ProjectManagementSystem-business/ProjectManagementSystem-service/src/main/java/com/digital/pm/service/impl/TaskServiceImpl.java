@@ -1,10 +1,9 @@
-package com.digital.pm.service.Impl;
+package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.common.filters.TaskFilter;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
-import com.digital.pm.model.employee.EmployeeSpecification;
 import com.digital.pm.model.task.TaskSpecification;
 import com.digital.pm.repository.TaskRepository;
 import com.digital.pm.service.TaskService;
