@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 public class CreateProjectDto {
-    private Long id;
     private String name;
     private String description;
-    private ProjectStatus status;
 
 }

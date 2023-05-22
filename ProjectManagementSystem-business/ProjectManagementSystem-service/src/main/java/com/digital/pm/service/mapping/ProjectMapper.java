@@ -1,5 +1,6 @@
 package com.digital.pm.service.mapping;
 
+import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.model.project.Project;
@@ -11,10 +12,9 @@ public class ProjectMapper {
     public static Project create(CreateProjectDto createProjectDto) {
         return Project.
                 builder().
-                id(createProjectDto.getId()).
                 description(createProjectDto.getDescription()).
                 name(createProjectDto.getName()).
-                status(createProjectDto.getStatus()).
+                status(ProjectStatus.DRAFT).
                 build();
     }
 
