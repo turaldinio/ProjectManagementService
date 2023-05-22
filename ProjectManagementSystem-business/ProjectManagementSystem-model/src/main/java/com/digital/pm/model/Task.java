@@ -1,6 +1,7 @@
 package com.digital.pm.model;
 
 import com.digital.pm.common.enums.TaskStatus;
+import com.digital.pm.model.employee.Employee;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

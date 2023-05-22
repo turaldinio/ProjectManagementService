@@ -1,8 +1,8 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.dto.employee.FilterEmployee;
-import com.digital.pm.model.Employee;
+import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.model.employee.Employee;
 import com.digital.pm.repository.DataBaseRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
                 "values (?,?,?,?,?,?,?,?)")) {
             long id = getLastId() + 1;
             insert.setLong(1, id);
-            insert.setString(2, employee.getFirsName());
+            insert.setString(2, employee.getFirstName());
             insert.setString(3, employee.getLastName());
             insert.setString(4, employee.getPatronymic());
             insert.setString(5, employee.getPost());
@@ -70,7 +70,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
             if (resultSet.next()) {
                 return Employee.builder().
                         id(resultSet.getLong("id")).
-                        firsName(resultSet.getString("first_name")).
+                        firstName(resultSet.getString("first_name")).
                         lastName(resultSet.getString("last_name")).
                         patronymic(resultSet.getString("patronymic")).
                         account(resultSet.getString("account")).
@@ -92,7 +92,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
 
                 var employee = Employee.builder().
                         id(resultSet.getLong("id")).
-                        firsName(resultSet.getString("first_name")).
+                        firstName(resultSet.getString("first_name")).
                         lastName(resultSet.getString("last_name")).
                         patronymic(resultSet.getString("patronymic")).
                         account(resultSet.getString("account")).
@@ -119,7 +119,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
         return employee;
     }
 
-    public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
+    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) {
         String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
@@ -134,9 +134,9 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
 
         }
 
-        if (filterEmployee.getFirsName() != null) {
+        if (filterEmployee.getFirstName() != null) {
             request = request + " and first_name=?";
-            map.put(paramCount++, filterEmployee.getFirsName());
+            map.put(paramCount++, filterEmployee.getFirstName());
 
         }
         if (filterEmployee.getPatronymic() != null) {
@@ -178,7 +178,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
             while (resultSet.next()) {
                 var employee = Employee.builder().
                         id(resultSet.getLong("id")).
-                        firsName(resultSet.getString("first_name")).
+                        firstName(resultSet.getString("first_name")).
                         lastName(resultSet.getString("last_name")).
                         patronymic(resultSet.getString("patronymic")).
                         account(resultSet.getString("account")).

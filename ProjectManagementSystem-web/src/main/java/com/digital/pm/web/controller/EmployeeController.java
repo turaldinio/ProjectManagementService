@@ -2,7 +2,7 @@ package com.digital.pm.web.controller;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.dto.employee.FilterEmployee;
+import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -35,11 +35,11 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
-    public EmployeeDto deleteById(long id) {
-        return employeeService.deleteById(id);
+    public void deleteById(long id) {
+        employeeService.deleteById(id);
     }
 
-    public List<EmployeeDto> searchByFilter(FilterEmployee filterEmployee) {
-        return employeeService.searchWithFilter(filterEmployee);
+    public EmployeeDto findOne(EmployeeFilter filterEmployee) {
+        return employeeService.findOne(filterEmployee);
     }
 }

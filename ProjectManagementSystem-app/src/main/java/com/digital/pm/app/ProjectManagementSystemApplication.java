@@ -1,36 +1,61 @@
 package com.digital.pm.app;
 
+import com.digital.pm.common.enums.EmployeeStatus;
+import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.DataBaseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.digital.pm.service.EmployeeService;
+import com.digital.pm.service.Impl.EmployeeServiceImpl;
+import com.digital.pm.web.controller.EmployeeController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @SpringBootApplication
-public class ProjectManagementSystemApplication {
-    @Autowired
-    private DataBaseService dataBaseService;
-    @Autowired
-    private DataBaseService dataBaseFileService;
+@RequiredArgsConstructor
+
+
+public class ProjectManagementSystemApplication implements CommandLineRunner {
+    private final DataBaseService dataBaseService;
+    private final DataBaseService dataBaseFileService;
+    private final EmployeeController employeeController;
+
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectManagementSystemApplication.class, args);
 
     }
 
-//    @Override
-//    public void run(String... args) throws Exception {
-//        CreateEmployeeDto first = CreateEmployeeDto.
+    //    @Override
+    public void run(String... args) throws Exception {
+        System.out.println(employeeController.
+                findOne(EmployeeFilter.
+                builder().
+                status(EmployeeStatus.ACTIVE).
+                build()));
+
+//        var result=employeeService.findOne(EmployeeFilter.
 //                builder().
-//                lastName("Романов").
-//                firstName("Сергей").
-//                patronymic("Иванович").
-//                post("junior developer").
-//                account("sergRom98").
-//                email("romaniv@mail.ru").
-//                build();
+//                status(EmployeeStatus.ACTIVE).
+//                build());
+//        printResult(result);
+//    CreateEmployeeDto first = CreateEmployeeDto.
+//            builder().
+//            id(0).
+//            lastName("Романов").
+//            firstName("Сергей").
+//            patronymic("Иванович").
+//            post("junior developer").
+//            account("sergRom98").
+//            email("romaniv@mail.ru").
+//            build();
 //
 //        CreateEmployeeDto second = CreateEmployeeDto.
 //                builder().
@@ -57,7 +82,8 @@ public class ProjectManagementSystemApplication {
 //        printResult(dataBaseService.create(first));
 //        printResult(dataBaseService.create(second));
 //
-//    }
+
+    }
 
     public static void printResult(EmployeeDto employeeDto) {
         if (employeeDto != null) {

@@ -1,8 +1,8 @@
 package com.digital.pm.repository.impl;
 
-import com.digital.pm.dto.employee.FilterEmployee;
+import com.digital.pm.common.filters.EmployeeFilter;
 import com.google.gson.reflect.TypeToken;
-import com.digital.pm.model.Employee;
+import com.digital.pm.model.employee.Employee;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -146,12 +146,12 @@ public class DataBaseFileImpl extends FileStorage {
         }
     }
 
-    public List<Employee> searchWithFilter(FilterEmployee filterEmployee) {
+    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) {
         return getAll().
                 stream().
                 filter(x -> {
-                    if (isNotNullObjects(x.getFirsName(), filterEmployee.getFirsName()) &&
-                            x.getFirsName().equals(filterEmployee.getFirsName())) {
+                    if (isNotNullObjects(x.getFirstName(), filterEmployee.getFirstName()) &&
+                            x.getFirstName().equals(filterEmployee.getFirstName())) {
                         return true;
                     }
                     if (isNotNullObjects(x.getLastName(), filterEmployee.getLastName()) &&

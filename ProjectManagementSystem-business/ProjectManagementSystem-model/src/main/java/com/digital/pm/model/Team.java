@@ -1,10 +1,10 @@
 package com.digital.pm.model;
 
 import com.digital.pm.common.enums.Roles;
+import com.digital.pm.model.employee.Employee;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Team {

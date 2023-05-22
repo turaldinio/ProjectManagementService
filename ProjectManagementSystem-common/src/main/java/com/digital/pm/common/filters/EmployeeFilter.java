@@ -1,4 +1,4 @@
-package com.digital.pm.dto.employee;
+package com.digital.pm.common.filters;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import lombok.Builder;
@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FilterEmployee {
+public class EmployeeFilter {
     private Long id;
-    private String firsName;
+    private String firstName;
     private String lastName;
     private String patronymic;
     private String post;

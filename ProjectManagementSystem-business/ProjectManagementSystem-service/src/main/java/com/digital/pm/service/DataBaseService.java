@@ -2,7 +2,7 @@ package com.digital.pm.service;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.dto.employee.FilterEmployee;
+import com.digital.pm.common.filters.EmployeeFilter;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface DataBaseService {
 
     EmployeeDto deleteById(Long id);
 
-    List<EmployeeDto> searchWithFilter(FilterEmployee filterEmployee);
+    List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee);
 }

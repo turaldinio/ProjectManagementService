@@ -3,7 +3,7 @@ package com.digital.pm.service.mapping;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.model.Employee;
+import com.digital.pm.model.employee.Employee;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,8 @@ public class EmployeeMapper {
 
         return Employee.
                 builder().
-                firsName(createEmployeeDto.getFirstName()).
+                id(createEmployeeDto.getId()).
+                firstName(createEmployeeDto.getFirstName()).
                 lastName(createEmployeeDto.getLastName()).
                 patronymic(createEmployeeDto.getPatronymic()).
                 post(createEmployeeDto.getPost()).
@@ -30,7 +31,7 @@ public class EmployeeMapper {
         return EmployeeDto.
                 builder().
                 id(employee.getId()).
-                firstName(employee.getFirsName()).
+                firstName(employee.getFirstName()).
                 lastName(employee.getLastName()).
                 patronymic(employee.getPatronymic()).
                 post(employee.getPost()).
@@ -47,7 +48,7 @@ public class EmployeeMapper {
                 stream().
                 map(x -> EmployeeDto.
                         builder().id(x.getId()).
-                        firstName(x.getFirsName()).
+                        firstName(x.getFirstName()).
                         lastName(x.getLastName()).
                         patronymic(x.getPatronymic()).post(x.getPost()).
                         account(x.getAccount()).
