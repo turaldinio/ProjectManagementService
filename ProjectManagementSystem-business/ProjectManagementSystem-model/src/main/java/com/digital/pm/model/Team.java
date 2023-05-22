@@ -2,6 +2,7 @@ package com.digital.pm.model;
 
 import com.digital.pm.common.enums.Roles;
 import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.project.Project;
 import jakarta.persistence.*;
 
 import java.util.List;

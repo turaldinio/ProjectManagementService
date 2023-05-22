@@ -1,5 +1,6 @@
 package com.digital.pm.service;
 
+import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 

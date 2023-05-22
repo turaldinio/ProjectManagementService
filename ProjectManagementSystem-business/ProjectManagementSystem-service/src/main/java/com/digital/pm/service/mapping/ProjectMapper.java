@@ -2,7 +2,7 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
-import com.digital.pm.model.Project;
+import com.digital.pm.model.project.Project;
 
 import java.util.List;
 import java.util.stream.Collectors;
