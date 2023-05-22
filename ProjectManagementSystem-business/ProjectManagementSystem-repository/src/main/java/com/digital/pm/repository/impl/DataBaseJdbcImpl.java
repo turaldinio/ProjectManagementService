@@ -15,8 +15,8 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
 
 
     public Employee create(Employee employee) {
-        try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status_id)" +
-                "values (?,?,?,?,?,?,?,?)")) {
+        try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status)" +
+                "values(id,first_name,last_name,patronymic,post,account,email,status) ")) {
             long id = getLastId() + 1;
             insert.setLong(1, id);
             insert.setString(2, employee.getFirstName());
@@ -25,7 +25,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
             insert.setString(5, employee.getPost());
             insert.setString(6, employee.getAccount());
             insert.setString(7, employee.getEmail());
-            insert.setInt(8, employee.getStatus().ordinal() + 1);
+            insert.setString(8, employee.getStatus().name());
 
             insert.execute();
 
@@ -68,40 +68,25 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
             var resultSet = select.executeQuery();
 
             if (resultSet.next()) {
-                return Employee.builder().
-                        id(resultSet.getLong("id")).
-                        firstName(resultSet.getString("first_name")).
-                        lastName(resultSet.getString("last_name")).
-                        patronymic(resultSet.getString("patronymic")).
-                        account(resultSet.getString("account")).
-                        email(resultSet.getString("email")).
-                        post(resultSet.getString("post")).
-                        status(EmployeeStatus.values()[resultSet.getInt("status_id")]).
-                        build();
+                var employee = getEmployee(resultSet);
+                resultSet.close();
+                return employee;
             }
+            resultSet.close();
 
         }
         return null;
     }
 
     public List<Employee> getAll() {
-        try (var select = connection.prepareStatement("select * from employee e inner join employee_status es on e.status_id = es.id")) {
+        try (var select = connection.prepareStatement("select * from employee e ")) {
             var resultSet = select.executeQuery();
             List<Employee> list = new ArrayList<>();
-            while (resultSet.next()) {
 
-                var employee = Employee.builder().
-                        id(resultSet.getLong("id")).
-                        firstName(resultSet.getString("first_name")).
-                        lastName(resultSet.getString("last_name")).
-                        patronymic(resultSet.getString("patronymic")).
-                        account(resultSet.getString("account")).
-                        email(resultSet.getString("email")).
-                        post(resultSet.getString("post")).
-                        status(EmployeeStatus.valueOf(resultSet.getString("status"))).
-                        build();
-                list.add(employee);
-            }
+            list.add(getEmployee(resultSet));
+
+            resultSet.close();
+
             return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,7 +140,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
 
         }
         if (filterEmployee.getStatus() != null) {
-            request = request + " and status_id=?";
+            request = request + " and status=?";
             map.put(paramCount++, filterEmployee.getStatus());
 
         }
@@ -176,23 +161,30 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
             List<Employee> list = new ArrayList<>();
 
             while (resultSet.next()) {
-                var employee = Employee.builder().
-                        id(resultSet.getLong("id")).
-                        firstName(resultSet.getString("first_name")).
-                        lastName(resultSet.getString("last_name")).
-                        patronymic(resultSet.getString("patronymic")).
-                        account(resultSet.getString("account")).
-                        email(resultSet.getString("email")).
-                        post(resultSet.getString("post")).
-                        status(EmployeeStatus.values()[resultSet.getInt("status_id")]).
-                        build();
-                list.add(employee);
+                list.add(getEmployee(resultSet));
             }
 
             return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public Employee getEmployee(ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            return Employee.builder().
+                    id(resultSet.getLong("id")).
+                    firstName(resultSet.getString("first_name")).
+                    lastName(resultSet.getString("last_name")).
+                    patronymic(resultSet.getString("patronymic")).
+                    account(resultSet.getString("account")).
+                    email(resultSet.getString("email")).
+                    post(resultSet.getString("post")).
+                    status(EmployeeStatus.valueOf(resultSet.getString("status"))).
+                    build();
+        }
+        return null;
 
     }
 }
