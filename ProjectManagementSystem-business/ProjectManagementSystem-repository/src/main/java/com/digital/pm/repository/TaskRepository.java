@@ -1,9 +1,11 @@
 package com.digital.pm.repository;
 
-import com.digital.pm.model.Task;
+import com.digital.pm.model.task.Task;
+import com.digital.pm.model.team.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task,Long>, JpaSpecificationExecutor<Task> {
 }

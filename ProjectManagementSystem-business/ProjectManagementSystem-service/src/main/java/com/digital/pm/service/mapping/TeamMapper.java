@@ -2,7 +2,7 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
-import com.digital.pm.model.Team;
+import com.digital.pm.model.team.Team;
 
 import java.util.List;
 import java.util.stream.Collectors;
