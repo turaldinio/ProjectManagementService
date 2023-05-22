@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class CreateEmployeeDto {
-    private Long id;
     private String firstName;
     private String lastName;
     private String patronymic;
@@ -15,6 +14,5 @@ public class CreateEmployeeDto {
     private String account;
     private String email;
 
-    private EmployeeStatus status;
 
 }

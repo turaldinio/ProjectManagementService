@@ -14,14 +14,13 @@ public class EmployeeMapper {
 
         return Employee.
                 builder().
-                id(createEmployeeDto.getId()).
                 firstName(createEmployeeDto.getFirstName()).
                 lastName(createEmployeeDto.getLastName()).
                 patronymic(createEmployeeDto.getPatronymic()).
                 post(createEmployeeDto.getPost()).
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
-                status(createEmployeeDto.getStatus()).
+                status(EmployeeStatus.ACTIVE).
                 build();
 
 
@@ -53,7 +52,7 @@ public class EmployeeMapper {
                         patronymic(x.getPatronymic()).post(x.getPost()).
                         account(x.getAccount()).
                         email(x.getEmail()).
-                        status(EmployeeStatus.ACTIVE).
+                        status(x.getStatus()).
                         build()).
                 collect(Collectors.toList());
 
