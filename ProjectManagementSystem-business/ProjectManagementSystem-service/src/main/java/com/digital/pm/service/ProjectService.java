@@ -3,6 +3,7 @@ package com.digital.pm.service;
 import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
+import com.digital.pm.model.project.Project;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ProjectService {
 
     List<ProjectDto> getAll();
 
-    void deleteById(Long id);
+     void changeProjectStatus(Project project);
 
     ProjectDto findOne(ProjectFilter projectFilter);
 }

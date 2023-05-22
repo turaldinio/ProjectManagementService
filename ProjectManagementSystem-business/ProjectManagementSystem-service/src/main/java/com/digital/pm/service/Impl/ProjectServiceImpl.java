@@ -1,8 +1,10 @@
 package com.digital.pm.service.Impl;
 
+import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
+import com.digital.pm.model.project.Project;
 import com.digital.pm.model.project.ProjectSpecification;
 import com.digital.pm.repository.ProjectRepository;
 import com.digital.pm.service.ProjectService;
@@ -51,9 +53,20 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        projectRepository.deleteById(id);
+    public void changeProjectStatus(Project project) {
+        if (project.getStatus().equals(ProjectStatus.DRAFT)) {
+            project.setStatus(ProjectStatus.DEVELOPING);
+            return;
+        }
+        if (project.getStatus().equals(ProjectStatus.DEVELOPING)) {
+            project.setStatus(ProjectStatus.TESTING);
+            return;
 
+        }
+        if (project.getStatus().equals(ProjectStatus.TESTING)) {
+            project.setStatus(ProjectStatus.COMPLETED);
+
+        }
     }
 
     @Override
