@@ -1,10 +1,10 @@
 --liquibase formatted sql
 --changeset stevedonie:create
 --multiple-tables splitStatements:true endDelimiter:;
-create table role
+create table position
 (
     id   bigint primary key auto_increment,
-    role varchar(20) not null
+    name text not null
 );
 
 
@@ -34,10 +34,10 @@ create table team
     id          bigint primary key auto_increment,
     employee_id bigint not null,
     project_id  bigint not null,
-    role_id     bigint not null,
+    position_id     bigint not null,
     foreign key (employee_id) references employee (id),
     foreign key (project_id) references project (id),
-    foreign key (role_id) references role (id)
+    foreign key (position_id) references position (id)
 );
 create table task
 (
