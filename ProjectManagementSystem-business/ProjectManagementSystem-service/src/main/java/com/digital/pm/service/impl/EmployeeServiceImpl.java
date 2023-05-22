@@ -45,13 +45,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.map(result);
     }
 
-    public void delete(CreateEmployeeDto createEmployeeDto) {
-        var employee = EmployeeMapper.create(createEmployeeDto);
-        employeeRepository.delete(employee);
-    }
-
     public void deleteById(Long id) {
-        var currentEmployee = employeeRepository.findById(id).orElseThrow();
+        var currentEmployee = employeeRepository.
+                findById(id).
+                orElseThrow();
         currentEmployee.setStatus(EmployeeStatus.REMOTE);
     }
 

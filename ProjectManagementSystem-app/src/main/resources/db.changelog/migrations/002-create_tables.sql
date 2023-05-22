@@ -1,12 +1,6 @@
 --liquibase formatted sql
 --changeset stevedonie:create
 --multiple-tables splitStatements:true endDelimiter:;
-create table position
-(
-    id   bigint primary key auto_increment,
-    name text not null
-);
-
 
 create table employee
 (
@@ -31,13 +25,12 @@ create table project
 
 create table team
 (
-    id          bigint primary key auto_increment,
-    employee_id bigint not null,
-    project_id  bigint not null,
-    position_id     bigint not null,
+    id            bigint primary key auto_increment,
+    employee_id   bigint not null,
+    project_id    bigint not null,
+    employee_role text   not null,
     foreign key (employee_id) references employee (id),
-    foreign key (project_id) references project (id),
-    foreign key (position_id) references position (id)
+    foreign key (project_id) references project (id)
 );
 create table task
 (

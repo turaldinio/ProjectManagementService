@@ -1,6 +1,6 @@
 package com.digital.pm.model.team;
 
-import com.digital.pm.common.enums.Position;
+import com.digital.pm.common.enums.Role;
 import com.digital.pm.model.employee.Employee;
 import com.digital.pm.model.project.Project;
 import jakarta.persistence.*;
@@ -20,11 +20,11 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // TODO: 22.05.2023 Вопрос о связи Employee-Position Map?
+    // TODO: 22.05.2023 Вопрос о связи Employee-Role Map?
     @OneToMany
     private List<Employee> employees;
     @Enumerated(EnumType.STRING)
-    private Position roles;
+    private Role roles;
 
     @OneToOne
     private Project project;

@@ -2,12 +2,6 @@
 --changeset stevedonie:create
 --multiple-tables splitStatements:true endDelimiter:;
 
-insert into position (name) VALUES
-       ('MANAGER'),
-       ('ANALYST'),
-       ('DEVELOPER'),
-       ('TESTER');
-
 insert into employee(first_name, last_name, patronymic, post, account, email, status)
 VALUES ('Дмитрий', 'Соколов', 'Иванович', 'junior developer', 'dimsoc', 'dima@mail.ru', 'ACTIVE'),
        ('Роман', 'Шумайлов', '', 'senior developer', 'romshum98', 'roma@bk.ru', 'ACTIVE'),
@@ -20,10 +14,10 @@ VALUES ('Smart house', 'Проект должен позволять управ�
        ('Amazing picture', 'приложение , позволяющее перевести любую фотографию в символьный вариант (.,/$|)',
         'DEVELOPING'),
        ('RusDo', 'приложение для поиска вторых половинок', 'COMPLETED');
-insert into team (employee_id, project_id, position_id)
-VALUES (1, 1, 1),
-       (2, 1, 2),
-       (3, 1, 4);
+insert into team (employee_id, project_id, employee_role)
+VALUES (1, 1, 'MANAGER'),
+       (2, 1, 'DEVELOPER'),
+       (3, 1, 'DEVELOPER');
 
 insert into task (name, description, executor_id, labor_costs, deadline, status, author_id, date_of_creation,
                   update_time)

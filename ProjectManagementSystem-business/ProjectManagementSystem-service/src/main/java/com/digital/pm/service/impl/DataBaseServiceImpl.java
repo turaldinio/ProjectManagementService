@@ -16,19 +16,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataBaseServiceImpl implements DataBaseService {
 
-    private final EmployeeMapper employeeMapper;
     private final EmployeeDataRepository dataStorage;
 
     @Override
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
         try {
-            Employee employee = employeeMapper.create(createEmployeeDto);
+            Employee employee = EmployeeMapper.create(createEmployeeDto);
 
             employee = dataStorage.create(employee);
             if (employee == null) {
                 throw new Exception("object creation exception");
             }
-            return employeeMapper.map(employee);
+            return EmployeeMapper.map(employee);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -38,8 +37,8 @@ public class DataBaseServiceImpl implements DataBaseService {
 
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        Employee employee = employeeMapper.create(createEmployeeDto);
-        return employeeMapper.map(dataStorage.update(employeeId, employee));
+        Employee employee = EmployeeMapper.create(createEmployeeDto);
+        return EmployeeMapper.map(dataStorage.update(employeeId, employee));
 
     }
 
@@ -47,7 +46,7 @@ public class DataBaseServiceImpl implements DataBaseService {
     public EmployeeDto getById(Long id) {
         try {
             var foundEmployee = dataStorage.getById(id);
-            return employeeMapper.map(foundEmployee);
+            return EmployeeMapper.map(foundEmployee);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -57,7 +56,7 @@ public class DataBaseServiceImpl implements DataBaseService {
     @Override
     public List<EmployeeDto> getAll() {
         var listEmployee = dataStorage.getAll();
-        return employeeMapper.map(listEmployee);
+        return EmployeeMapper.map(listEmployee);
 
     }
 
@@ -65,7 +64,7 @@ public class DataBaseServiceImpl implements DataBaseService {
     public EmployeeDto deleteById(Long id) {
         try {
             var employee = dataStorage.deleteById(id);
-            return employeeMapper.map(employee);
+            return EmployeeMapper.map(employee);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -76,7 +75,7 @@ public class DataBaseServiceImpl implements DataBaseService {
     @Override
     public List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee) {
         var listEmployee = dataStorage.searchWithFilter(filterEmployee);
-        return employeeMapper.map(listEmployee);
+        return EmployeeMapper.map(listEmployee);
 
     }
 }

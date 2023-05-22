@@ -1,6 +1,6 @@
 package com.digital.pm.common.enums;
 
-public enum Position {
+public enum Role {
     MANAGER,
     ANALYST,
     DEVELOPER,
