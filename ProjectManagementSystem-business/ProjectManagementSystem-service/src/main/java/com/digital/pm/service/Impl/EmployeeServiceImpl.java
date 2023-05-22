@@ -1,6 +1,7 @@
 package com.digital.pm.service.Impl;
 
 
+import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
@@ -32,7 +33,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         var currentEmployee = employeeRepository.findById(employeeId).orElseThrow();
 
 
-
         currentEmployee = EmployeeMapper.create(createEmployeeDto);
         employeeRepository.save(currentEmployee);
 
@@ -41,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public EmployeeDto getById(Long id) {
-        var result=employeeRepository.findById(id).orElseThrow();
+        var result = employeeRepository.findById(id).orElseThrow();
         return EmployeeMapper.map(result);
     }
 
@@ -51,7 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     public void deleteById(Long id) {
-        employeeRepository.deleteById(id);
+        var currentEmployee = employeeRepository.findById(id).orElseThrow();
+        currentEmployee.setStatus(EmployeeStatus.REMOTE);
     }
 
 
