@@ -3,14 +3,14 @@ package com.digital.pm.repository.impl;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.employee.Employee;
-import com.digital.pm.repository.DataBaseRepository;
+import com.digital.pm.repository.EmployeeDataRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.*;
 
 @RequiredArgsConstructor
-public class DataBaseJdbcImpl implements DataBaseRepository {
+public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
     private final Connection connection;
 
 
@@ -18,6 +18,7 @@ public class DataBaseJdbcImpl implements DataBaseRepository {
         try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status)" +
                 "values(id,first_name,last_name,patronymic,post,account,email,status) ")) {
             long id = getLastId() + 1;
+
             insert.setLong(1, id);
             insert.setString(2, employee.getFirstName());
             insert.setString(3, employee.getLastName());

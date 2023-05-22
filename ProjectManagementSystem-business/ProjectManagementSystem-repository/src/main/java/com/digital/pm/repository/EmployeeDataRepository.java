@@ -5,7 +5,7 @@ import com.digital.pm.model.employee.Employee;
 
 import java.util.List;
 
-public interface DataBaseRepository {
+public interface EmployeeDataRepository {
     Employee create(Employee employee) ;
 
     Employee update(Long employeeId, Employee employee);

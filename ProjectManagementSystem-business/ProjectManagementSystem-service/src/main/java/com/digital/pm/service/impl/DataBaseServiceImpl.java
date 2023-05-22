@@ -4,7 +4,7 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.employee.Employee;
-import com.digital.pm.repository.DataBaseRepository;
+import com.digital.pm.repository.EmployeeDataRepository;
 import com.digital.pm.service.DataBaseService;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 public class DataBaseServiceImpl implements DataBaseService {
 
     private final EmployeeMapper employeeMapper;
-    private final DataBaseRepository dataStorage;
+    private final EmployeeDataRepository dataStorage;
 
     @Override
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {

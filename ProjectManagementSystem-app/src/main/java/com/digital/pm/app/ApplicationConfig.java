@@ -1,8 +1,8 @@
 package com.digital.pm.app;
 
-import com.digital.pm.repository.DataBaseRepository;
-import com.digital.pm.repository.impl.DataBaseJdbcImpl;
-import com.digital.pm.repository.impl.DataBaseFileImpl;
+import com.digital.pm.repository.EmployeeDataRepository;
+import com.digital.pm.repository.impl.EmployeeDataJdbcRepositoryImpl;
+import com.digital.pm.repository.impl.EmployeeDataFileRepositoryImpl;
 import com.digital.pm.service.DataBaseService;
 import com.digital.pm.service.impl.DataBaseServiceImpl;
 import com.digital.pm.service.mapping.EmployeeMapper;
@@ -26,13 +26,13 @@ public class ApplicationConfig {
     private String password;
 
     @Bean
-    public DataBaseRepository dBRepository() throws SQLException {
-        return new DataBaseJdbcImpl(getConnection());
+    public EmployeeDataRepository dBRepository() throws SQLException {
+        return new EmployeeDataJdbcRepositoryImpl(getConnection());
     }
 
     @Bean
-    public DataBaseRepository fileRepository() {
-        return new DataBaseFileImpl(defaultFilePathRepository());
+    public EmployeeDataRepository fileRepository() {
+        return new EmployeeDataFileRepositoryImpl(defaultFilePathRepository());
     }
 
     @Bean
