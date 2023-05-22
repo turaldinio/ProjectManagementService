@@ -3,11 +3,15 @@ package com.digital.pm.model;
 import com.digital.pm.common.enums.ProjectStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

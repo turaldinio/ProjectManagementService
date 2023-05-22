@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class EmployeeMapper {
 
-    public Employee create(CreateEmployeeDto createEmployeeDto) {
+    public static Employee create(CreateEmployeeDto createEmployeeDto) {
 
         return Employee.
                 builder().
@@ -27,7 +27,7 @@ public class EmployeeMapper {
 
     }
 
-    public EmployeeDto map(Employee employee) {
+    public static EmployeeDto map(Employee employee) {
         return EmployeeDto.
                 builder().
                 id(employee.getId()).
@@ -43,7 +43,7 @@ public class EmployeeMapper {
 
     }
 
-    public List<EmployeeDto> map(List<Employee> employeeList) {
+    public static List<EmployeeDto> map(List<Employee> employeeList) {
         return employeeList.
                 stream().
                 map(x -> EmployeeDto.
@@ -54,7 +54,8 @@ public class EmployeeMapper {
                         account(x.getAccount()).
                         email(x.getEmail()).
                         status(EmployeeStatus.ACTIVE).
-                        build()).collect(Collectors.toList());
+                        build()).
+                collect(Collectors.toList());
 
     }
 }

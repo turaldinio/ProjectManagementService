@@ -8,6 +8,7 @@ import com.digital.pm.model.employee.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
+import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,28 +21,33 @@ public class EmployeeServiceImpl implements EmployeeService{
     private final EmployeeRepository employeeRepository;
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
-        EmployeeMapper employeeMapper = new EmployeeMapper();
 
-        var employee = employeeMapper.create(createEmployeeDto);
+        var employee = EmployeeMapper.create(createEmployeeDto);
 
         employeeRepository.save(employee);
-        return employeeMapper.map(employee);
+        return EmployeeMapper.map(employee);
     }
 
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        return null;
+        var currentEmployee = employeeRepository.findById(employeeId).orElseThrow();
+
+
+
+        currentEmployee = EmployeeMapper.create(createEmployeeDto);
+        employeeRepository.save(currentEmployee);
+
+        return EmployeeMapper.map(currentEmployee);
     }
 
     @Override
     public EmployeeDto getById(Long id) {
         var result=employeeRepository.findById(id).orElseThrow();
-        EmployeeMapper employeeMapper=new EmployeeMapper();
-        return employeeMapper.map(result);
+        return EmployeeMapper.map(result);
     }
 
     public void delete(CreateEmployeeDto createEmployeeDto) {
-        var employee = new EmployeeMapper().create(createEmployeeDto);
+        var employee = EmployeeMapper.create(createEmployeeDto);
         employeeRepository.delete(employee);
     }
 
@@ -49,25 +55,18 @@ public class EmployeeServiceImpl implements EmployeeService{
         employeeRepository.deleteById(id);
     }
 
-    public EmployeeDto getEmployeeById(Long id) {
-        var employee = employeeRepository.findById(id).orElseThrow();
-        EmployeeMapper employeeMapper = new EmployeeMapper();
-        return employeeMapper.map(employee);
-    }
 
     public List<EmployeeDto> getAll() {
-        EmployeeMapper employeeMapper = new EmployeeMapper();
-        return employeeMapper.map(employeeRepository.findAll());
+        return EmployeeMapper.map(employeeRepository.findAll());
     }
 
     public EmployeeDto findOne(EmployeeFilter employeeFilter) {
-        EmployeeMapper employeeMapper = new EmployeeMapper();
 
         var result = employeeRepository.
                 findOne(EmployeeSpecification.getSpec(employeeFilter)).
                 orElseThrow();
 
-        return employeeMapper.map(result);
+        return EmployeeMapper.map(result);
     }
 
 }
