@@ -19,8 +19,3 @@ VALUES (1, 1, 'MANAGER'),
        (2, 1, 'DEVELOPER'),
        (3, 1, 'DEVELOPER');
 
-insert into task (name, description, executor_id, labor_costs, deadline, status, author_id, date_of_creation,
-                  update_time)
-VALUES ('Провести дебагинг',
-        'Метод foo выбрасывает exception. Разобраться в основных причинах данной оишкби и устранить ее',
-        1, 43, CURDATE(), 'NEW', 2, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 20 DAY));
