@@ -3,7 +3,7 @@ package com.digital.pm.app;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.service.DataBaseService;
+import com.digital.pm.service.EmployeeDataService;
 import com.digital.pm.web.controller.EmployeeController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,8 +17,8 @@ import java.util.List;
 
 
 public class ProjectManagementSystemApplication implements CommandLineRunner {
-    private final DataBaseService dataBaseService;
-    private final DataBaseService dataBaseFileService;
+    private final EmployeeDataService dataBaseService;
+    private final EmployeeDataService dataBaseFileService;
     private final EmployeeController employeeController;
 
 

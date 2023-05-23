@@ -5,7 +5,7 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.employee.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
-import com.digital.pm.service.DataBaseService;
+import com.digital.pm.service.EmployeeDataService;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DataBaseServiceImpl implements DataBaseService {
+public class EmployeeDataServiceImpl implements EmployeeDataService {
 
     private final EmployeeDataRepository dataStorage;
 

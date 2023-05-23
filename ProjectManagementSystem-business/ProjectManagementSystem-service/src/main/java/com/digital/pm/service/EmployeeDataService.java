@@ -6,7 +6,7 @@ import com.digital.pm.common.filters.EmployeeFilter;
 
 import java.util.List;
 
-public interface DataBaseService {
+public interface EmployeeDataService {
     EmployeeDto create(CreateEmployeeDto createEmployeeDto);
 
     EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto);
