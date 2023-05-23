@@ -4,7 +4,7 @@
 
 create table employee
 (
-    id         serial primary key,
+    id         bigserial primary key,
     first_name text not null,
     last_name  text not null,
     patronymic text,
@@ -16,7 +16,7 @@ create table employee
 );
 create table project
 (
-    id     serial primary key,
+    id     bigserial primary key,
 
     name   text not null,
     text   text,
@@ -26,7 +26,7 @@ create table project
 
 create table team
 (
-    id            serial primary key,
+    id            bigserial primary key,
 
     employee_id   bigint not null,
     project_id    bigint not null,
@@ -36,7 +36,7 @@ create table team
 );
 create table task
 (
-    id               serial primary key,
+    id               bigserial primary key,
 
     name             text      not null,
     description      text,
