@@ -5,6 +5,10 @@ import com.digital.pm.repository.impl.EmployeeDataJdbcRepositoryImpl;
 import com.digital.pm.repository.impl.EmployeeDataFileRepositoryImpl;
 import com.digital.pm.service.EmployeeDataService;
 import com.digital.pm.service.impl.EmployeeDataServiceImpl;
+import com.digital.pm.service.mapping.EmployeeMapper;
+import com.digital.pm.service.mapping.ProjectMapper;
+import com.digital.pm.service.mapping.TaskMapper;
+import com.digital.pm.service.mapping.TeamMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,13 +40,33 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public EmployeeMapper employeeMapper() {
+        return new EmployeeMapper();
+    }
+
+    @Bean
+    public ProjectMapper projectMapper() {
+        return new ProjectMapper();
+    }
+
+    @Bean
+    public TaskMapper taskMapper() {
+        return new TaskMapper();
+    }
+
+    @Bean
+    public TeamMapper teamMapper() {
+        return new TeamMapper();
+    }
+
+    @Bean
     public EmployeeDataService dataBaseFileService() throws IOException {
-        return new EmployeeDataServiceImpl(fileRepository());
+        return new EmployeeDataServiceImpl(employeeMapper(), fileRepository());
     }
 
     @Bean
     public EmployeeDataService dataBaseService() throws SQLException {
-        return new EmployeeDataServiceImpl(dBRepository());
+        return new EmployeeDataServiceImpl(employeeMapper(), dBRepository());
     }
 
     @Bean

@@ -15,23 +15,24 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
 
     @Override
     public TaskDto create(CreateTaskDto createTaskDto) {
-        var task = TaskMapper.create(createTaskDto);
+        var task = taskMapper.create(createTaskDto);
         taskRepository.save(task);
 
-        return TaskMapper.map(task);
+        return taskMapper.map(task);
     }
 
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
         var currentTask = taskRepository.findById(taskId).orElseThrow();
-        currentTask = TaskMapper.create(createTaskDto);
+        currentTask = taskMapper.create(createTaskDto);
 
         taskRepository.save(currentTask);
 
-        return TaskMapper.map(currentTask);
+        return taskMapper.map(currentTask);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class TaskServiceImpl implements TaskService {
         var result = taskRepository.
                 findOne(TaskSpecification.getSpec(taskFilter)).
                 orElseThrow();
-        return TaskMapper.map(result);
+        return taskMapper.map(result);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
         if (currentTask.getStatus().equals(TaskStatus.COMPLETED)) {
             currentTask.setStatus(TaskStatus.CLOSED);
         }
-        return TaskMapper.map(currentTask);
+        return taskMapper.map(currentTask);
 
     }
 }

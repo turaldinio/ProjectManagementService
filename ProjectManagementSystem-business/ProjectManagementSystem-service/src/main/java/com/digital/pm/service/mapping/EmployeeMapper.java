@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class EmployeeMapper {
 
-    public static Employee create(CreateEmployeeDto createEmployeeDto) {
+    public  Employee create(CreateEmployeeDto createEmployeeDto) {
 
         return Employee.
                 builder().
@@ -26,7 +26,7 @@ public class EmployeeMapper {
 
     }
 
-    public static EmployeeDto map(Employee employee) {
+    public  EmployeeDto map(Employee employee) {
         return EmployeeDto.
                 builder().
                 id(employee.getId()).
@@ -42,7 +42,7 @@ public class EmployeeMapper {
 
     }
 
-    public static List<EmployeeDto> map(List<Employee> employeeList) {
+    public  List<EmployeeDto> map(List<Employee> employeeList) {
         return employeeList.
                 stream().
                 map(x -> EmployeeDto.

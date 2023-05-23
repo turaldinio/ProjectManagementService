@@ -19,23 +19,24 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectMapper projectMapper;
 
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
-        var project = ProjectMapper.create(createProjectDto);
+        var project = projectMapper.create(createProjectDto);
 
         projectRepository.save(project);
-        return ProjectMapper.map(project);
+        return projectMapper.map(project);
     }
 
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
         var currentProject = projectRepository.findById(projectId).orElseThrow();
 
-        currentProject = ProjectMapper.create(createProjectDto);
+        currentProject = projectMapper.create(createProjectDto);
         projectRepository.save(currentProject);
 
-        return ProjectMapper.map(currentProject);
+        return projectMapper.map(currentProject);
 
     }
 
@@ -44,12 +45,12 @@ public class ProjectServiceImpl implements ProjectService {
         var project = projectRepository.findById(id).orElseThrow();
 
 
-        return ProjectMapper.map(project);
+        return projectMapper.map(project);
     }
 
     @Override
     public List<ProjectDto> getAll() {
-        return ProjectMapper.map(projectRepository.findAll());
+        return projectMapper.map(projectRepository.findAll());
     }
 
     @Override
@@ -76,7 +77,7 @@ public class ProjectServiceImpl implements ProjectService {
                 findOne(ProjectSpecification.getSpec(projectFilter)).
                 orElseThrow();
 
-        return ProjectMapper.map(result);
+        return projectMapper.map(result);
     }
 }
 

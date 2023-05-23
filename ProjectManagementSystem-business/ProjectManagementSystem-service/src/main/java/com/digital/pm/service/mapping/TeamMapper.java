@@ -13,13 +13,13 @@ public class TeamMapper {
     }
 
 
-    public static TeamDto map(Team team) {
+    public TeamDto map(Team team) {
         return TeamDto.builder().build();
     }
 
-    public static List<TeamDto> map(List<Team> list) {
+    public List<TeamDto> map(List<Team> list) {
         return list.stream().map(project ->
-                TeamDto.builder().build()).
-                        collect(Collectors.toList());
+                        TeamDto.builder().build()).
+                collect(Collectors.toList());
     }
 }

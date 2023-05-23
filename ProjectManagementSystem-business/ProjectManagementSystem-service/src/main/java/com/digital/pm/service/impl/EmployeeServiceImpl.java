@@ -19,13 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final EmployeeMapper employeeMapper;
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
 
-        var employee = EmployeeMapper.create(createEmployeeDto);
+        var employee = employeeMapper.create(createEmployeeDto);
 
         employeeRepository.save(employee);
-        return EmployeeMapper.map(employee);
+        return employeeMapper.map(employee);
     }
 
     @Override
@@ -33,16 +34,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         var currentEmployee = employeeRepository.findById(employeeId).orElseThrow();
 
 
-        currentEmployee = EmployeeMapper.create(createEmployeeDto);
+        currentEmployee = employeeMapper.create(createEmployeeDto);
         employeeRepository.save(currentEmployee);
 
-        return EmployeeMapper.map(currentEmployee);
+        return employeeMapper.map(currentEmployee);
     }
 
     @Override
     public EmployeeDto getById(Long id) {
         var result = employeeRepository.findById(id).orElseThrow();
-        return EmployeeMapper.map(result);
+        return employeeMapper.map(result);
     }
 
     public void deleteById(Long id) {
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public List<EmployeeDto> getAll() {
-        return EmployeeMapper.map(employeeRepository.findAll());
+        return employeeMapper.map(employeeRepository.findAll());
     }
 
     public EmployeeDto findOne(EmployeeFilter employeeFilter) {
@@ -63,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 findOne(EmployeeSpecification.getSpec(employeeFilter)).
                 orElseThrow();
 
-        return EmployeeMapper.map(result);
+        return employeeMapper.map(result);
     }
 
 }

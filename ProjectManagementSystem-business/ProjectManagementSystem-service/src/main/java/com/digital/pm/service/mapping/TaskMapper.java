@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskMapper {
-    // TODO: 21.05.2023 executor какой объект положить в него?
-    public static Task create(CreateTaskDto createTaskDto) {
+    public  Task create(CreateTaskDto createTaskDto) {
         return Task.builder().
                 name(createTaskDto.getName()).
                 description(createTaskDto.getDescription()).
@@ -25,7 +24,7 @@ public class TaskMapper {
                 build();
     }
 
-    public static TaskDto map(Task task) {
+    public  TaskDto map(Task task) {
         return TaskDto.
                 builder().
                 id(task.getId()).
@@ -42,7 +41,7 @@ public class TaskMapper {
 
     }
 
-    public static List<TaskDto> map(List<Task> list) {
+    public  List<TaskDto> map(List<Task> list) {
         return list.stream().map(x ->
                         TaskDto.builder().
                                 id(x.getId()).

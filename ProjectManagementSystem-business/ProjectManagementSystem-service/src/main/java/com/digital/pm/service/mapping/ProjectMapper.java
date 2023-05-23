@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectMapper {
-    public static Project create(CreateProjectDto createProjectDto) {
+    public  Project create(CreateProjectDto createProjectDto) {
         return Project.
                 builder().
                 description(createProjectDto.getDescription()).
@@ -19,7 +19,7 @@ public class ProjectMapper {
     }
 
 
-    public static ProjectDto map(Project project) {
+    public  ProjectDto map(Project project) {
         return ProjectDto.
                 builder().
                 id(project.getId()).
@@ -29,7 +29,7 @@ public class ProjectMapper {
                 build();
     }
 
-    public static List<ProjectDto> map(List<Project> list) {
+    public  List<ProjectDto> map(List<Project> list) {
         return list.stream().map(project ->
                         ProjectDto.
                                 builder().
