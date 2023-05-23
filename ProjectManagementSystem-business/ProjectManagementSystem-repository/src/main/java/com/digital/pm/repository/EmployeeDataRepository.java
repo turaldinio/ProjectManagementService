@@ -3,18 +3,19 @@ package com.digital.pm.repository;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.employee.Employee;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface EmployeeDataRepository {
-    Employee create(Employee employee) ;
+    Employee create(Employee employee) throws Exception;
 
-    Employee update(Long employeeId, Employee employee);
+    Employee update(Long employeeId, Employee employee) throws Exception;
 
     Employee getById(Long id) throws Exception;
 
-    List<Employee> getAll();
+    List<Employee> getAll() throws Exception;
 
     Employee deleteById(Long id) throws Exception;
 
-    List<Employee> searchWithFilter(EmployeeFilter filterEmployee);
+    List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception;
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,12 +31,12 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public EmployeeDataRepository fileRepository() {
+    public EmployeeDataRepository fileRepository() throws IOException {
         return new EmployeeDataFileRepositoryImpl(defaultFilePathRepository());
     }
 
     @Bean
-    public EmployeeDataService dataBaseFileService() {
+    public EmployeeDataService dataBaseFileService() throws IOException {
         return new EmployeeDataServiceImpl(fileRepository());
     }
 

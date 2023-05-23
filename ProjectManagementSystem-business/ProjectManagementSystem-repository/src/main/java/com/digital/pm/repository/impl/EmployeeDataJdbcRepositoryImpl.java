@@ -14,7 +14,7 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
     private final Connection connection;
 
 
-    public Employee create(Employee employee) {
+    public Employee create(Employee employee) throws Exception {
         try (var insert = connection.prepareStatement("insert into employee(id,first_name, last_name, patronymic, post, account, email, status)" +
                 "values(id,first_name,last_name,patronymic,post,account,email,status) ")) {
             long id = getLastId() + 1;
@@ -36,15 +36,11 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
                 insert.close();
                 return result;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
         return null;
     }
 
-    private long getLastId() {
+    private long getLastId() throws Exception {
         var all = getAll();
         if (all.isEmpty()) {
             return 0;
@@ -53,12 +49,8 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
 
     }
 
-    public Employee update(Long employeeId, Employee employee) {
-        try {
-            deleteById(employeeId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Employee update(Long employeeId, Employee employee) throws Exception {
+        deleteById(employeeId);
         return create(employee);
     }
 
@@ -79,7 +71,7 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
         return null;
     }
 
-    public List<Employee> getAll() {
+    public List<Employee> getAll() throws Exception {
         try (var select = connection.prepareStatement("select * from employee e ")) {
             var resultSet = select.executeQuery();
             List<Employee> list = new ArrayList<>();
@@ -89,8 +81,6 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
             resultSet.close();
 
             return list;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
     }
@@ -105,7 +95,7 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
         return employee;
     }
 
-    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) {
+    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception {
         String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
@@ -166,13 +156,11 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
             }
 
             return list;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
     }
 
-    public Employee getEmployee(ResultSet resultSet) throws SQLException {
+    public Employee getEmployee(ResultSet resultSet) throws Exception {
         while (resultSet.next()) {
             return Employee.builder().
                     id(resultSet.getLong("id")).

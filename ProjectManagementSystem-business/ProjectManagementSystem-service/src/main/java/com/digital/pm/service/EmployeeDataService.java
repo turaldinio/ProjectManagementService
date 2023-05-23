@@ -17,5 +17,5 @@ public interface EmployeeDataService {
 
     EmployeeDto deleteById(Long id);
 
-    List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee);
+    List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee) ;
 }

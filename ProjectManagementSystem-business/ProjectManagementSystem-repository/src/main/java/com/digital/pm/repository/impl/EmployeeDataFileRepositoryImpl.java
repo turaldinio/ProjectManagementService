@@ -4,6 +4,7 @@ import com.digital.pm.common.filters.EmployeeFilter;
 import com.google.gson.reflect.TypeToken;
 import com.digital.pm.model.employee.Employee;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,88 +21,67 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
     private final FileReader fileReader;
     private final FileWriter fileWriter;
 
-    public EmployeeDataFileRepositoryImpl(String path) {
+    public EmployeeDataFileRepositoryImpl(String path) throws IOException {
         filePath = Path.of(path);
-        try {
-            if (Files.notExists(Path.of(filePath.toString()))) {
-                createDataStorageFile();
-            }
-            fileReader = new FileReader(filePath.toFile());
-            fileWriter = new FileWriter(filePath.toFile(), true);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (Files.notExists(Path.of(filePath.toString()))) {
+            createDataStorageFile();
         }
+        fileReader = new FileReader(filePath.toFile());
+        fileWriter = new FileWriter(filePath.toFile(), true);
+
 
     }
 
-
-    public synchronized Employee create(Employee employee) {
-        try {
-            employee.setId(getLastEmployeeId());
-        } catch (IOException e) {
-            throw new RuntimeException("error reading id field from file");
-        }
+    @Override
+    public synchronized Employee create(Employee employee) throws Exception {
+        employee.setId(getLastEmployeeId());
         return writeObject(employee);
 
 
     }
 
-    public Employee update(Long employeeId, Employee employee) {
+    @Override
+    public Employee update(Long employeeId, Employee employee) throws Exception {
 
-        try {
-            var list = Files.
-                    readAllLines(filePath).
-                    stream().
-                    map(x -> getGson().fromJson(x, Employee.class)).
-                    map(x -> {
-                        if (x.getId().longValue() == employeeId) {
-                            employee.setId(employeeId);
-                            return getGson().toJson(employee);
-                        }
-                        return getGson().toJson(x);
-                    }).toList();
+        var list = Files.
+                readAllLines(filePath).
+                stream().
+                map(x -> getGson().fromJson(x, Employee.class)).
+                map(x -> {
+                    if (x.getId().longValue() == employeeId) {
+                        employee.setId(employeeId);
+                        return getGson().toJson(employee);
+                    }
+                    return getGson().toJson(x);
+                }).toList();
 
-            Files.write(filePath, list);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        Files.write(filePath, list);
         return employee;
     }
 
+    @Override
     public Employee getById(Long id) throws Exception {
-        try {
-            return Files.readAllLines(filePath).
-                    stream().
-                    map(x -> getGson().fromJson(x, Employee.class)).
-                    filter(x -> x.getId().longValue() == id).
-                    findFirst().
-                    orElseThrow(() ->
-                            new Exception(String.format("the user with %s id is not found", id)));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return Files.readAllLines(filePath).
+                stream().
+                map(x -> getGson().fromJson(x, Employee.class)).
+                filter(x -> x.getId().longValue() == id).
+                findFirst().
+                orElseThrow(() ->
+                        new Exception(String.format("the user with %s id is not found", id)));
 
     }
 
-    public List<Employee> getAll() {
+    @Override
+    public List<Employee> getAll() throws Exception {
+        var list = Files.readAllLines(filePath);
+        Type listOfMyClassObject = new TypeToken<ArrayList<Employee>>() {
+        }.getType();
 
-        try {
-            var list = Files.readAllLines(filePath);
-            Type listOfMyClassObject = new TypeToken<ArrayList<Employee>>() {
-            }.getType();
-
-            return getGson().fromJson(list.toString(), listOfMyClassObject);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return getGson().fromJson(list.toString(), listOfMyClassObject);
 
     }
 
+    @Override
     public Employee deleteById(Long id) throws Exception {
         var all = getAll();
         var currentEmployee = getById(id);
@@ -113,19 +93,16 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
         return currentEmployee;
     }
 
-    private Employee writeObject(Employee employee) {
+    private Employee writeObject(Employee employee) throws IOException {
+        fileWriter.write(getGson().toJson(employee));
+        fileWriter.write("\n");
+        fileWriter.flush();
 
-        try {
-            fileWriter.write(getGson().toJson(employee));
-            fileWriter.write("\n");
-            fileWriter.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return employee;
     }
 
-    public long getLastEmployeeId() throws IOException {
+
+    public long getLastEmployeeId() throws Exception {
         if (!fileReader.ready()) {
             return 0;
         } else {
@@ -138,15 +115,12 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
 
     }
 
-    public void createDataStorageFile() {
-        try {
+    public void createDataStorageFile() throws IOException {
             Files.createFile(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) {
+    @Override
+    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception {
         return getAll().
                 stream().
                 filter(x -> {

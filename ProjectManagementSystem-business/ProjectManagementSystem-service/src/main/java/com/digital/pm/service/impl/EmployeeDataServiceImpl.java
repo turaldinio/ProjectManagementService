@@ -30,15 +30,20 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
             return EmployeeMapper.map(employee);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
         }
+        return null;
 
     }
 
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        Employee employee = EmployeeMapper.create(createEmployeeDto);
-        return EmployeeMapper.map(dataStorage.update(employeeId, employee));
+        try {
+            Employee employee = EmployeeMapper.create(createEmployeeDto);
+            return EmployeeMapper.map(dataStorage.update(employeeId, employee));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
 
     }
 
@@ -49,14 +54,21 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
             return EmployeeMapper.map(foundEmployee);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
         }
+        return null;
+
     }
 
     @Override
     public List<EmployeeDto> getAll() {
-        var listEmployee = dataStorage.getAll();
-        return EmployeeMapper.map(listEmployee);
+        try {
+            var listEmployee = dataStorage.getAll();
+            return EmployeeMapper.map(listEmployee);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
 
     }
 
@@ -68,14 +80,22 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+
         }
         return null;
+
     }
 
     @Override
     public List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee) {
-        var listEmployee = dataStorage.searchWithFilter(filterEmployee);
-        return EmployeeMapper.map(listEmployee);
+        try {
+            var listEmployee = dataStorage.searchWithFilter(filterEmployee);
+            return EmployeeMapper.map(listEmployee);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
 
     }
 }
