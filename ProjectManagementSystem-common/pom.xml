@@ -7,6 +7,13 @@
         <version>${revision}${changelist}</version>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
     <artifactId>pm-common</artifactId>
 
 </project>

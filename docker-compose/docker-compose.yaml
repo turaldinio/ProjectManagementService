@@ -1,8 +1,8 @@
 services:
-  app:
-    image: 'pm-sample-exec:latest'
-    networks:
-      - java-2023
+#  app:
+#    image: 'pm-sample-exec:latest'
+#    networks:
+#      - java-2023
 
   db:
     image: postgres
