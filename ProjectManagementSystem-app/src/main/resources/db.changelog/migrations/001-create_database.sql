@@ -1,1 +1,1 @@
-create database if not exists digital;
+create database digital;

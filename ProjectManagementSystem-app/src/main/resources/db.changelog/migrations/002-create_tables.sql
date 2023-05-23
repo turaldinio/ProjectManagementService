@@ -4,7 +4,7 @@
 
 create table employee
 (
-    id         bigint primary key auto_increment,
+    id         serial primary key,
     first_name text not null,
     last_name  text not null,
     patronymic text,
@@ -16,7 +16,8 @@ create table employee
 );
 create table project
 (
-    id     bigint primary key auto_increment,
+    id     serial primary key,
+
     name   text not null,
     text   text,
     status text not null
@@ -25,7 +26,8 @@ create table project
 
 create table team
 (
-    id            bigint primary key auto_increment,
+    id            serial primary key,
+
     employee_id   bigint not null,
     project_id    bigint not null,
     employee_role text   not null,
@@ -34,7 +36,8 @@ create table team
 );
 create table task
 (
-    id               bigint primary key auto_increment,
+    id               serial primary key,
+
     name             text      not null,
     description      text,
     executor_id      bigint,
