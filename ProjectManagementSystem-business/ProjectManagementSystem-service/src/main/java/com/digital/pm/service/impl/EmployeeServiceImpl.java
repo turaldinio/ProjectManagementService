@@ -5,7 +5,7 @@ import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.model.employee.EmployeeSpecification;
+import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;

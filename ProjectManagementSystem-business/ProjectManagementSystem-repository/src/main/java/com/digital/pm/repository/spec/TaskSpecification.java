@@ -1,8 +1,9 @@
-package com.digital.pm.model.task;
+package com.digital.pm.repository.spec;
 
 import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.common.filters.TaskFilter;
 import com.digital.pm.model.project.Project;
+import com.digital.pm.model.task.Task;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;

@@ -5,7 +5,7 @@ import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.model.project.Project;
-import com.digital.pm.model.project.ProjectSpecification;
+import com.digital.pm.repository.spec.ProjectSpecification;
 import com.digital.pm.repository.ProjectRepository;
 import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.mapping.ProjectMapper;
