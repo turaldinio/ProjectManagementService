@@ -1,21 +1,24 @@
 services:
   app:
     image: 'pm-sample-exec:latest'
-    ports:
-      - '8081:8081'
+    networks:
+      - java-2023
 
-  depends_on:
-    - mysql
-  environment:
-    - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-docker:3306/trening?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    - SPRING_DATASOURCE_USERNAME=root
-    - SPRING_DATASOURCE_PASSWORD=root
-
-  mysql:
-    container_name: 'mysql-docker'
-    image: mysql:8.0.32
-    ports:
-      - '3307:3306'
+  db:
+    image: postgres
+    container_name: db
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=trening
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=digital
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./imports/db/:/docker-entrypoint-initdb.d/
+    restart: always
+    networks:
+      - java-2023
+
+networks:
+  java-2023:
