@@ -16,8 +16,6 @@ import java.util.List;
 
 public class ProjectManagementSystemApplication implements CommandLineRunner {
     private final EmployeeController employeeController;
-
-    // TODO: 23.05.2023 Подправить liqubase.xml
     public static void main(String[] args) {
         SpringApplication.run(ProjectManagementSystemApplication.class, args);
 

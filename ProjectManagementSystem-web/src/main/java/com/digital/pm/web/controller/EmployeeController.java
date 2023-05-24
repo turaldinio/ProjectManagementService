@@ -5,11 +5,11 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;

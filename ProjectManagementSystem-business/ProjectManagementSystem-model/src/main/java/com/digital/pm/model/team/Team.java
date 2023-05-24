@@ -20,14 +20,13 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // TODO: 22.05.2023 Вопрос о связи Employee-Role Map?
-    @OneToMany
+    @ManyToMany
     private List<Employee> employees;
+
+    @ManyToMany
+    private List<Project> project;
     @Enumerated(EnumType.STRING)
     private Role roles;
-
-    @OneToOne
-    private Project project;
 
 
 }
