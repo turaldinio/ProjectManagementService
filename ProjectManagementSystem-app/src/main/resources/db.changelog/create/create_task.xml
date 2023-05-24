@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="create_table_team" author="Guluev">
+        <createTable tableName="task">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="description" type="text"/>
+
+            <column name="executor_id" type="bigserial"/>
+
+            <column name="labor_cost" type="bigserial"/>
+
+            <column name="deadline" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="author_id" type="bigserial">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="creation_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated" type="timestamp"/>
+
+            <column name="project_id" type="bigserial">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <addForeignKeyConstraint baseTableName="task" baseColumnNames="executor_id" constraintName="executor_id"
+                                 referencedTableName="employee"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="task" baseColumnNames="project_id" constraintName="project_id"
+                                 referencedTableName="project"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="task" baseColumnNames="author_id" constraintName="author_id"
+                                 referencedTableName="employee"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

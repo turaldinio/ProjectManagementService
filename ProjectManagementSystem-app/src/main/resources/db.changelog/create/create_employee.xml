@@ -3,16 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    
 
-    <changeSet id="initial-0" author="Guluev">
-        <sql dbms="postgresql" endDelimiter=";">
-            create
-            extension if not exists "digitsals"
-        </sql>
-
-    </changeSet>
-
-    <changeSet id="initial-1" author="Guluev">
+    <changeSet id="create_table_employee" author="Guluev">
         <createTable tableName="employee">
             <column name="id" type="bigserial">
                 <constraints primaryKey="true"/>
@@ -35,7 +28,7 @@
             <column name="account" type="varchar(30)">
                 <constraints nullable="true"/>
             </column>
-
+            <column name="status" type="text"/>
 
         </createTable>
     </changeSet>
