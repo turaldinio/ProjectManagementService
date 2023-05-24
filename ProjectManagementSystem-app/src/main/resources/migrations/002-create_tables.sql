@@ -16,28 +16,26 @@ create table employee
 );
 create table project
 (
-    id     bigserial primary key,
+    id          bigserial primary key,
 
-    name   text not null,
-    text   text,
-    status text not null
-
+    name        text not null,
+    description text,
+    status      text not null
 );
 
 create table team
 (
     id            bigserial primary key,
-
     employee_id   bigint not null,
     project_id    bigint not null,
     employee_role text   not null,
     foreign key (employee_id) references employee (id),
     foreign key (project_id) references project (id)
 );
+
 create table task
 (
     id               bigserial primary key,
-
     name             text      not null,
     description      text,
     executor_id      bigint,
@@ -47,9 +45,13 @@ create table task
     author_id        bigint,
     date_of_creation timestamp not null,
     update_time      timestamp,
+    project_id       bigint,
+    foreign key (project_id) references project (id),
     foreign key (executor_id) references employee (id),
     foreign key (author_id) references employee (id)
 
 );
+
+
 
 

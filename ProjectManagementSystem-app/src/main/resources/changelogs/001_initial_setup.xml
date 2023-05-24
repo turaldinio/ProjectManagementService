@@ -9,6 +9,35 @@
             create
             extension if not exists "digitsals"
         </sql>
+
+    </changeSet>
+
+    <changeSet id="initial-1" author="Guluev">
+        <createTable tableName="employee">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="second_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="post" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="account" type="varchar(30)">
+                <constraints nullable="true"/>
+            </column>
+
+
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

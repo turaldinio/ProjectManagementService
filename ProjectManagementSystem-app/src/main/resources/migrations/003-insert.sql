@@ -8,7 +8,7 @@ VALUES ('Дмитрий', 'Соколов', 'Иванович', 'junior develope
        ('Илья', 'Салихов', 'Дмитриевич', 'junior developer', 'sali_ilya', 'ilusha@mail.ru', 'ACTIVE'),
        ('Вова', 'Норвегов', 'Александрович', 'middle developer', 'vovanNorver-93@mail.ru', 'vovnorv@mail.ru', 'REMOTE'),
        ('Никита', 'Беликов', 'Юрьевич', 'junior developer', 'niKa_9271', 'belikovNikia@bk.ru', 'REMOTE');
-insert into project(name, text, status)
+insert into project(name, description, status)
 VALUES ('Smart house', 'Проект должен позволять управлять домом через мобильно приложение', 'DRAFT'),
        ('Fazan', 'Приложение, для поиска видео по снятым отрывкам', 'TESTING'),
        ('Amazing picture', 'приложение , позволяющее перевести любую фотографию в символьный вариант (.,/$|)',
