@@ -1,9 +1,10 @@
 package com.digital.pm.web.controller;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
-import com.digital.pm.dto.employee.EmployeeDto;
+
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody CreateEmployeeDto createEmployeeDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
         return employeeService.create(createEmployeeDto);
 
 
