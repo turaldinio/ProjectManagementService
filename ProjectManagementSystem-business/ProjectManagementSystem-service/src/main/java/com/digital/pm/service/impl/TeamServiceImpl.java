@@ -2,18 +2,15 @@ package com.digital.pm.service.impl;
 
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.team.CreateTeamDto;
-import com.digital.pm.model.employee.Employee;
 import com.digital.pm.model.team.Team;
 import com.digital.pm.repository.TeamRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.TeamService;
-import com.digital.pm.service.mapping.EmployeeMapper;
 import com.digital.pm.service.mapping.TeamMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 
@@ -22,12 +19,19 @@ import java.util.Objects;
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
-
     private final EmployeeService employeeService;
-    private final EmployeeMapper employeeMapper;
 
     @Override
     public ResponseEntity<?> addEmployee(CreateTeamDto createTeamDto) {
+        if (teamRepository.existsByEmployeeIdAndProjectId(createTeamDto.getEmployeeId(), createTeamDto.getProjectId())) {
+            return ResponseEntity.
+                    badRequest().
+                    body(String.format("the user %d id is already participating in the project %d id with the %s role",
+                            createTeamDto.getEmployeeId(),
+                            createTeamDto.getProjectId(),
+                            createTeamDto.getRole().name().toLowerCase()));
+        }
+        
         var team = teamMapper.create(createTeamDto);
 
         teamRepository.save(team);

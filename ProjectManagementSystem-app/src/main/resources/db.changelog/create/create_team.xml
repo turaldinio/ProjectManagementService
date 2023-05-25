@@ -25,6 +25,8 @@
                                  referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableName="team" baseColumnNames="project_id" constraintName="project_id" referencedTableName="project"
                                  referencedColumnNames="id"/>
+        <addUniqueConstraint tableName="team" columnNames="employee_id, project_id"/>
+
     </changeSet>
 
 </databaseChangeLog>

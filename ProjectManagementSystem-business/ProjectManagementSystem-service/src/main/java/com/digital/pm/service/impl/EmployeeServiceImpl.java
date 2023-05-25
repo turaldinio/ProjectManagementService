@@ -76,7 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(employeeMapper.map(employeeRepository.findAll()));
+        return ResponseEntity.
+                ok(employeeMapper.map(employeeRepository.findAll()));
     }
 
     public ResponseEntity<?> findAll(EmployeeFilter employeeFilter) {

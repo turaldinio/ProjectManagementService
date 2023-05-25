@@ -46,8 +46,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ResponseEntity<?> changeProjectStatus(Long id) {
-        var project = projectRepository.findById(id).orElseThrow();
+    public ResponseEntity<?> changeProjectStatus(Long projectId) {
+        var project = projectRepository.findById(projectId).orElseThrow();
 
         if (project.getStatus().equals(ProjectStatus.COMPLETED)) {
             return ResponseEntity.badRequest().body("you cannot change the status for this project");

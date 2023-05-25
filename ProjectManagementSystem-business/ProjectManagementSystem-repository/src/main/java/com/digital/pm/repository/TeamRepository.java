@@ -14,6 +14,9 @@ public interface TeamRepository extends JpaRepository<Team, Long>, JpaSpecificat
     Team deleteByEmployeeIdAndProjectId(Long employeeId, Long projectId);
 
     boolean existsByEmployeeIdAndProjectId(Long employeeId, Long projectId);
-    List<Team>findAllByProjectId(Long projectId);
+
+    List<Team> findAllByProjectId(Long projectId);
+
+
 
 }
