@@ -8,12 +8,11 @@ import com.digital.pm.repository.EmployeeDataRepository;
 import com.digital.pm.service.EmployeeDataService;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
+
 public class EmployeeDataServiceImpl implements EmployeeDataService {
 
     private final EmployeeMapper employeeMapper;

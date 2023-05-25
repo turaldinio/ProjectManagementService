@@ -1,35 +1,18 @@
 package com.digital.pm.app;
 
-import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.EmployeeFilter;
-import com.digital.pm.web.controller.EmployeeController;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.List;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+@EnableJpaRepositories(basePackages = "com.digital.pm.repository")
+@EntityScan(basePackages = "com.digital.pm.model")
+public class ProjectManagementSystemApplication  {
 
-
-public class ProjectManagementSystemApplication implements CommandLineRunner {
-    private final EmployeeController employeeController;
     public static void main(String[] args) {
         SpringApplication.run(ProjectManagementSystemApplication.class, args);
 
     }
-
-    @Override
-    public void run(String... args) {
-        System.out.println(employeeController.
-                findOne(EmployeeFilter.
-                        builder().
-                        status(EmployeeStatus.ACTIVE).
-                        build()));
-
-    }
-
 
 }

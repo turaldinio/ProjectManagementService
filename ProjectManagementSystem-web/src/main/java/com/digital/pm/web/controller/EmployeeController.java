@@ -5,40 +5,48 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/employee")
 public class EmployeeController {
+
     private final EmployeeService employeeService;
 
-
-    public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+    @PostMapping("/create")
+    public EmployeeDto create(@RequestBody CreateEmployeeDto createEmployeeDto) {
         return employeeService.create(createEmployeeDto);
 
 
     }
 
-    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        return employeeService.update(employeeId, createEmployeeDto);
+    @PutMapping("/update/{id}")
+    public EmployeeDto update(@PathVariable Long id, CreateEmployeeDto createEmployeeDto) {
+        return employeeService.update(id, createEmployeeDto);
 
 
     }
 
-    public EmployeeDto getById(Long id) {
+    @GetMapping("/{id}")
+    public EmployeeDto getById(@PathVariable Long id) {
         return employeeService.getById(id);
     }
 
+    @GetMapping("/")
     public List<EmployeeDto> getAll() {
         return employeeService.getAll();
     }
 
-    public void deleteById(long id) {
+    @DeleteMapping("/delete/{id}")
+    public void deleteById(@PathVariable Long id) {
         employeeService.deleteById(id);
     }
 
+    @GetMapping("/find")
     public EmployeeDto findOne(EmployeeFilter filterEmployee) {
         return employeeService.findOne(filterEmployee);
     }

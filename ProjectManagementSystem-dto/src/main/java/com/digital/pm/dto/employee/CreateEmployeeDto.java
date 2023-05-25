@@ -1,6 +1,6 @@
 package com.digital.pm.dto.employee;
 
-import com.digital.pm.common.enums.EmployeeStatus;
+
 import lombok.Builder;
 import lombok.Data;
 
