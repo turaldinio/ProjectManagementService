@@ -25,9 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public ResponseEntity<?> create(CreateEmployeeDto createEmployeeDto) {
 
+        if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
+            return new ResponseEntity<>(
+                    String.format("%s account is busy", createEmployeeDto.getAccount()),
+                    HttpStatus.BAD_REQUEST);
+        }
+
         var employee = employeeMapper.create(createEmployeeDto);
 
+
         employeeRepository.save(employee);
+
         return ResponseEntity.ok(employeeMapper.map(employee));
     }
 
@@ -55,8 +63,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         var currentEmployee = employeeRepository.
                 findById(id).orElse(null);
 
-        if(currentEmployee==null){
-            return  new ResponseEntity<>(String.format("the user with the %d id is not found ", id), HttpStatus.BAD_REQUEST);
+        if (currentEmployee == null) {
+            return new ResponseEntity<>(String.format("the user with the %d id is not found ", id), HttpStatus.BAD_REQUEST);
         }
         if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {
             return new ResponseEntity<>(String.format("the user with the %d id has already been deleted ", id), HttpStatus.BAD_REQUEST);
