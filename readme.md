@@ -40,9 +40,12 @@
 
 * Разработана схема бд:
 
-![team](https://github.com/turaldinio/ProjectManagementService/assets/65041919/b3471977-f2ef-4e90-bd4a-19ed4fa1d3d8)
 
-<h3>17.05.23 Добавлена Spring-boot реализация (Service/Controller...) (jdbc)</h3>
+![Диаграмма без названия (4)](https://github.com/turaldinio/ProjectManagementService/assets/65041919/4cf692dc-ac83-42e6-aeb0-2dfdc0072615)
+
+
+
+<h3>17.05.23 Добавлена Spring-boot реализация (Service/Controller...) </h3>
 * 
 
 
