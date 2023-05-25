@@ -4,19 +4,18 @@ import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.model.project.Project;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ProjectService {
-    ProjectDto create(CreateProjectDto createProjectDto);
+    ResponseEntity<?> create(CreateProjectDto createProjectDto);
 
-    ProjectDto update(Long projectId, CreateProjectDto createProjectDto);
+    ResponseEntity<?>  update(Long projectId, CreateProjectDto createProjectDto);
 
-    ProjectDto getById(Long id);
 
-    List<ProjectDto> getAll();
 
-     void changeProjectStatus(Project project);
+    ResponseEntity<?>  changeProjectStatus(Long id);
 
-    ProjectDto findOne(ProjectFilter projectFilter);
+    ResponseEntity<?>  findAll(ProjectFilter projectFilter);
 }

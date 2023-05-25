@@ -8,8 +8,9 @@
     <changeSet id="insert_first_project" author="Guluev">
         <insert tableName="project">
             <column name="name" value="приложение знакомств"/>
+            <column name="project_code" value="kNvo3nid"/>
             <column name="description" value="приложение знакомств по общей музыке"/>
-            <column name="status" value="NEW"/>
+            <column name="status" value="DRAFT"/>
         </insert>
     </changeSet>
 

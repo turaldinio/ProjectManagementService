@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectFilter {
     private Long id;
+    private String projectCode;
     private String name;
     private String description;
     private ProjectStatus status;

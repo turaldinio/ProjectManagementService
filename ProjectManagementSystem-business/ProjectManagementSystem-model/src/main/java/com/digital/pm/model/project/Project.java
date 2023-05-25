@@ -16,6 +16,8 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false,unique = true,name = "project_code")
+    private String projectCode;
     @Column(nullable = false)
     private String name;
     private String description;

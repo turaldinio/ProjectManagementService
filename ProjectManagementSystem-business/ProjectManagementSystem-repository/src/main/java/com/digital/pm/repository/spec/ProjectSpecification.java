@@ -19,6 +19,10 @@ public class ProjectSpecification {
             if (!ObjectUtils.isEmpty(projectFilter.getId())) {
                 list.add(criteriaBuilder.equal(root.get("id"), projectFilter.getId()));
             }
+            if (!ObjectUtils.isEmpty(projectFilter.getProjectCode())) {
+                list.add(criteriaBuilder.equal(root.get("project_code"), projectFilter.getProjectCode()));
+            }
+
             if (!ObjectUtils.isEmpty(projectFilter.getName())) {
                 list.add(criteriaBuilder.equal(root.get("name"), projectFilter.getName()));
             }
