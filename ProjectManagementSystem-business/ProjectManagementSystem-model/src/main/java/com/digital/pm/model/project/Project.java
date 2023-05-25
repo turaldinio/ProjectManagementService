@@ -17,7 +17,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false,unique = true,name = "project_code")
-    private String projectCode;
+    private String projectCode;//уникальный код проекта
     @Column(nullable = false)
     private String name;
     private String description;
