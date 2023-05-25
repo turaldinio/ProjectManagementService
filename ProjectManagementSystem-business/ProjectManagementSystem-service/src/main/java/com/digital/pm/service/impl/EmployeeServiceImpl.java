@@ -9,6 +9,7 @@ import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +31,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        var currentEmployee = employeeRepository.findById(employeeId).orElseThrow();
+    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto)  {
+        if (employeeRepository.existsById(employeeId)) {
+            var newEmployee = employeeMapper.create(createEmployeeDto);
+            newEmployee.setId(employeeId);
 
+            employeeRepository.save(newEmployee);
 
-        currentEmployee = employeeMapper.create(createEmployeeDto);
-        employeeRepository.save(currentEmployee);
-
-        return employeeMapper.map(currentEmployee);
+            return employeeMapper.map(newEmployee);
+        } else {
+            return null;
+        }
     }
 
     @Override

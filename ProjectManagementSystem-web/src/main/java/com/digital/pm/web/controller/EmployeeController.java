@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{id}")
-    public EmployeeDto update(@PathVariable Long id, CreateEmployeeDto createEmployeeDto) {
+    public EmployeeDto update(@PathVariable Long id, @RequestBody CreateEmployeeDto createEmployeeDto) {
         return employeeService.update(id, createEmployeeDto);
 
 
@@ -47,7 +47,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/find")
-    public EmployeeDto findOne(EmployeeFilter filterEmployee) {
-        return employeeService.findOne(filterEmployee);
+    public EmployeeDto findOne(EmployeeFilter employeeFilter) {
+        return employeeService.findOne(employeeFilter);
     }
 }

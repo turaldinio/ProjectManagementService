@@ -12,12 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class EmployeeFilter {
-    private Long id;
     private String firstName;
     private String lastName;
     private String patronymic;
-    private String post;
     private String account;
     private String email;
-    private EmployeeStatus status;
 }

@@ -99,10 +99,6 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
         String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;
-        if (filterEmployee.getId() != null) {
-            request = request + " and id=?";
-            map.put(paramCount++, filterEmployee.getId());
-        }
 
         if (filterEmployee.getLastName() != null) {
             request = request + " and last_name=?";
@@ -128,16 +124,6 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
         if (filterEmployee.getEmail() != null) {
             request = request + " and email=?";
             map.put(paramCount++, filterEmployee.getEmail());
-
-        }
-        if (filterEmployee.getStatus() != null) {
-            request = request + " and status=?";
-            map.put(paramCount++, filterEmployee.getStatus());
-
-        }
-        if (filterEmployee.getPost() != null) {
-            request = request + " and post=?";
-            map.put(paramCount, filterEmployee.getPost());
 
         }
 

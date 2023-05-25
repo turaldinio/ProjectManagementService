@@ -1,5 +1,6 @@
 package com.digital.pm.repository.spec;
 
+import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.employee.Employee;
 import jakarta.persistence.criteria.Predicate;
@@ -14,14 +15,8 @@ public class EmployeeSpecification {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!ObjectUtils.isEmpty(employee.getId())) {
-                predicates.add(criteriaBuilder.equal(root.get("id"), employee.getId()));
-            }
-            if (!ObjectUtils.isEmpty(employee.getPost())) {
-                predicates.add(criteriaBuilder.equal(root.get("post"), employee.getPost()));
-            }
-            if (!ObjectUtils.isEmpty(employee.getStatus())) {
-                predicates.add(criteriaBuilder.equal(root.get("status"), employee.getStatus()));
+            if (!ObjectUtils.isEmpty(root.get("status"))) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), EmployeeStatus.ACTIVE));
             }
             if (!ObjectUtils.isEmpty(employee.getEmail())) {
                 predicates.add(criteriaBuilder.equal(root.get("email"), employee.getEmail()));

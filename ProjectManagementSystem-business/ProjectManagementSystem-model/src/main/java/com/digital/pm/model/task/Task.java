@@ -26,7 +26,8 @@ public class Task {
     @OneToOne
 
     private Employee executor;
-    @Column(nullable = false)
+    @Column(nullable = false,
+            name = "labor_cost")
     private int laborCosts;
 
     @CreationTimestamp
@@ -36,8 +37,10 @@ public class Task {
 
     private String author;
     @CreationTimestamp
+    @Column(name = "creation_date")
     private Date dateOfCreation;
     @CreationTimestamp
+    @Column(name = "updated")
     private Date updateTime;
 
 }

@@ -138,18 +138,11 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
                     if (isNotNullObjects(x.getEmail(), filterEmployee.getEmail()) && x.getEmail().equals(filterEmployee.getEmail())) {
                         return true;
                     }
-                    if (isNotNullObjects(x.getPost(), filterEmployee.getPost()) && x.getPost().equals(filterEmployee.getPost())) {
-                        return true;
-                    }
+
                     if (isNotNullObjects(x.getAccount(), filterEmployee.getAccount()) && x.getAccount().equals(filterEmployee.getAccount())) {
                         return true;
                     }
-                    if (isNotNullObjects(x.getStatus(), filterEmployee.getStatus()) && x.getStatus() == (filterEmployee.getStatus())) {
-                        return true;
-                    }
-                    if (isNotNullObjects(x.getId(), filterEmployee.getId()) && x.getId().longValue() == filterEmployee.getId().longValue()) {
-                        return true;
-                    }
+
                     return false;
                 }).collect(Collectors.toList());
 

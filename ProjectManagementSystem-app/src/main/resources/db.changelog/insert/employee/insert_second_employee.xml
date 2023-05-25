@@ -8,7 +8,7 @@
     <changeSet id="insert_second_employee" author="Guluev">
         <insert tableName="employee">
             <column name="first_name" value="Кирилл"/>
-            <column name="second_name" value="Шнуров"/>
+            <column name="last_name" value="Шнуров"/>
             <column name="patronymic" value="Николаевич"/>
             <column name="post" value="top manager"/>
             <column name="email" value="kirilka-98@mail.ru"/>
