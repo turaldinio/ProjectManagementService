@@ -46,7 +46,6 @@
 
 
 <h3>17.05.23 Добавлена Spring-boot реализация (Service/Controller...) </h3>
-* 
 
 
 
