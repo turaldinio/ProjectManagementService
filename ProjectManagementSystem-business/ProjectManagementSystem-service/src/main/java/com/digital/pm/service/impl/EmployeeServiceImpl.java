@@ -88,6 +88,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return ResponseEntity.ok(employeeMapper.map(result));
     }
 
-
-
+    @Override
+    public boolean existsById(Long executorId) {
+        return employeeRepository.existsById(executorId);
+    }
 }

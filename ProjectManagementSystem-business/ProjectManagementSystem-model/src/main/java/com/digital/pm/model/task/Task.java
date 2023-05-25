@@ -2,6 +2,7 @@ package com.digital.pm.model.task;
 
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,19 +24,21 @@ public class Task {
     @Column(nullable = false)
     private String name;
     private String description;
-    @OneToOne
-
-    private Employee executor;
+    @Column(name = "executor_id")
+    private Long executorId;
+    @Column(name = "project_id")
+    private Long projectId;
     @Column(nullable = false,
             name = "labor_cost")
-    private int laborCosts;          //трудозатраты в часах
+    private int laborCost;          //трудозатраты в часах
 
     @CreationTimestamp
     private Date deadline;      //не может быть меньше чем now +трудозатраты
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    private String author;
+    @Column(name = "author_id")
+    private Long authorId;
     @CreationTimestamp
     @Column(name = "creation_date")
     private Date dateOfCreation;

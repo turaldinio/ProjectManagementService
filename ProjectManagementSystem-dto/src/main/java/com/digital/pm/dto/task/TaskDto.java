@@ -15,19 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDto {
-    private long id;
+    private Long id;
     private String name;
     private String description;
-
-    private EmployeeDto executor;
-
+    private Long executorId;
     private int laborCosts;
-
+    private Long authorId;
+    private Long projectId;
     private Date deadline;
-    private TaskStatus status;
-
-    private String author;
-
     private Date dateOfCreation;
     private Date updateTime;
+    private TaskStatus status;
+
 }

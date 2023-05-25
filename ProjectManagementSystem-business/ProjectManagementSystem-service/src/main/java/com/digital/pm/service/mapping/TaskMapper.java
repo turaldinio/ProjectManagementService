@@ -5,23 +5,23 @@ import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.model.task.Task;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskMapper {
+    // TODO: 25.05.2023 дефолтное значение в authorId
     public Task create(CreateTaskDto createTaskDto) {
         return Task.builder().
                 name(createTaskDto.getName()).
                 description(createTaskDto.getDescription()).
-                executor(null).
-                laborCosts(createTaskDto.getLaborCosts()).
+                executorId(createTaskDto.getExecutorId()).
+                laborCost(createTaskDto.getLaborCost()).
                 deadline(createTaskDto.getDeadline()).
                 status(TaskStatus.NEW).
                 dateOfCreation(new Date()).
-                updateTime(createTaskDto.getUpdateTime()).
-                author(createTaskDto.getAuthor()).
+                authorId(1L).
+                projectId(createTaskDto.getProjectId()).
                 build();
     }
 
@@ -31,31 +31,35 @@ public class TaskMapper {
                 id(task.getId()).
                 name(task.getName()).
                 description(task.getDescription()).
-                executor(null).
-                laborCosts(task.getLaborCosts()).
+                executorId(task.getExecutorId()).
+                authorId(task.getAuthorId()).
+                projectId(task.getProjectId()).
+                laborCosts(task.getLaborCost()).
                 deadline(task.getDeadline()).
                 status(task.getStatus()).
                 dateOfCreation(task.getDateOfCreation()).
                 updateTime(task.getUpdateTime()).
-                author(task.getAuthor()).
                 build();
 
     }
 
     public List<TaskDto> map(List<Task> list) {
-        return list.stream().map(x ->
-                        TaskDto.builder().
-                                id(x.getId()).
-                                name(x.getName()).
-                                description(x.getDescription()).
-                                executor(null).
-                                laborCosts(x.getLaborCosts()).
-                                deadline(x.getDeadline()).
-                                status(x.getStatus()).
-                                dateOfCreation(x.getDateOfCreation()).
-                                updateTime(x.getUpdateTime()).
-                                author(x.getAuthor()).
-                                build()).
+        return list.
+                stream().
+                map(x -> TaskDto.
+                        builder().
+                        id(x.getId()).
+                        name(x.getName()).
+                        description(x.getDescription()).
+                        executorId(x.getExecutorId()).
+                        authorId(x.getAuthorId()).
+                        projectId(x.getProjectId()).
+                        laborCosts(x.getLaborCost()).
+                        deadline(x.getDeadline()).
+                        status(x.getStatus()).
+                        dateOfCreation(x.getDateOfCreation()).
+                        updateTime(x.getUpdateTime()).
+                        build()).
                 collect(Collectors.toList());
 
     }

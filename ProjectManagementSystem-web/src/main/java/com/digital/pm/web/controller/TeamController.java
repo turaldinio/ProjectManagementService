@@ -23,7 +23,7 @@ public class TeamController {
     }
 
     @GetMapping("/all/{id}")
-    public ResponseEntity<?> getAll(@PathVariable("id") Long projectId) {
-        return teamService.getAll(projectId);
+    public ResponseEntity<?> getAllByProjectId(@PathVariable("id") Long projectId) {
+        return teamService.getAllByProjectId(projectId);
     }
 }

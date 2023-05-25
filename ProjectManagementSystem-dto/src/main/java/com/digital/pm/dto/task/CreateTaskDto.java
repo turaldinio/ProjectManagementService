@@ -17,11 +17,9 @@ public class CreateTaskDto {
     @NotNull
     private String name;
     private String description;
-    private EmployeeDto executor;
-    private int laborCosts; //трудозатраты в часах
+    private Long executorId;
+    private Long projectId;
+    private int laborCost; //трудозатраты в часах
     @NotNull
     private Date deadline;
-
-    private String author;
-    private Date updateTime;
 }

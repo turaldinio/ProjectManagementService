@@ -31,7 +31,7 @@ public class TeamServiceImpl implements TeamService {
                             createTeamDto.getProjectId(),
                             createTeamDto.getRole().name().toLowerCase()));
         }
-        
+
         var team = teamMapper.create(createTeamDto);
 
         teamRepository.save(team);
@@ -52,7 +52,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public ResponseEntity<?> getAll(Long projectId) {
+    public ResponseEntity<?> getAllByProjectId(Long projectId) {
         var result = teamRepository.findAllByProjectId(projectId).
                 stream().
                 map(Team::getEmployeeId).
@@ -63,4 +63,8 @@ public class TeamServiceImpl implements TeamService {
         return ResponseEntity.ok(result);
 
     }
+    public boolean existsByEmployeeIdAndProjectId(Long employeeId, Long projectId){
+        return teamRepository.existsByEmployeeIdAndProjectId(employeeId, projectId);
+    }
+
 }

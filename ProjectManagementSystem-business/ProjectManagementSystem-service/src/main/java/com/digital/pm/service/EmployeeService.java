@@ -20,4 +20,6 @@ public interface EmployeeService {
     ResponseEntity<?> deleteById(Long id);
 
     ResponseEntity<?> findAll(EmployeeFilter filterEmployee);
+
+    boolean existsById(Long executorId);
 }
