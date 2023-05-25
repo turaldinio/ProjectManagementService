@@ -4,13 +4,14 @@ import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.common.filters.TaskFilter;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
+import org.springframework.http.ResponseEntity;
 
 public interface TaskService {
-    TaskDto create(CreateTaskDto createTaskDto);
+    ResponseEntity<?> create(CreateTaskDto createTaskDto);
 
-    TaskDto update(Long taskId, CreateTaskDto createTaskDto);
+    ResponseEntity<?> update(Long taskId, CreateTaskDto createTaskDto);
 
-    TaskDto findOne(TaskFilter taskFilter);
+    ResponseEntity<?> findAll(TaskFilter taskFilter);
 
-    TaskDto changeStatus(Long taskId);
+    ResponseEntity<?> changeStatus(Long taskId);
 }

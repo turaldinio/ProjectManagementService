@@ -1,13 +1,15 @@
 package com.digital.pm.service;
 
 import com.digital.pm.dto.employee.CreateEmployeeDto;
+import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface TeamService {
-    TeamDto addEmployee(CreateEmployeeDto createEmployeeDto);
-    void delete(Long employeeId);
+    ResponseEntity<?> addEmployee(CreateTeamDto createTeamDto);
+    ResponseEntity<?> delete(Long employeeId,Long projectId);
 
-    List<TeamDto>getAll();
+    ResponseEntity<?>getAll(Long projectId);
 }

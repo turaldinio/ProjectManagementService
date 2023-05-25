@@ -4,17 +4,15 @@ package com.digital.pm.service.impl;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
+import com.digital.pm.model.employee.Employee;
 import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.mapping.EmployeeMapper;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -88,5 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return ResponseEntity.ok(employeeMapper.map(result));
     }
+
+
 
 }

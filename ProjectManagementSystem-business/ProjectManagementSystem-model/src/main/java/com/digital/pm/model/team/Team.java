@@ -20,13 +20,14 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
-    private List<Employee> employees;
+    @Column(name = "employee_id")
+    private Long employeeId;
+    @Column(name = "project_id")
 
-    @ManyToMany
-    private List<Project> project;
+    private Long projectId;
     @Enumerated(EnumType.STRING)
-    private Role roles;
+    @Column(name = "employee_role")
+    private Role role;
 
 
 }

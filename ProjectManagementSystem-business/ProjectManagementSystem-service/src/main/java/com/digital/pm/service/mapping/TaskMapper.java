@@ -5,12 +5,13 @@ import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.model.task.Task;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskMapper {
-    public  Task create(CreateTaskDto createTaskDto) {
+    public Task create(CreateTaskDto createTaskDto) {
         return Task.builder().
                 name(createTaskDto.getName()).
                 description(createTaskDto.getDescription()).
@@ -24,7 +25,7 @@ public class TaskMapper {
                 build();
     }
 
-    public  TaskDto map(Task task) {
+    public TaskDto map(Task task) {
         return TaskDto.
                 builder().
                 id(task.getId()).
@@ -41,7 +42,7 @@ public class TaskMapper {
 
     }
 
-    public  List<TaskDto> map(List<Task> list) {
+    public List<TaskDto> map(List<Task> list) {
         return list.stream().map(x ->
                         TaskDto.builder().
                                 id(x.getId()).

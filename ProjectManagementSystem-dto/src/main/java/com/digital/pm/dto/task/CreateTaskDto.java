@@ -1,6 +1,7 @@
 package com.digital.pm.dto.task;
 
 import com.digital.pm.dto.employee.EmployeeDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateTaskDto {
+    @NotNull
     private String name;
     private String description;
     private EmployeeDto executor;
-    private int laborCosts;
-
+    private int laborCosts; //трудозатраты в часах
+    @NotNull
     private Date deadline;
+
     private String author;
     private Date updateTime;
 }

@@ -7,9 +7,13 @@ import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.repository.spec.TaskSpecification;
 import com.digital.pm.repository.TaskRepository;
 import com.digital.pm.service.TaskService;
+import com.digital.pm.service.TeamService;
 import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -17,34 +21,46 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
+    private final TeamService teamService;
+
     @Override
-    public TaskDto create(CreateTaskDto createTaskDto) {
+    public ResponseEntity<?> create(CreateTaskDto createTaskDto) {
+        if (createTaskDto.getDeadline().before(new Date(System.currentTimeMillis() + createTaskDto.getLaborCosts()))) {
+            return ResponseEntity.
+                    badRequest().
+                    body("the end date cannot come earlier than " + new Date(System.currentTimeMillis() + createTaskDto.getLaborCosts()));
+        }
+
+
         var task = taskMapper.create(createTaskDto);
         taskRepository.save(task);
 
-        return taskMapper.map(task);
+        return ResponseEntity.ok(taskMapper.map(task));
     }
 
     @Override
-    public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
-        var currentTask = taskRepository.findById(taskId).orElseThrow();
-        currentTask = taskMapper.create(createTaskDto);
+    public ResponseEntity<?> update(Long taskId, CreateTaskDto createTaskDto) {
+        if (!taskRepository.existsById(taskId)) {
+            return ResponseEntity.badRequest().body(String.format("the task with %d id is not found", taskId));
+        }
 
-        taskRepository.save(currentTask);
+        var newTask = taskMapper.create(createTaskDto);
+        newTask.setId(taskId);
 
-        return taskMapper.map(currentTask);
+        taskRepository.save(newTask);
+
+        return ResponseEntity.ok(taskMapper.map(newTask));
     }
 
     @Override
-    public TaskDto findOne(TaskFilter taskFilter) {
+    public ResponseEntity<?> findAll(TaskFilter taskFilter) {
         var result = taskRepository.
-                findOne(TaskSpecification.getSpec(taskFilter)).
-                orElseThrow();
-        return taskMapper.map(result);
+                findAll(TaskSpecification.getSpec(taskFilter));
+        return ResponseEntity.ok(taskMapper.map(result));
     }
 
     @Override
-    public TaskDto changeStatus(Long taskId) {
+    public ResponseEntity<?> changeStatus(Long taskId) {
         var currentTask = taskRepository.findById(taskId).orElseThrow();
 
         if (currentTask.getStatus().equals(TaskStatus.NEW)) {
@@ -56,7 +72,7 @@ public class TaskServiceImpl implements TaskService {
         if (currentTask.getStatus().equals(TaskStatus.COMPLETED)) {
             currentTask.setStatus(TaskStatus.CLOSED);
         }
-        return taskMapper.map(currentTask);
+        return ResponseEntity.ok(taskMapper.map(currentTask));
 
     }
 }

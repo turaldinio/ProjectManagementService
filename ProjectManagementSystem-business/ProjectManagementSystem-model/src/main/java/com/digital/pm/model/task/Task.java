@@ -28,10 +28,10 @@ public class Task {
     private Employee executor;
     @Column(nullable = false,
             name = "labor_cost")
-    private int laborCosts;
+    private int laborCosts;          //трудозатраты в часах
 
     @CreationTimestamp
-    private Date deadline;
+    private Date deadline;      //не может быть меньше чем now +трудозатраты
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
