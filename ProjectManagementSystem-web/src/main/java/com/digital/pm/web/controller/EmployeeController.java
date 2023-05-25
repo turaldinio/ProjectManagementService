@@ -46,8 +46,8 @@ public class EmployeeController {
         employeeService.deleteById(id);
     }
 
-    @GetMapping("/find")
-    public EmployeeDto findOne(EmployeeFilter employeeFilter) {
-        return employeeService.findOne(employeeFilter);
+    @PostMapping("/find")
+    public List<EmployeeDto> findAll(@RequestBody EmployeeFilter employeeFilter) {
+        return employeeService.findAll(employeeFilter);
     }
 }

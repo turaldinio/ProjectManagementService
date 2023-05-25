@@ -18,5 +18,5 @@ public interface EmployeeService {
 
     void deleteById(Long id);
 
-    EmployeeDto findOne(EmployeeFilter filterEmployee);
+    List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
 }

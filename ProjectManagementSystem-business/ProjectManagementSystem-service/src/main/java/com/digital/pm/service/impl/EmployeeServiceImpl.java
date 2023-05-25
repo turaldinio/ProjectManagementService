@@ -31,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto)  {
+    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
         if (employeeRepository.existsById(employeeId)) {
             var newEmployee = employeeMapper.create(createEmployeeDto);
             newEmployee.setId(employeeId);
@@ -62,11 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.map(employeeRepository.findAll());
     }
 
-    public EmployeeDto findOne(EmployeeFilter employeeFilter) {
+    public List<EmployeeDto> findAll(EmployeeFilter employeeFilter) {
 
         var result = employeeRepository.
-                findOne(EmployeeSpecification.getSpec(employeeFilter)).
-                orElseThrow();
+                findAll(EmployeeSpecification.getSpec(employeeFilter));
 
         return employeeMapper.map(result);
     }

@@ -15,9 +15,8 @@ public class EmployeeSpecification {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (!ObjectUtils.isEmpty(root.get("status"))) {
                 predicates.add(criteriaBuilder.equal(root.get("status"), EmployeeStatus.ACTIVE));
-            }
+
             if (!ObjectUtils.isEmpty(employee.getEmail())) {
                 predicates.add(criteriaBuilder.equal(root.get("email"), employee.getEmail()));
             }
@@ -34,9 +33,7 @@ public class EmployeeSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("account"), employee.getAccount()));
 
             }
-            if (predicates.isEmpty()) {
-                return query.where().getRestriction();
-            }
+
             return query.where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).getRestriction();
 
         });
