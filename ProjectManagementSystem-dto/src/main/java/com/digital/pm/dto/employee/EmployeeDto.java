@@ -11,7 +11,6 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private String patronymic;
-
     private String post;
     private String account;
     private String email;

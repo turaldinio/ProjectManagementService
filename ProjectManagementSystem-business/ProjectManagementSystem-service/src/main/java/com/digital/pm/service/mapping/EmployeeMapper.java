@@ -22,6 +22,7 @@ public class EmployeeMapper {
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
+                password(createEmployeeDto.getPassword()).
                 build();
 
 

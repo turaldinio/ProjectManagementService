@@ -19,11 +19,12 @@ public class Employee {
     @Column(nullable = false,
             name = "last_name")
     private String lastName;
-    private String patronymic;
-
-    private String post;
     @Column(unique = true)
     private String account;
+    private String patronymic;
+    private String password;
+    private String post;
+
     private String email;
     @Enumerated(EnumType.STRING)
     private EmployeeStatus status;
