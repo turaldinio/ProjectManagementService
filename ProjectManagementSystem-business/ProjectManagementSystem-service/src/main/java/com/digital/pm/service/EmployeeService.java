@@ -3,6 +3,7 @@ package com.digital.pm.service;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.model.employee.Employee;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -22,4 +23,6 @@ public interface EmployeeService {
     ResponseEntity<?> findAll(EmployeeFilter filterEmployee);
 
     boolean existsById(Long executorId);
+
+    Employee findByEmployeeAccount(String account);
 }

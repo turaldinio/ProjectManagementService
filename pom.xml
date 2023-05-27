@@ -29,6 +29,7 @@
         <spring-boot-starter-web>3.0.5</spring-boot-starter-web>
         <spring-boot-starter-validation>3.0.5</spring-boot-starter-validation>
         <springdoc>2.0.0</springdoc>
+        <spring-security>3.0.5</spring-security>
 
     </properties>
 
@@ -83,6 +84,11 @@
                 <version>${liqubase}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-security}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>

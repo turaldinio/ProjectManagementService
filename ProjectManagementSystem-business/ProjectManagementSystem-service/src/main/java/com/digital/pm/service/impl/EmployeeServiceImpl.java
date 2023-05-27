@@ -12,6 +12,7 @@ import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -91,5 +92,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean existsById(Long executorId) {
         return employeeRepository.existsById(executorId);
+    }
+
+    @Override
+    public Employee findByEmployeeAccount(String account) {
+        return employeeRepository.
+                findByAccount(account).
+                orElseThrow(() -> new UsernameNotFoundException(String.
+                        format("User with %s account not found", account)));
     }
 }
