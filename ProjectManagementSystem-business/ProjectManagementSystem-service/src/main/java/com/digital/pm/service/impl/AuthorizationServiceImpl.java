@@ -2,9 +2,11 @@ package com.digital.pm.service.impl;
 
 import com.digital.pm.common.auth.AuthorizationRequest;
 import com.digital.pm.service.AuthorizationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailService customUserDetailService;
