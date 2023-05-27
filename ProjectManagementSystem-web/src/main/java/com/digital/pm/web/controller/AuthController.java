@@ -1,7 +1,21 @@
 package com.digital.pm.web.controller;
 
-import org.springframework.stereotype.Controller;
+import com.digital.pm.common.auth.AuthorizationRequest;
+import com.digital.pm.service.AuthorizationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
+    private final AuthorizationService authorizationService;
+
+    @PostMapping("/login")
+    public String login(AuthorizationRequest authorizationRequest) {
+        return authorizationService.authorize(authorizationRequest);
+    }
+
 }
