@@ -10,19 +10,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 public interface EmployeeService {
-    ResponseEntity<?> create(CreateEmployeeDto createEmployeeDto);
+    EmployeeDto create(CreateEmployeeDto createEmployeeDto);
 
-    ResponseEntity<?> update(Long employeeId, CreateEmployeeDto createEmployeeDto);
+    EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto);
 
-    ResponseEntity<?> getById(Long id);
+    EmployeeDto getById(Long id);
 
-    ResponseEntity<?> getAll();
+    List<EmployeeDto> findAll();
 
-    ResponseEntity<?> deleteById(Long id);
+    EmployeeDto deleteById(Long id);
 
-    ResponseEntity<?> findAll(EmployeeFilter filterEmployee);
+   List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
 
-    boolean existsById(Long executorId);
-
-    Employee findByEmployeeAccount(String account);
 }

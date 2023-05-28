@@ -4,10 +4,11 @@ import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.model.project.Project;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Component
 public class ProjectMapper {
     public  Project create(CreateProjectDto createProjectDto) {
         return Project.

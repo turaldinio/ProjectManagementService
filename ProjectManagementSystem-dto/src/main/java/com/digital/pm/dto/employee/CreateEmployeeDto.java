@@ -13,9 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateEmployeeDto {
-    @NotNull(message = "employee firstName is not be null")
     private String firstName;
-    @NotNull(message = "employee lastName is not be null")
     private String lastName;
     private String patronymic;
     private String post;

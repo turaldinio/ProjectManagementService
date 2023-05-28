@@ -1,6 +1,5 @@
 package com.digital.pm.service.impl;
 
-import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.model.team.Team;
 import com.digital.pm.repository.TeamRepository;
@@ -56,7 +55,7 @@ public class TeamServiceImpl implements TeamService {
         var result = teamRepository.findAllByProjectId(projectId).
                 stream().
                 map(Team::getEmployeeId).
-                map(x -> (EmployeeDto) employeeService.getById(x).getBody()).
+                map(employeeService::getById).
                 filter(Objects::nonNull).
                 toList();
 

@@ -4,10 +4,12 @@ import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
 import com.digital.pm.model.employee.Employee;
 import com.digital.pm.model.team.Team;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class TeamMapper {
     public Team create(CreateTeamDto createTeamDto) {
         return Team.builder().

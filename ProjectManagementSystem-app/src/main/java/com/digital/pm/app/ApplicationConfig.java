@@ -13,28 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("com.digital")
 public class ApplicationConfig {
-
-
-    @Bean
-    public EmployeeMapper employeeMapper() {
-        return new EmployeeMapper();
-    }
-
-    @Bean
-    public ProjectMapper projectMapper() {
-        return new ProjectMapper();
-    }
-
-//    @Bean
-//    public TaskMapper taskMapper() {
-//        return new TaskMapper();
-//    }
-
-    @Bean
-    public TeamMapper teamMapper() {
-        return new TeamMapper();
-    }
-
     @Bean
     public Gson gson() {
         return new Gson();

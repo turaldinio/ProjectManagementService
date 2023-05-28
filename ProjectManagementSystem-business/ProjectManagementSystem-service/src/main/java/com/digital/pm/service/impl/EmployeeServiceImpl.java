@@ -4,16 +4,18 @@ package com.digital.pm.service.impl;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.employee.Employee;
 import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
+import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -22,80 +24,74 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
-    public ResponseEntity<?> create(CreateEmployeeDto createEmployeeDto) {
 
-        if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
-            return new ResponseEntity<>(
-                    String.format("%s account is busy", createEmployeeDto.getAccount()),
-                    HttpStatus.BAD_REQUEST);
+    public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+        if (createEmployeeDto.getFirstName() == null ||
+                createEmployeeDto.getLastName() == null ||
+                createEmployeeDto.getLastName().isBlank() ||
+                createEmployeeDto.getFirstName().isBlank()) {
+            throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
+        getEmployeeByAccount(createEmployeeDto.getAccount());
 
         var employee = employeeMapper.create(createEmployeeDto);
-
-
         employeeRepository.save(employee);
 
-        return ResponseEntity.ok(employeeMapper.map(employee));
+        return employeeMapper.map(employee);
+    }
+
+
+    @Override
+    public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
+        getEmployeeById(employeeId);
+        getEmployeeByAccount(createEmployeeDto.getAccount());
+
+        var newEmployee = employeeMapper.create(createEmployeeDto);
+        newEmployee.setId(employeeId);
+
+        employeeRepository.save(newEmployee);
+
+        return employeeMapper.map(newEmployee);
     }
 
     @Override
-    public ResponseEntity<?> update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        if (employeeRepository.existsById(employeeId)) {
-            var newEmployee = employeeMapper.create(createEmployeeDto);
-            newEmployee.setId(employeeId);
-
-            employeeRepository.save(newEmployee);
-
-            return ResponseEntity.ok(employeeMapper.map(newEmployee));
-        } else {
-            return new ResponseEntity<>(String.format("the user with %d id is not found", employeeId), HttpStatus.BAD_REQUEST);
-        }
+    public EmployeeDto getById(Long id) {
+        return employeeMapper.map(getEmployeeById(id));
     }
 
     @Override
-    public ResponseEntity<?> getById(Long id) {
-        var result = employeeRepository.findById(id).orElseThrow();
-        return ResponseEntity.ok(employeeMapper.map(result));
-    }
-
-    public ResponseEntity<?> deleteById(Long id) {
-        var currentEmployee = employeeRepository.
-                findById(id).orElse(null);
-
-        if (currentEmployee == null) {
-            return new ResponseEntity<>(String.format("the user with the %d id is not found ", id), HttpStatus.BAD_REQUEST);
-        }
+    public EmployeeDto deleteById(Long id) {
+        var currentEmployee = getEmployeeById(id);
         if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {
-            return new ResponseEntity<>(String.format("the user with the %d id has already been deleted ", id), HttpStatus.BAD_REQUEST);
+            throw new BadRequest(String.format("the user with %d id has already been deleted",id));
         }
-        currentEmployee.setStatus(EmployeeStatus.REMOTE);
 
+        currentEmployee.setStatus(EmployeeStatus.REMOTE);
         var result = employeeRepository.save(currentEmployee);
 
-        return ResponseEntity.ok(employeeMapper.map(result));
+        return employeeMapper.map(result);
     }
 
 
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.
-                ok(employeeMapper.map(employeeRepository.findAll()));
+    public List<EmployeeDto> findAll() {
+        return employeeMapper.map(employeeRepository.findAll());
     }
 
-    public ResponseEntity<?> findAll(EmployeeFilter employeeFilter) {
-
+    public List<EmployeeDto> findAll(EmployeeFilter employeeFilter) {
         var result = employeeRepository.
                 findAll(EmployeeSpecification.getSpec(employeeFilter));
 
-        return ResponseEntity.ok(employeeMapper.map(result));
+        return employeeMapper.map(result);
     }
 
-    @Override
-    public boolean existsById(Long executorId) {
-        return employeeRepository.existsById(executorId);
+    private Employee getEmployeeById(Long executorId) {
+        return employeeRepository.
+                findById(executorId).
+                orElseThrow(() -> new BadRequest(String.format("the Employee with %d id is is not found", executorId)));
+
     }
 
-    @Override
-    public Employee findByEmployeeAccount(String account) {
+    private Employee getEmployeeByAccount(String account) {
         return employeeRepository.
                 findByAccount(account).
                 orElseThrow(() -> new UsernameNotFoundException(String.

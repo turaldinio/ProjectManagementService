@@ -2,7 +2,6 @@ package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.common.filters.TaskFilter;
-import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.repository.spec.TaskSpecification;
 import com.digital.pm.repository.TaskRepository;
@@ -35,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
                     badRequest().
                     body("the end date cannot come earlier than " + new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()));
         }
-        var employeeDto = (EmployeeDto) employeeService.getById(createTaskDto.getExecutorId()).getBody();
+        var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
 
         //проверка является ли сотрудник участником проекта
         if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
@@ -46,8 +45,8 @@ public class TaskServiceImpl implements TaskService {
 //проверка является ли тек автор участником проекта
         if (!teamService.existsByEmployeeIdAndProjectId(
                 employeeService.findByEmployeeAccount(SecurityContextHolder.getContext().
-                        getAuthentication().
-                        getName()).
+                                getAuthentication().
+                                getName()).
                         getId(),
                 createTaskDto.getProjectId())) {
             return ResponseEntity.
