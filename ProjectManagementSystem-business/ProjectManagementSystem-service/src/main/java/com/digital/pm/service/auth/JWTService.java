@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -25,7 +26,7 @@ import java.util.function.Function;
 public class JWTService {
     private final CustomUserDetailService customUserDetailService;
     @Value("${secret_key}")
-    private  String SECRET_KEY;
+    private String SECRET_KEY;
 
     public String extractUserAccount(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -49,10 +50,10 @@ public class JWTService {
         String userAccount = extractUserAccount(token);
         var userDetails = customUserDetailService.loadUserByUsername(userAccount);
 
-        return (userAccount.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (userAccount.equals(userDetails.getUsername()));
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
