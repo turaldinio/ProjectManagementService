@@ -27,27 +27,22 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (isAuthorizationRequest(request)) {
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
             return;
         }
         String token = request.getHeader("auth-token") == null ?
                 (request.getHeader("authorization") == null ?
                         null : request.getHeader("authorization"))
                 : request.getHeader("auth-token");
+
         if (token == null) {
-            filterChain.doFilter(request, response);
+            writeForbiddenResponse(response,"no token provided");
             return;
         }
         token = token.substring("Bearer ".length());
-        if (!jwtService.isTokenExpired(token)) {
-            Map<String, Object> errorDetails = new HashMap<>();
-            errorDetails.put("message", "Token is expired.Get a new token at /auth/login");
 
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            var gsonMap = gson.toJson(errorDetails);
-
-            response.getWriter().write(gsonMap);
+        if (jwtService.isTokenExpired(token)) {
+            writeForbiddenResponse(response, "Token is expired.Get a new token at /auth/login");
             return;
         }
 
@@ -59,12 +54,25 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                 return;
             }
             filterChain.doFilter(request, response);
-
+        } else {
+            writeForbiddenResponse(response,"invalidate token");
         }
     }
 
     public boolean isAuthorizationRequest(HttpServletRequest request) {
         return request.getRequestURI().equals("/auth/login");
+    }
+
+    public void writeForbiddenResponse(HttpServletResponse response, String message) throws IOException {
+        Map<String, Object> errorDetails = new HashMap<>();
+        errorDetails.put("message", message);
+
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        var gsonMap = gson.toJson(errorDetails);
+
+        response.getWriter().write(gsonMap);
+
     }
 
 
