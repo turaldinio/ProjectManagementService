@@ -12,6 +12,7 @@ import com.digital.pm.service.TeamService;
 import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public ResponseEntity<?> create(CreateTaskDto createTaskDto) {
+        //проверка дедлайн>время на работу+тек время
         if (createTaskDto.getDeadline().before(new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()))) {
             return ResponseEntity.
                     badRequest().
@@ -35,12 +37,24 @@ public class TaskServiceImpl implements TaskService {
         }
         var employeeDto = (EmployeeDto) employeeService.getById(createTaskDto.getExecutorId()).getBody();
 
+        //проверка является ли сотрудник участником проекта
         if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
             return ResponseEntity.
                     badRequest().
                     body(String.format("the employee with id %s is not a member of team with %d", employeeDto.getId(), createTaskDto.getProjectId()));
         }
-        // TODO: 25.05.2023 вытащить из SpringSecurityContext текущего пользователя и проверить наличие в команде
+//проверка является ли тек автор участником проекта
+        if (!teamService.existsByEmployeeIdAndProjectId(
+                employeeService.findByEmployeeAccount(SecurityContextHolder.getContext().
+                        getAuthentication().
+                        getName()).
+                        getId(),
+                createTaskDto.getProjectId())) {
+            return ResponseEntity.
+                    badRequest().
+                    body(String.format("the author of the task must be a participant in the project", employeeDto.getId(), createTaskDto.getProjectId()));
+
+        }
 
         var task = taskMapper.create(createTaskDto);
         taskRepository.save(task);

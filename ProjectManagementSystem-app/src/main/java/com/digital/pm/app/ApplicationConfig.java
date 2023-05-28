@@ -24,10 +24,10 @@ public class ApplicationConfig {
         return new ProjectMapper();
     }
 
-    @Bean
-    public TaskMapper taskMapper() {
-        return new TaskMapper();
-    }
+//    @Bean
+//    public TaskMapper taskMapper() {
+//        return new TaskMapper();
+//    }
 
     @Bean
     public TeamMapper teamMapper() {

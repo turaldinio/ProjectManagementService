@@ -4,13 +4,20 @@ import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.model.task.Task;
+import com.digital.pm.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
+@Component
 public class TaskMapper {
-    // TODO: 25.05.2023 дефолтное значение в authorId
+    private final EmployeeService employeeService;
+
     public Task create(CreateTaskDto createTaskDto) {
         return Task.builder().
                 name(createTaskDto.getName()).
@@ -20,7 +27,12 @@ public class TaskMapper {
                 deadline(createTaskDto.getDeadline()).
                 status(TaskStatus.NEW).
                 dateOfCreation(new Date()).
-                authorId(1L).
+                authorId(employeeService.
+                        findByEmployeeAccount(SecurityContextHolder.
+                                getContext().
+                                getAuthentication().
+                                getName())
+                        .getId()).
                 projectId(createTaskDto.getProjectId()).
                 build();
     }
