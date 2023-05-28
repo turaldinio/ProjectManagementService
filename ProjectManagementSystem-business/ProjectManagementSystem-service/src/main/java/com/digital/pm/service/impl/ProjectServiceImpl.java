@@ -3,14 +3,17 @@ package com.digital.pm.service.impl;
 import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
-import com.digital.pm.model.project.Project;
+import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.repository.spec.ProjectSpecification;
 import com.digital.pm.repository.ProjectRepository;
 import com.digital.pm.service.ProjectService;
+import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -21,36 +24,39 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
 
     @Override
-    public ResponseEntity<?> create(CreateProjectDto createProjectDto) {
-        if (isProjectCodeUnique(createProjectDto.getProjectCode())) {
-            return ResponseEntity.badRequest().body(String.format("the project with %s code is already exists", createProjectDto.getProjectCode()));
+    public ProjectDto create(CreateProjectDto createProjectDto) {
+        if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
+            throw invalidProjectCode(createProjectDto.getProjectCode());
         }
         var project = projectMapper.create(createProjectDto);
 
         projectRepository.save(project);
-        return ResponseEntity.ok(projectMapper.map(project));
+        return projectMapper.map(project);
     }
 
     @Override
-    public ResponseEntity<?> update(Long projectId, CreateProjectDto createProjectDto) {
+    public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
         if (projectRepository.existsById(projectId)) {
-            return ResponseEntity.badRequest().body(String.format("the user with %d id is not found", projectId));
+            throw invalidId(projectId);
         }
-        if (isProjectCodeUnique(createProjectDto.getProjectCode())) {
-            return ResponseEntity.badRequest().body("the project with %s code is already exists");
+        if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
+            throw invalidProjectCode(createProjectDto.getProjectCode());
         }
+
         var newProject = projectMapper.create(createProjectDto);
         newProject.setId(projectId);
+
         projectRepository.save(newProject);
-        return ResponseEntity.ok(projectMapper.map(newProject));
+
+        return projectMapper.map(newProject);
     }
 
     @Override
-    public ResponseEntity<?> changeProjectStatus(Long projectId) {
-        var project = projectRepository.findById(projectId).orElseThrow();
+    public ProjectDto changeProjectStatus(Long projectId) {
+        var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
 
         if (project.getStatus().equals(ProjectStatus.COMPLETED)) {
-            return ResponseEntity.badRequest().body("you cannot change the status for this project");
+            throw new BadRequest("you cannot change the status for this project");
         }
         if (project.getStatus().equals(ProjectStatus.DRAFT)) {
             project.setStatus(ProjectStatus.DEVELOPING);
@@ -62,19 +68,24 @@ public class ProjectServiceImpl implements ProjectService {
             project.setStatus(ProjectStatus.COMPLETED);
 
         }
-        return ResponseEntity.ok(projectMapper.map(project));
+        return projectMapper.map(project);
     }
 
     @Override
-    public ResponseEntity<?> findAll(ProjectFilter projectFilter) {
+    public List<ProjectDto> findAll(ProjectFilter projectFilter) {
         var result = projectRepository.
                 findAll(ProjectSpecification.getSpec(projectFilter));
 
-        return ResponseEntity.ok(projectMapper.map(result));
+        return projectMapper.map(result);
     }
 
-    public boolean isProjectCodeUnique(String code) {
-        return projectRepository.existsByProjectCode(code);
+    public BadRequest invalidId(Long id) {
+        return new BadRequest(String.format("the project with %d id is not found", id));
+    }
+
+    public BadRequest invalidProjectCode(String code) {
+        return new BadRequest(String.format("the %s code is already exists", code));
+
     }
 }
 

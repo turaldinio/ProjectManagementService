@@ -6,12 +6,13 @@ import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface TaskService {
-    ResponseEntity<?> create(CreateTaskDto createTaskDto);
+    TaskDto create(CreateTaskDto createTaskDto);
 
-    ResponseEntity<?> update(Long taskId, CreateTaskDto createTaskDto);
+    TaskDto update(Long taskId, CreateTaskDto createTaskDto);
 
-    ResponseEntity<?> findAll(TaskFilter taskFilter);
+    List<TaskDto> findAll(TaskFilter taskFilter);
 
-    ResponseEntity<?> changeStatus(Long taskId);
 }

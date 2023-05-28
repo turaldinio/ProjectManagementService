@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProjectService {
-    ResponseEntity<?> create(CreateProjectDto createProjectDto);
+    ProjectDto create(CreateProjectDto createProjectDto);
 
-    ResponseEntity<?>  update(Long projectId, CreateProjectDto createProjectDto);
+    ProjectDto update(Long projectId, CreateProjectDto createProjectDto);
 
 
 
-    ResponseEntity<?>  changeProjectStatus(Long id);
+    ProjectDto  changeProjectStatus(Long id);
 
-    ResponseEntity<?>  findAll(ProjectFilter projectFilter);
+    List<ProjectDto> findAll(ProjectFilter projectFilter);
 }

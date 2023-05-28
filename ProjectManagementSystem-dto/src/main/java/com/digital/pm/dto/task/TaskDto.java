@@ -19,7 +19,7 @@ public class TaskDto {
     private String name;
     private String description;
     private Long executorId;
-    private int laborCosts;
+    private Long laborCosts;
     private Long authorId;
     private Long projectId;
     private Date deadline;

@@ -28,7 +28,7 @@ public class Task {
     private Long projectId;
     @Column(nullable = false,
             name = "labor_cost")
-    private int laborCost;          //трудозатраты в часах
+    private Long laborCost;          //трудозатраты в часах
 
     @CreationTimestamp
     private Date deadline;      //не может быть меньше чем now +трудозатраты

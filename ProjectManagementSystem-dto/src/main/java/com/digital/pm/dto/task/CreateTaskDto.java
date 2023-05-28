@@ -14,12 +14,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class    CreateTaskDto {
-    @NotNull
     private String name;
     private String description;
     private Long executorId;
     private Long projectId;
-    private int laborCost; //трудозатраты в часах
-    @NotNull
+    private Long laborCost; //трудозатраты в часах
     private Date deadline;
 }

@@ -20,6 +20,10 @@ public interface EmployeeService {
 
     EmployeeDto deleteById(Long id);
 
-   List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
+    List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
 
+    EmployeeDto findByAccount(String account);
+
+
+    boolean existsById(Long executorId);
 }

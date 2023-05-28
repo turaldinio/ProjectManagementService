@@ -28,7 +28,7 @@ public class TaskMapper {
                 status(TaskStatus.NEW).
                 dateOfCreation(new Date()).
                 authorId(employeeService.
-                        findByEmployeeAccount(SecurityContextHolder.
+                        findByAccount(SecurityContextHolder.
                                 getContext().
                                 getAuthentication().
                                 getName())
