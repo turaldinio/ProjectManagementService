@@ -6,7 +6,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +21,13 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-public class JwtService {
+
+public class JWTService {
     private final CustomUserDetailService customUserDetailService;
-
     @Value("${secret_key}")
-    private final String SECRET_KEY;
+    private  String SECRET_KEY;
 
-    public String extractUserEmail(String token) {
+    public String extractUserAccount(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -39,14 +42,14 @@ public class JwtService {
     }
 
     public String generateToken(Authentication authentication) {
-        return generateToken(new HashMap<>(),authentication);
+        return generateToken(new HashMap<>(), authentication);
     }
 
     public boolean isTokenValid(String token) {
-        String userEmail = extractUserEmail(token);
-        var userDetails = customUserDetailService.loadUserByUsername(userEmail);
+        String userAccount = extractUserAccount(token);
+        var userDetails = customUserDetailService.loadUserByUsername(userAccount);
 
-        return (userEmail.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (userAccount.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {

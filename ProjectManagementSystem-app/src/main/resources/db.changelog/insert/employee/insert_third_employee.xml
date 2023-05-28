@@ -14,7 +14,7 @@
             <column name="email" value="anaMaliaTolya@bk.ru"/>
             <column name="account" value="antoshkaAleks-93"/>
             <column name="status" value="ACTIVE"/>
-            <column name="password" value="$2y$10$R7gmkCvf2WfleaMiDskbkOrY.y1J3KvKYDTXlWZPTVeA34m8H9TUG"
+            <column name="password" value="$2y$10$R7gmkCvf2WfleaMiDskbkOrY.y1J3KvKYDTXlWZPTVeA34m8H9TUG"/>
 
         </insert>
     </changeSet>

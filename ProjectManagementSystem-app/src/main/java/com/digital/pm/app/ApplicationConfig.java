@@ -4,7 +4,6 @@ import com.digital.pm.service.mapping.EmployeeMapper;
 import com.digital.pm.service.mapping.ProjectMapper;
 import com.digital.pm.service.mapping.TaskMapper;
 import com.digital.pm.service.mapping.TeamMapper;
-import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("com.digital")
 public class ApplicationConfig {
+
 
     @Bean
     public EmployeeMapper employeeMapper() {
@@ -33,5 +33,6 @@ public class ApplicationConfig {
     public TeamMapper teamMapper() {
         return new TeamMapper();
     }
+
 
 }

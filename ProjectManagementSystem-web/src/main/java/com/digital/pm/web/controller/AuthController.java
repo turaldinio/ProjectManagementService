@@ -4,6 +4,7 @@ import com.digital.pm.common.auth.AuthorizationRequest;
 import com.digital.pm.service.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class AuthController {
     private final AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public String login(AuthorizationRequest authorizationRequest) {
+    public String login(@RequestBody AuthorizationRequest authorizationRequest) {
         return authorizationService.authorize(authorizationRequest);
     }
 

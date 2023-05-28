@@ -14,7 +14,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailService customUserDetailService;
 
-    private final JwtService jwtService;
+    private final JWTService jwtService;
 
     @Override
     public String authorize(AuthorizationRequest authorizationRequest) {
