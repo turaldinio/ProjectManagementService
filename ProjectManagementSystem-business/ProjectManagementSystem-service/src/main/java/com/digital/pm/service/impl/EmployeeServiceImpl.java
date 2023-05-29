@@ -23,10 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
-        if (createEmployeeDto.getFirstName() == null ||
-                createEmployeeDto.getLastName() == null ||
-                createEmployeeDto.getLastName().isBlank() ||
-                createEmployeeDto.getFirstName().isBlank()) {
+        if (!checkRequiredValue(createEmployeeDto)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
         if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
@@ -42,24 +39,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        if (!employeeRepository.existsById(employeeId)) {
-            throw invalidId(employeeId);
-        }
+        var employee = employeeRepository.findById(employeeId).orElseThrow(() -> invalidId(employeeId));
 
-        if (createEmployeeDto.getFirstName() == null ||
-                createEmployeeDto.getLastName() == null ||
-                createEmployeeDto.getLastName().isBlank() ||
-                createEmployeeDto.getFirstName().isBlank()) {
+        var newEmployee = employeeMapper.update(employee, createEmployeeDto);
+
+        if (!checkRequiredValue(createEmployeeDto)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
 
-
-        if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
+        if (newEmployee.getAccount() != null && employeeRepository.existsByAccount(newEmployee.getAccount())) {
             throw invalidAccount(createEmployeeDto.getAccount());
         }
-
-        var newEmployee = employeeMapper.create(createEmployeeDto);
-        newEmployee.setId(employeeId);
 
         employeeRepository.save(newEmployee);
 
@@ -111,12 +101,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public BadRequest invalidAccount(String account) {
-        return new BadRequest(String.format("the %s already is already exists ", account));
+        return new BadRequest(String.format("the %s  is already exists ", account));
     }
+
 
     @Override
     public EmployeeDto findByAccount(String account) {
         return employeeMapper.map(employeeRepository.findByAccount(account).orElseThrow(
                 () -> new BadRequest(String.format("the employee with %s account not found", account))));
+    }
+
+    public boolean checkRequiredValue(CreateEmployeeDto createEmployeeDto) {
+        return createEmployeeDto.getFirstName() != null &&
+                createEmployeeDto.getLastName() != null &&
+                !createEmployeeDto.getLastName().isBlank() &&
+                !createEmployeeDto.getFirstName().isBlank();
     }
 }

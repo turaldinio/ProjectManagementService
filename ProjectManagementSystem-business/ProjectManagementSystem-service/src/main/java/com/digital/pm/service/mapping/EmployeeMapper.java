@@ -9,10 +9,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
 public class EmployeeMapper {
 
-    public  Employee create(CreateEmployeeDto createEmployeeDto) {
+    public Employee create(CreateEmployeeDto createEmployeeDto) {
 
         return Employee.
                 builder().
@@ -29,7 +30,32 @@ public class EmployeeMapper {
 
     }
 
-    public  EmployeeDto map(Employee employee) {
+    public Employee update(Employee employee, CreateEmployeeDto createEmployeeDto) {
+        if (createEmployeeDto.getFirstName() != null) {
+            employee.setFirstName(createEmployeeDto.getFirstName());
+        }
+        if (createEmployeeDto.getLastName() != null) {
+            employee.setLastName(createEmployeeDto.getLastName());
+        }
+        if (createEmployeeDto.getPatronymic() != null) {
+            employee.setPatronymic(createEmployeeDto.getPatronymic());
+        }
+        if (createEmployeeDto.getAccount() != null) {
+            employee.setAccount(createEmployeeDto.getAccount());
+        }
+        if (createEmployeeDto.getEmail() != null) {
+            employee.setEmail(createEmployeeDto.getEmail());
+        }
+        if (createEmployeeDto.getPost() != null) {
+            employee.setPost(createEmployeeDto.getPost());
+        }
+        if (createEmployeeDto.getPassword() != null) {
+            employee.setPost(createEmployeeDto.getPost());
+        }
+        return employee;
+    }
+
+    public EmployeeDto map(Employee employee) {
         return EmployeeDto.
                 builder().
                 id(employee.getId()).
@@ -45,7 +71,7 @@ public class EmployeeMapper {
 
     }
 
-    public  List<EmployeeDto> map(List<Employee> employeeList) {
+    public List<EmployeeDto> map(List<Employee> employeeList) {
         return employeeList.
                 stream().
                 map(x -> EmployeeDto.
