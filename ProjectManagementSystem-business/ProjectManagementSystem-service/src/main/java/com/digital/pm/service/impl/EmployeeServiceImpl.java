@@ -4,6 +4,7 @@ import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.model.employee.Employee;
 import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.EmployeeService;
@@ -43,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         var newEmployee = employeeMapper.update(employee, createEmployeeDto);
 
-        if (!checkRequiredValue(createEmployeeDto)) {
+        if (!checkRequiredValue(newEmployee)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
 
@@ -116,5 +117,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 createEmployeeDto.getLastName() != null &&
                 !createEmployeeDto.getLastName().isBlank() &&
                 !createEmployeeDto.getFirstName().isBlank();
+    }
+    public boolean checkRequiredValue(Employee newEmployee) {
+        return newEmployee.getFirstName() != null &&
+                newEmployee.getLastName() != null &&
+                !newEmployee.getLastName().isBlank() &&
+                !newEmployee.getFirstName().isBlank();
     }
 }

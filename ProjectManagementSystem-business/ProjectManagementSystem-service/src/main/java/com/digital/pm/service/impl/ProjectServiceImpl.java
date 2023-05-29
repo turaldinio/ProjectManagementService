@@ -4,13 +4,13 @@ import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.common.filters.ProjectFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
+import com.digital.pm.model.project.Project;
 import com.digital.pm.repository.spec.ProjectSpecification;
 import com.digital.pm.repository.ProjectRepository;
 import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +25,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
-        if(createProjectDto.getName()==null||createProjectDto.getName().isBlank()){
-            throw invalidProjectName(createProjectDto.getName());
+        if (checkRequiredValue(createProjectDto)) {
+            throw invalidRequiredValues();
         }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
-        if(createProjectDto.getProjectCode()==null||createProjectDto.getProjectCode().isBlank()){
-            throw invalidProjectCodeIsEmptyOrBlank(createProjectDto.getProjectCode());
-        }
+
         var project = projectMapper.create(createProjectDto);
 
         projectRepository.save(project);
@@ -42,22 +40,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
-        if (projectRepository.existsById(projectId)) {
-            throw invalidId(projectId);
+        var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
+        var newProject = projectMapper.update(project, createProjectDto);
+
+        if (checkRequiredValue(newProject)) {
+            throw invalidRequiredValues();
+
         }
-        if(createProjectDto.getName()==null||createProjectDto.getName().isBlank()){
-            throw invalidProjectName(createProjectDto.getName());
-        }
-        if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
+        if (projectRepository.existsByProjectCode(newProject.getProjectCode())) {
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
-        if(createProjectDto.getProjectCode()==null||createProjectDto.getProjectCode().isBlank()){
-            throw invalidProjectCodeIsEmptyOrBlank(createProjectDto.getProjectCode());
-        }
-
-        var newProject = projectMapper.create(createProjectDto);
-        newProject.setId(projectId);
-
         projectRepository.save(newProject);
 
         return projectMapper.map(newProject);
@@ -91,6 +83,10 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.map(result);
     }
 
+    public BadRequest invalidRequiredValues() {
+        return new BadRequest("project name and project code are required fields");
+    }
+
     public BadRequest invalidId(Long id) {
         return new BadRequest(String.format("the project with %d id is not found", id));
     }
@@ -99,13 +95,29 @@ public class ProjectServiceImpl implements ProjectService {
         return new BadRequest(String.format("the %s code is already exists", code));
 
     }
+
     public BadRequest invalidProjectName(String name) {
         return new BadRequest(String.format("the project name cannot be empty or blank", name));
 
     }
+
     public BadRequest invalidProjectCodeIsEmptyOrBlank(String code) {
         return new BadRequest(String.format("the %s project-code cannot be empty or blank", code));
 
+    }
+
+    public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
+        return createProjectDto.getProjectCode() != null &&
+                createProjectDto.getName() != null &&
+                !createProjectDto.getProjectCode().isBlank() &&
+                !createProjectDto.getName().isBlank();
+    }
+
+    public boolean checkRequiredValue(Project newProject) {
+        return newProject.getProjectCode() != null &&
+                newProject.getName() != null &&
+                !newProject.getProjectCode().isBlank() &&
+                !newProject.getName().isBlank();
     }
 }
 

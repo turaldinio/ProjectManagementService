@@ -21,6 +21,19 @@ public class ProjectMapper {
                 build();
     }
 
+    public Project update(Project project, CreateProjectDto createProjectDto) {
+        if (createProjectDto.getName() != null) {
+            project.setName(project.getName());
+        }
+        if (createProjectDto.getProjectCode() != null) {
+            project.setProjectCode(createProjectDto.getProjectCode());
+        }
+        if (createProjectDto.getDescription() != null) {
+            project.setDescription(createProjectDto.getDescription());
+        }
+        return project;
+    }
+
 
     public ProjectDto map(Project project) {
         return ProjectDto.
