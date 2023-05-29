@@ -102,7 +102,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public boolean existsByEmployeeIdAndProjectId(Long id, Long projectId) {
+    public Boolean existsByEmployeeIdAndProjectId(Long id, Long projectId) {
         return teamRepository.existsByEmployeeIdAndProjectId(id, projectId);
     }
 }
