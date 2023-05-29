@@ -6,6 +6,7 @@ import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/private/project")
+@RequestMapping(value = "/private/project",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ProjectController {
     private final ProjectService projectService;
 
@@ -23,7 +26,7 @@ public class ProjectController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ProjectDto> update(@PathVariable Long id, @Valid @RequestBody CreateProjectDto createProjectDto) {
+    public ResponseEntity<ProjectDto> update(@PathVariable Long id, @RequestBody CreateProjectDto createProjectDto) {
         return ResponseEntity.ok(projectService.update(id, createProjectDto));
     }
 

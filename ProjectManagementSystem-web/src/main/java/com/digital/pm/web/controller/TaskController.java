@@ -5,6 +5,7 @@ import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/private/task")
+@RequestMapping(value = "/private/task",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class TaskController {
     private final TaskService taskService;
 

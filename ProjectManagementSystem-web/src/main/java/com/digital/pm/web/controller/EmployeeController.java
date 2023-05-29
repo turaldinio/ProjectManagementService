@@ -5,9 +5,9 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,20 +16,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/private/employee")
+@RequestMapping(value = "/private/employee",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class EmployeeController {
-
     private final EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<EmployeeDto> create( @RequestBody CreateEmployeeDto createEmployeeDto) {
+    public ResponseEntity<EmployeeDto> create(@RequestBody CreateEmployeeDto createEmployeeDto) {
         return ResponseEntity.ok(employeeService.create(createEmployeeDto));
 
 
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<EmployeeDto> update(@PathVariable Long id, @Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
+    public ResponseEntity<EmployeeDto> update(@PathVariable Long id, @RequestBody CreateEmployeeDto createEmployeeDto) {
         return ResponseEntity.ok(employeeService.update(id, createEmployeeDto));
 
 

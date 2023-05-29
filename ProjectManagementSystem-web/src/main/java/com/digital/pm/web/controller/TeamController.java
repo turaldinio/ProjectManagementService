@@ -4,12 +4,15 @@ import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
 import com.digital.pm.service.TeamService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/private/team")
+@RequestMapping(value = "/private/team",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class TeamController {
     private final TeamService teamService;
 
