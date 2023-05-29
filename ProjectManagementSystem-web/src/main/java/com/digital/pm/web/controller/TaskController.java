@@ -30,7 +30,7 @@ public class TaskController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<List<TaskDto>> findAll(TaskFilter taskFilter) {
+    public ResponseEntity<List<TaskDto>> findAll(@RequestBody TaskFilter taskFilter) {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
     }
 

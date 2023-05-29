@@ -20,7 +20,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
         var employee = employeeRepository.findByAccount(account).orElseThrow(
-                () -> new BadRequest(String.format("the employee with %s id is not found", account))
+                () -> new BadRequest(String.format("the employee with %s login is not found", account))
         );
 
 

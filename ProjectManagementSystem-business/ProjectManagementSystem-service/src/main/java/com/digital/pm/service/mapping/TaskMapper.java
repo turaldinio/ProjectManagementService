@@ -26,7 +26,7 @@ public class TaskMapper {
                 laborCost(createTaskDto.getLaborCost()).
                 deadline(createTaskDto.getDeadline()).
                 status(TaskStatus.NEW).
-                dateOfCreation(new Date()).
+                creationDate(new Date()).
                 authorId(employeeService.
                         findByAccount(SecurityContextHolder.
                                 getContext().
@@ -71,7 +71,7 @@ public class TaskMapper {
                 laborCosts(task.getLaborCost()).
                 deadline(task.getDeadline()).
                 status(task.getStatus()).
-                dateOfCreation(task.getDateOfCreation()).
+                creationDate(task.getCreationDate()).
                 updateTime(task.getUpdateTime()).
                 build();
 
@@ -91,7 +91,7 @@ public class TaskMapper {
                         laborCosts(x.getLaborCost()).
                         deadline(x.getDeadline()).
                         status(x.getStatus()).
-                        dateOfCreation(x.getDateOfCreation()).
+                        creationDate(x.getCreationDate()).
                         updateTime(x.getUpdateTime()).
                         build()).
                 collect(Collectors.toList());

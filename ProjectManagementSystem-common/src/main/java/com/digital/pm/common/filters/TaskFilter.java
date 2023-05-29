@@ -17,6 +17,8 @@ public class TaskFilter {
     private TaskStatus status;
     private Long authorId;
     private Long executorId;
-    private Date dateOfCreation;
-    private Date deadline;
+    private Date createdAfter;
+    private Date createdBefore;
+    private Date deadlineBefore;
+    private Date deadlineAfter;
 }

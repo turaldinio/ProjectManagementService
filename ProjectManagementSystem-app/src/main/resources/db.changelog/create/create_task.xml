@@ -18,9 +18,9 @@
 
             <column name="description" type="text"/>
 
-            <column name="executor_id" type="bigserial"/>
+            <column name="executor_id" type="bigint"/>
 
-            <column name="labor_cost" type="bigserial"/>
+            <column name="labor_cost" type="bigint"/>
 
             <column name="deadline" type="timestamp">
                 <constraints nullable="false"/>
@@ -30,7 +30,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="author_id" type="bigserial">
+            <column name="author_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
 
@@ -40,7 +40,7 @@
 
             <column name="updated" type="timestamp"/>
 
-            <column name="project_id" type="bigserial">
+            <column name="project_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
 

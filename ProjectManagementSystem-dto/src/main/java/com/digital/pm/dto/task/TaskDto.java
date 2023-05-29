@@ -23,7 +23,7 @@ public class TaskDto {
     private Long authorId;
     private Long projectId;
     private Date deadline;
-    private Date dateOfCreation;
+    private Date creationDate;
     private Date updateTime;
     private TaskStatus status;
 

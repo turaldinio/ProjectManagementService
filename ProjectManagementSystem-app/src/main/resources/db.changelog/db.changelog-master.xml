@@ -14,4 +14,6 @@
     <include file="insert/team/insert_first_team.xml" relativeToChangelogFile="true"/>
     <include file="insert/team/insert_second_team.xml" relativeToChangelogFile="true"/>
     <include file="insert/task/insert_first_task.xml" relativeToChangelogFile="true"/>
+    <include file="insert/task/insert_second_task.xml" relativeToChangelogFile="true"/>
+    <include file="insert/task/insert_third_task.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

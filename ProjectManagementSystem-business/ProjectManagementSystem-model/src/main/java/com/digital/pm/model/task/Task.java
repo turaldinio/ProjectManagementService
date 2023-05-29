@@ -39,7 +39,7 @@ public class Task {
     private Long authorId;
     @CreationTimestamp
     @Column(name = "creation_date")
-    private Date dateOfCreation;
+    private Date creationDate;
     @CreationTimestamp
     @Column(name = "updated")
     private Date updateTime;

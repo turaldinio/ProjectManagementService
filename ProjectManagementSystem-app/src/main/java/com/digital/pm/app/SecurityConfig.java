@@ -25,30 +25,33 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-//        security.
-//                csrf().
-//                disable().
-//                formLogin().
-//                disable().
-//                authorizeHttpRequests().
-//                requestMatchers("/auth/**").
-//                permitAll().
-//                and().
-//                authorizeHttpRequests().
-//                anyRequest().
-//                authenticated().
-//                and().
-//                addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        security.csrf().
+        security.
+                csrf().
                 disable().
                 formLogin().
                 disable().
                 authorizeHttpRequests().
-                requestMatchers("/private/**").
-                authenticated().
+                requestMatchers("/auth/**").
+                permitAll().
+                and().
+                authorizeHttpRequests().
                 anyRequest().
-                permitAll();
+                authenticated().
+                and().
+                addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        security.csrf().
+//                disable().
+//                formLogin().
+//                disable().
+//                authorizeHttpRequests().
+//                anyRequest().
+//                permitAll().
+//                and().
+//                authorizeHttpRequests().
+//                requestMatchers("/private/**").
+//                authenticated();
+
         return security.build();
     }
 
