@@ -25,8 +25,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
+        if(createProjectDto.getName()==null||createProjectDto.getName().isBlank()){
+            throw invalidProjectName(createProjectDto.getName());
+        }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
             throw invalidProjectCode(createProjectDto.getProjectCode());
+        }
+        if(createProjectDto.getProjectCode()==null||createProjectDto.getProjectCode().isBlank()){
+            throw invalidProjectCodeIsEmptyOrBlank(createProjectDto.getProjectCode());
         }
         var project = projectMapper.create(createProjectDto);
 
@@ -39,8 +45,14 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectRepository.existsById(projectId)) {
             throw invalidId(projectId);
         }
+        if(createProjectDto.getName()==null||createProjectDto.getName().isBlank()){
+            throw invalidProjectName(createProjectDto.getName());
+        }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
             throw invalidProjectCode(createProjectDto.getProjectCode());
+        }
+        if(createProjectDto.getProjectCode()==null||createProjectDto.getProjectCode().isBlank()){
+            throw invalidProjectCodeIsEmptyOrBlank(createProjectDto.getProjectCode());
         }
 
         var newProject = projectMapper.create(createProjectDto);
@@ -85,6 +97,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     public BadRequest invalidProjectCode(String code) {
         return new BadRequest(String.format("the %s code is already exists", code));
+
+    }
+    public BadRequest invalidProjectName(String name) {
+        return new BadRequest(String.format("the project name cannot be empty or blank", name));
+
+    }
+    public BadRequest invalidProjectCodeIsEmptyOrBlank(String code) {
+        return new BadRequest(String.format("the %s project-code cannot be empty or blank", code));
 
     }
 }

@@ -1,6 +1,7 @@
 package com.digital.pm.web.controller;
 
 import com.digital.pm.dto.team.CreateTeamDto;
+import com.digital.pm.dto.team.TeamDto;
 import com.digital.pm.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,17 @@ public class TeamController {
     private final TeamService teamService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody CreateTeamDto createTeamDto) {
-        return teamService.addEmployee(createTeamDto);
+    public ResponseEntity<TeamDto> add(@RequestBody CreateTeamDto createTeamDto) {
+        return ResponseEntity.ok(teamService.addEmployee(createTeamDto));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(Long employeeId, Long projectId) {
-        return teamService.delete(employeeId, projectId);
+    public ResponseEntity<TeamDto> delete(Long employeeId, Long projectId) {
+        return ResponseEntity.ok(teamService.delete(employeeId, projectId));
     }
 
     @GetMapping("/all/{id}")
-    public ResponseEntity<?> getAllByProjectId(@PathVariable("id") Long projectId) {
-        return teamService.getAllByProjectId(projectId);
+    public ResponseEntity<?> getAllEmployeeByProjectId(@PathVariable("id") Long projectId) {
+        return ResponseEntity.ok(teamService.getAllByProjectId(projectId));
     }
 }

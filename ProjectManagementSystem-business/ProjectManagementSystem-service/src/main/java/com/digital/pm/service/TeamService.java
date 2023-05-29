@@ -1,16 +1,20 @@
 package com.digital.pm.service;
 
+import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.team.CreateTeamDto;
+import com.digital.pm.dto.team.TeamDto;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 
 public interface TeamService {
-    ResponseEntity<?> addEmployee(CreateTeamDto createTeamDto);
+    TeamDto addEmployee(CreateTeamDto createTeamDto);
 
-    ResponseEntity<?> delete(Long employeeId, Long projectId);
+    TeamDto delete(Long employeeId, Long projectId);
 
-    ResponseEntity<?> getAllByProjectId(Long projectId);
+    List<EmployeeDto> getAllByProjectId(Long projectId);
 
-    boolean existsByEmployeeIdAndProjectId(Long employeeId, Long projectId);
 
+    boolean existsByEmployeeIdAndProjectId(Long id, Long projectId);
 }

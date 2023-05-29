@@ -10,5 +10,6 @@ public class ProjectDto {
     private Long id;
     private String name;
     private String description;
+    private String projectCode;
     private ProjectStatus status;
 }

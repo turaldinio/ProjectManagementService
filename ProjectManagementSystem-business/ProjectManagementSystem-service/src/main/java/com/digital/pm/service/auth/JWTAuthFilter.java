@@ -50,9 +50,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             var userDetail = customUserDetailService.loadUserByUsername(jwtService.extractUserAccount(token));
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetail.getUsername(),
                     userDetail.getPassword(), userDetail.getAuthorities()));
-            if (isAuthorizationRequest(request)) {
-                return;
-            }
+
             filterChain.doFilter(request, response);
         } else {
             writeForbiddenResponse(response,"invalidate token");

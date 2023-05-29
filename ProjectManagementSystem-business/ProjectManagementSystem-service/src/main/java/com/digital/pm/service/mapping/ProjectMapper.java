@@ -8,29 +8,32 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
 public class ProjectMapper {
-    public  Project create(CreateProjectDto createProjectDto) {
+    public Project create(CreateProjectDto createProjectDto) {
         return Project.
                 builder().
                 description(createProjectDto.getDescription()).
                 name(createProjectDto.getName()).
                 status(ProjectStatus.DRAFT).
+                projectCode(createProjectDto.getProjectCode()).
                 build();
     }
 
 
-    public  ProjectDto map(Project project) {
+    public ProjectDto map(Project project) {
         return ProjectDto.
                 builder().
                 id(project.getId()).
                 description(project.getDescription()).
                 name(project.getName()).
                 status(project.getStatus()).
+                projectCode(project.getProjectCode()).
                 build();
     }
 
-    public  List<ProjectDto> map(List<Project> list) {
+    public List<ProjectDto> map(List<Project> list) {
         return list.stream().map(project ->
                         ProjectDto.
                                 builder().
@@ -38,6 +41,7 @@ public class ProjectMapper {
                                 description(project.getDescription()).
                                 name(project.getName()).
                                 status(project.getStatus()).
+                                projectCode(project.getProjectCode()).
                                 build()).
                 collect(Collectors.toList());
     }

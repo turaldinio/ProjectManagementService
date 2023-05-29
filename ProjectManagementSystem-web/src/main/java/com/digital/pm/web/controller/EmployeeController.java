@@ -22,7 +22,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<EmployeeDto> create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
+    public ResponseEntity<EmployeeDto> create( @RequestBody CreateEmployeeDto createEmployeeDto) {
         return ResponseEntity.ok(employeeService.create(createEmployeeDto));
 
 

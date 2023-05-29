@@ -1,6 +1,5 @@
 package com.digital.pm.service.impl;
 
-
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
@@ -46,6 +45,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!employeeRepository.existsById(employeeId)) {
             throw invalidId(employeeId);
         }
+
+        if (createEmployeeDto.getFirstName() == null ||
+                createEmployeeDto.getLastName() == null ||
+                createEmployeeDto.getLastName().isBlank() ||
+                createEmployeeDto.getFirstName().isBlank()) {
+            throw new BadRequest("employee firstname or lastname cannot be null or blank");
+        }
+
+
         if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
             throw invalidAccount(createEmployeeDto.getAccount());
         }
