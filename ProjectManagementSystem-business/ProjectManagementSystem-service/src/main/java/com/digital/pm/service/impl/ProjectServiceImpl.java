@@ -83,6 +83,11 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.map(result);
     }
 
+    @Override
+    public boolean existsById(Long id) {
+        return projectRepository.existsById(id);
+    }
+
     public BadRequest invalidRequiredValues() {
         return new BadRequest("project name and project code are required fields");
     }

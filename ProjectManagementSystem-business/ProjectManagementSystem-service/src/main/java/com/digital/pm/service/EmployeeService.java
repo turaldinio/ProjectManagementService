@@ -25,5 +25,5 @@ public interface EmployeeService {
     EmployeeDto findByAccount(String account);
 
 
-    boolean existsById(Long executorId);
+    Boolean existsById(Long executorId);
 }

@@ -1,17 +1,16 @@
 package com.digital.pm.service.impl;
 
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
 import com.digital.pm.model.team.Team;
 import com.digital.pm.repository.TeamRepository;
 import com.digital.pm.service.EmployeeService;
+import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.TeamService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.TeamMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +24,26 @@ public class TeamServiceImpl implements TeamService {
     private final TeamMapper teamMapper;
     private final EmployeeService employeeService;
 
+    private final ProjectService projectService;
+
     @Override
     public TeamDto addEmployee(CreateTeamDto createTeamDto) {
+        //существует ли сотрудник с таким id
+        if (!employeeService.existsById(createTeamDto.getEmployeeId())) {
+            throw invalidEmployeeId(createTeamDto.getEmployeeId());
+        }
+        //существует ли такой проект
+        if (projectService.existsById(createTeamDto.getProjectId())) {
+            throw invalidProjectId(createTeamDto.getProjectId());
+        }
+
+        //если сотрудник уже участвует в этом проекте ->ошибка
         if (teamRepository.existsByEmployeeIdAndProjectId(createTeamDto.getEmployeeId(), createTeamDto.getProjectId())) {
-            throw invalidEmployeeOrProjectId(createTeamDto);
+            throw invalidEmployeeAlreadyInvolved(createTeamDto.getEmployeeId(), createTeamDto.getProjectId());
+        }
+
+        if (createTeamDto.getRole() == null) {
+            throw invalidRole();
         }
         var team = teamMapper.create(createTeamDto);
 
@@ -37,10 +52,22 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.map(team);
     }
 
+    private BadRequest invalidRole() {
+        return new BadRequest("the Role filed cannot be null");
+    }
+
     @Override
     public TeamDto delete(Long employeeId, Long projectId) {
+        //существует ли такой пользователь
+        if (!employeeService.existsById(employeeId)) {
+            throw invalidEmployeeId(employeeId);
+        }
+        //существует ли такой проект
+        if (projectService.existsById(projectId)) {
+            throw invalidProjectId(projectId);
+        }
         if (!teamRepository.existsByEmployeeIdAndProjectId(employeeId, projectId)) {
-            throw invalidEmployeeOrProjectId(employeeId, projectId);
+            throw invalidEmployeeNotParticipate(employeeId, projectId);
         }
         var result = teamRepository.deleteByEmployeeIdAndProjectId(employeeId, projectId);
 
@@ -49,7 +76,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<EmployeeDto> getAllByProjectId(Long projectId) {
-
         return teamRepository.findAllByProjectId(projectId).
                 stream().
                 map(Team::getEmployeeId).
@@ -59,20 +85,24 @@ public class TeamServiceImpl implements TeamService {
 
     }
 
-
-    public BadRequest invalidEmployeeOrProjectId(CreateTeamDto createTeamDto) {
-        return new BadRequest(String.format("the user %d id is already participating in the project %d id with the %s role",
-                createTeamDto.getEmployeeId(),
-                createTeamDto.getProjectId(),
-                createTeamDto.getRole().name().toLowerCase()));
+    public BadRequest invalidEmployeeNotParticipate(Long employeeId, Long projectId) {
+        return new BadRequest(String.format("the employee with %d is does not participate in the %d id project", employeeId, projectId));
     }
 
-    public BadRequest invalidEmployeeOrProjectId(Long employeeId, Long projectId) {
-        return new BadRequest(String.format("the employee with %d id does not participate in the %d id project", employeeId, projectId));
+    public BadRequest invalidEmployeeAlreadyInvolved(Long employeeId, Long projectId) {
+        return new BadRequest(String.format("employee %d is already involved in project %d", employeeId, projectId));
+    }
+
+    public BadRequest invalidEmployeeId(Long employeeId) {
+        return new BadRequest(String.format("the employee with %d is not found", employeeId));
+    }
+
+    public BadRequest invalidProjectId(Long projectId) {
+        return new BadRequest(String.format("the project with %d is not found", projectId));
     }
 
     @Override
     public boolean existsByEmployeeIdAndProjectId(Long id, Long projectId) {
-        return teamRepository.existsByEmployeeIdAndProjectId(id,projectId);
+        return teamRepository.existsByEmployeeIdAndProjectId(id, projectId);
     }
 }

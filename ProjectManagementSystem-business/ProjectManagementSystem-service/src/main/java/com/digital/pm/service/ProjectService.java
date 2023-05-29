@@ -13,9 +13,9 @@ public interface ProjectService {
 
     ProjectDto update(Long projectId, CreateProjectDto createProjectDto);
 
-
-
-    ProjectDto  changeProjectStatus(Long id);
+    ProjectDto changeProjectStatus(Long id);
 
     List<ProjectDto> findAll(ProjectFilter projectFilter);
+
+    boolean existsById(Long id);
 }

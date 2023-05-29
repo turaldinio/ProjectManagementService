@@ -82,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean existsById(Long executorId) {
+    public Boolean existsById(Long executorId) {
         return employeeRepository.existsById(executorId);
     }
 
