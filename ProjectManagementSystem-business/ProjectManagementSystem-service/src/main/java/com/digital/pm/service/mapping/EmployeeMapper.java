@@ -5,13 +5,17 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.employee.Employee;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class EmployeeMapper {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Employee create(CreateEmployeeDto createEmployeeDto) {
 
@@ -24,7 +28,7 @@ public class EmployeeMapper {
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
-                password(createEmployeeDto.getPassword()).
+                password(bCryptPasswordEncoder.encode(createEmployeeDto.getPassword())).
                 build();
 
 
@@ -50,7 +54,7 @@ public class EmployeeMapper {
             employee.setPost(createEmployeeDto.getPost());
         }
         if (createEmployeeDto.getPassword() != null) {
-            employee.setPost(createEmployeeDto.getPost());
+            employee.setPassword( bCryptPasswordEncoder.encode(createEmployeeDto.getPassword()));
         }
         return employee;
     }

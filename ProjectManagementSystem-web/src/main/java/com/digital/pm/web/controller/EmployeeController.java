@@ -40,7 +40,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<EmployeeDto>> findAll() {
         return ResponseEntity.ok(employeeService.findAll());
     }
