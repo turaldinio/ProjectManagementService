@@ -5,6 +5,7 @@ import com.digital.pm.common.filters.TaskFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
+import com.digital.pm.model.task.Task;
 import com.digital.pm.repository.spec.TaskSpecification;
 import com.digital.pm.repository.TaskRepository;
 import com.digital.pm.service.EmployeeService;
@@ -31,22 +32,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto create(CreateTaskDto createTaskDto) {
-        //проверка заполненности deadline
-        if (createTaskDto.getDeadline() == null) {
-            throw new BadRequest("the deadline filed cannot be empty");
-        }
-        //проверка наличия имени задачи
-        if (createTaskDto.getName() == null || createTaskDto.getName().isBlank()) {
-            throw new BadRequest("the task name cannot be empty or blank");
-        }
-        if(createTaskDto.getLaborCost()==null){
-            throw new BadRequest("the laborcost field cannot be empty ");
-
+        //проверка обязательных полей
+        if (!checkRequiredValues(createTaskDto)) {
+            throw invalidRequiredValues();
         }
         //проверка дедлайн>время на работу+тек время
         if (createTaskDto.getDeadline().before(new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()))) {
             throw invalidDeadline(createTaskDto);
         }
+
+        //получим назначенного сотрудника
         var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
 
         //проверка является ли сотрудник участником проекта
@@ -71,24 +66,17 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
-        if (!taskRepository.existsById(taskId)) {
-            throw invalidTaskId(taskId);
-        }
-        if (createTaskDto.getName() == null || createTaskDto.getName().isBlank()) {
-            throw new BadRequest("the task name cannot be empty or blank");
-        }
-        if (createTaskDto.getLaborCost() == null) {
-            throw new BadRequest("the laborCost field cannot be empty");
-        }
-        if (createTaskDto.getDeadline() == null) {
-            throw new BadRequest("the deadline filed cannot be empty");
-        }
-        if (!employeeService.existsById(createTaskDto.getExecutorId())) {
-            throw invalidId(createTaskDto.getExecutorId());
+        var task = taskRepository.findById(taskId).orElseThrow(()->invalidTaskId(taskId));
+        var newTask = taskMapper.update(task, createTaskDto);
+
+        if(checkRequiredValues(newTask)){
+            throw invalidRequiredValues();
         }
 
-        var newTask = taskMapper.create(createTaskDto);
-        newTask.setId(taskId);
+        if (!employeeService.existsById(createTaskDto.getExecutorId())) {
+            throw invalidEmployeeId(createTaskDto.getExecutorId());
+        }
+
         newTask.setUpdateTime(new Date());
 
         taskRepository.save(newTask);
@@ -136,13 +124,30 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    public BadRequest invalidRequiredValues() {
+        return new BadRequest("task name,labor-cost and deadline fields are required");
+
+    }
+
     public BadRequest invalidTaskId(Long id) {
         return new BadRequest(String.format("the task with %d id is not found", id));
 
     }
 
-    public BadRequest invalidId(Long id) {
+    public BadRequest invalidEmployeeId(Long id) {
         return new BadRequest(String.format("the employee with %d id is not found", id));
     }
 
+    public boolean checkRequiredValues(CreateTaskDto createTaskDto) {
+        return createTaskDto.getName() != null &&
+                !createTaskDto.getName().isBlank() &&
+                createTaskDto.getLaborCost() != null &&
+                createTaskDto.getDeadline() != null;
+    }
+    public boolean checkRequiredValues(Task newTask) {
+        return newTask.getName() != null &&
+                !newTask.getName().isBlank() &&
+                newTask.getLaborCost() != null &&
+                newTask.getDeadline() != null;
+    }
 }

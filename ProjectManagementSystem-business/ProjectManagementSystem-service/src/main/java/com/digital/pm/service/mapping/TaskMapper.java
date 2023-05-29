@@ -37,6 +37,28 @@ public class TaskMapper {
                 build();
     }
 
+    public Task update(Task task, CreateTaskDto createTaskDto) {
+        if (createTaskDto.getName() != null) {
+            task.setName(createTaskDto.getName());
+        }
+        if (createTaskDto.getDeadline() != null) {
+            task.setDeadline(createTaskDto.getDeadline());
+        }
+        if (createTaskDto.getExecutorId() != null) {
+            task.setExecutorId(createTaskDto.getExecutorId());
+        }
+        if (createTaskDto.getDescription() != null) {
+            task.setDescription(createTaskDto.getDescription());
+        }
+        if (createTaskDto.getLaborCost() != null) {
+            task.setLaborCost(createTaskDto.getLaborCost());
+        }
+        if (createTaskDto.getProjectId() != null) {
+            task.setProjectId(createTaskDto.getProjectId());
+        }
+        return task;
+    }
+
     public TaskDto map(Task task) {
         return TaskDto.
                 builder().

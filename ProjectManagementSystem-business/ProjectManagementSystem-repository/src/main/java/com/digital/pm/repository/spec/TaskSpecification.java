@@ -33,6 +33,9 @@ public class TaskSpecification {
             if (!ObjectUtils.isEmpty(taskFilter.getDateOfCreation())) {
                 list.add(criteriaBuilder.equal(root.get("dateOfCreation"), taskFilter.getDateOfCreation()));
             }
+            if (!ObjectUtils.isEmpty(taskFilter.getDateOfCreation())) {
+                list.add(criteriaBuilder.equal(root.get("dateOfCreation"), taskFilter.getDateOfCreation()));
+            }
             if (list.isEmpty()) {
                 return query.where().getRestriction();
             }

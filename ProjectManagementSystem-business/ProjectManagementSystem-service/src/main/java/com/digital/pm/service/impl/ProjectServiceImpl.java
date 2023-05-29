@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
-        if (checkRequiredValue(createProjectDto)) {
+        if (!checkRequiredValue(createProjectDto)) {
             throw invalidRequiredValues();
         }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
@@ -43,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
         var newProject = projectMapper.update(project, createProjectDto);
 
-        if (checkRequiredValue(newProject)) {
+        if (!checkRequiredValue(newProject)) {
             throw invalidRequiredValues();
 
         }
@@ -96,15 +96,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
-    public BadRequest invalidProjectName(String name) {
-        return new BadRequest(String.format("the project name cannot be empty or blank", name));
-
-    }
-
-    public BadRequest invalidProjectCodeIsEmptyOrBlank(String code) {
-        return new BadRequest(String.format("the %s project-code cannot be empty or blank", code));
-
-    }
 
     public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
         return createProjectDto.getProjectCode() != null &&
