@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/project")
+@RequestMapping("/private/project")
 public class ProjectController {
     private final ProjectService projectService;
 
