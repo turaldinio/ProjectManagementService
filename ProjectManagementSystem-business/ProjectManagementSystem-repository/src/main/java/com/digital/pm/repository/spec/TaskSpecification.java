@@ -54,9 +54,9 @@ public class TaskSpecification {
             }
 
             if (list.isEmpty()) {
-                return query.where().getRestriction();
+                return query.where().orderBy(criteriaBuilder.desc(root.get("creationDate"))).getRestriction();
             }
-            return query.where(criteriaBuilder.and(list.toArray(Predicate[]::new))).getRestriction();
+            return query.where(criteriaBuilder.and(list.toArray(Predicate[]::new))).orderBy(criteriaBuilder.desc(root.get("creationDate"))).getRestriction();
         });
     }
 }
