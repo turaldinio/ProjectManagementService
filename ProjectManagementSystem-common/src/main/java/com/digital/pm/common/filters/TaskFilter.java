@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class TaskFilter {
     private String name;
-    private TaskStatus status;
+    private List<TaskStatus> statusList;
     private Long authorId;
     private Long executorId;
     private Date createdAfter;
