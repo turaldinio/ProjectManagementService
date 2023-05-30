@@ -29,8 +29,8 @@ public class ProjectSpecification {
             if (!ObjectUtils.isEmpty(projectFilter.getDescription())) {
                 list.add(criteriaBuilder.equal(root.get("description"), projectFilter.getDescription()));
             }
-            if (!ObjectUtils.isEmpty(projectFilter.getStatus())) {
-                list.add(criteriaBuilder.equal(root.get("status"), projectFilter.getStatus()));
+            if (!ObjectUtils.isEmpty(projectFilter.getStatusList())) {
+                list.add(query.where(root.get("status").in(projectFilter.getStatusList())).getRestriction());
             }
             if (list.isEmpty()) {
                 return query.where().getRestriction();

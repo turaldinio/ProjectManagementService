@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,5 +17,5 @@ public class ProjectFilter {
     private String projectCode;
     private String name;
     private String description;
-    private ProjectStatus status;
+    private List<ProjectStatus> statusList;
 }
