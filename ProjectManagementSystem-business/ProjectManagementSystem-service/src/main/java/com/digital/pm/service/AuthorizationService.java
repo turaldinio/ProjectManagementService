@@ -1,7 +1,8 @@
 package com.digital.pm.service;
 
-import com.digital.pm.common.auth.AuthorizationRequest;
+import com.digital.pm.service.auth.AuthorizationRequest;
+import com.digital.pm.service.auth.AuthorizationResponse;
 
 public interface AuthorizationService {
-    String authorize(AuthorizationRequest authorizationRequest);
+    AuthorizationResponse authorize(AuthorizationRequest authorizationRequest);
 }

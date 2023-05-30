@@ -1,6 +1,6 @@
 package com.digital.pm.common.filters;
 
-import com.digital.pm.common.enums.EmployeeStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class EmployeeFilter {
+    @Schema(description = "Имя")
     private String firstName;
+    @Schema(description = "Фамилия")
+
     private String lastName;
+    @Schema(description = "Отчество")
+
     private String patronymic;
+    @Schema(description = "Учетная запись")
+
     private String account;
+    @Schema(description = "Адрес электронной почты")
+
     private String email;
 }

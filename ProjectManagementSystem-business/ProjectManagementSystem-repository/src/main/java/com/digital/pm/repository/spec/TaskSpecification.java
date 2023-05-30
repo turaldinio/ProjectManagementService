@@ -15,6 +15,10 @@ public class TaskSpecification {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
 
+            if(taskFilter==null){
+                return query.where().orderBy(criteriaBuilder.desc(root.get("creationDate"))).getRestriction();
+
+            }
             if (!ObjectUtils.isEmpty(taskFilter.getName())) {
                 list.add(criteriaBuilder.equal(root.get("name"), taskFilter.getName()));
             }

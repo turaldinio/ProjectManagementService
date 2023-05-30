@@ -26,7 +26,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (isAuthorizationRequest(request)) {
+        if (!isPrivateRequest(request)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -57,8 +57,8 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         }
     }
 
-    public boolean isAuthorizationRequest(HttpServletRequest request) {
-        return request.getRequestURI().equals("/auth/login");
+    public boolean isPrivateRequest(HttpServletRequest request) {
+        return request.getRequestURI().contains("/private");
     }
 
     public void writeForbiddenResponse(HttpServletResponse response, String message) throws IOException {

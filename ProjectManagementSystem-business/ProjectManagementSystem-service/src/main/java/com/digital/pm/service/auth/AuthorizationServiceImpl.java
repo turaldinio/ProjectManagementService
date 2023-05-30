@@ -1,6 +1,5 @@
 package com.digital.pm.service.auth;
 
-import com.digital.pm.common.auth.AuthorizationRequest;
 import com.digital.pm.service.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,13 +16,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final JWTService jwtService;
 
     @Override
-    public String authorize(AuthorizationRequest authorizationRequest) {
+    public AuthorizationResponse authorize(AuthorizationRequest authorizationRequest) {
         var auth = authenticationManager.
                 authenticate(new UsernamePasswordAuthenticationToken(authorizationRequest.getLogin(), authorizationRequest.getPassword(),
                         customUserDetailService.loadUserByUsername(authorizationRequest.getLogin()).getAuthorities()));
 
         SecurityContextHolder.getContext().setAuthentication(auth);
+        var token = jwtService.generateToken(auth);
 
-        return jwtService.generateToken(auth);
+        return AuthorizationResponse.
+                builder().
+                token(token).
+                build();
     }
 }

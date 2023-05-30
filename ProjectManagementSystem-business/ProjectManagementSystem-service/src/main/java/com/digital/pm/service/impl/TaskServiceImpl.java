@@ -87,7 +87,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> findAll(TaskFilter taskFilter) {
 
-        // TODO: 25.05.2023 вопрос про поиск по дате.искать точное совпадение или "раньше чем". Дописать сортировку
         var result = taskRepository.
                 findAll(TaskSpecification.getSpec(taskFilter));
         return taskMapper.map(result);

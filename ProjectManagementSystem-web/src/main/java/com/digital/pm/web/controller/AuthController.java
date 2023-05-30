@@ -1,27 +1,35 @@
 package com.digital.pm.web.controller;
 
-import com.digital.pm.common.auth.AuthorizationRequest;
+import com.digital.pm.service.auth.AuthorizationRequest;
 import com.digital.pm.service.AuthorizationService;
-import com.google.gson.Gson;
+import com.digital.pm.service.auth.AuthorizationResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "AuthController", description = "Контроллер авторизации")
+@ApiResponses({
+        @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AuthorizationResponse.class), mediaType = "application/json")),
+        @ApiResponse(responseCode = "400", description = "Неправильные параметры аргумента", content = @Content(schema = @Schema(), mediaType = "application/json"))
+})
+
 public class AuthController {
     private final AuthorizationService authorizationService;
-    private final Gson gson;
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthorizationRequest authorizationRequest) {
-        var token = authorizationService.authorize(authorizationRequest);
-        return gson.toJson(Map.of("token", token));
+    public AuthorizationResponse login(@RequestBody AuthorizationRequest authorizationRequest) {
+        return authorizationService.authorize(authorizationRequest);
     }
 
 }
