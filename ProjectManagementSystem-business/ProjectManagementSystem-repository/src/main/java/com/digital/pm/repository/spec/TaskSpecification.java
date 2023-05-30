@@ -20,7 +20,6 @@ public class TaskSpecification {
             }
             if (!ObjectUtils.isEmpty(taskFilter.getStatusList())) {
                 list.add(query.where(root.get("status").in(taskFilter.getStatusList())).getRestriction());
-                //    list.add(criteriaBuilder.equal(root.get("status"), taskFilter.getStatus()));
             }
             if (!ObjectUtils.isEmpty(taskFilter.getAuthorId())) {
                 list.add(criteriaBuilder.equal(root.get("authorId"), taskFilter.getAuthorId()));

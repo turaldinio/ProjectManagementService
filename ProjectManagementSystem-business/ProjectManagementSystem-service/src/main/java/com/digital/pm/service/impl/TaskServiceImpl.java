@@ -66,10 +66,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
-        var task = taskRepository.findById(taskId).orElseThrow(()->invalidTaskId(taskId));
+        var task = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
         var newTask = taskMapper.update(task, createTaskDto);
 
-        if(checkRequiredValues(newTask)){
+        if (checkRequiredValues(newTask)) {
             throw invalidRequiredValues();
         }
 
@@ -108,7 +108,8 @@ public class TaskServiceImpl implements TaskService {
         if (currentTask.getStatus().equals(TaskStatus.COMPLETED)) {
             currentTask.setStatus(TaskStatus.CLOSED);
         }
-        return taskMapper.map(currentTask);
+
+        return taskMapper.map(taskRepository.save(currentTask));
 
     }
 
@@ -145,6 +146,7 @@ public class TaskServiceImpl implements TaskService {
                 createTaskDto.getLaborCost() != null &&
                 createTaskDto.getDeadline() != null;
     }
+
     public boolean checkRequiredValues(Task newTask) {
         return newTask.getName() != null &&
                 !newTask.getName().isBlank() &&

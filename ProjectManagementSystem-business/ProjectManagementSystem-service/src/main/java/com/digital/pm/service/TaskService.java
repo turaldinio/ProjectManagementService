@@ -16,4 +16,7 @@ public interface TaskService {
 
     List<TaskDto> findAll(TaskFilter taskFilter);
 
+    @Transactional
+    public TaskDto changeStatus(Long taskId);
+
 }

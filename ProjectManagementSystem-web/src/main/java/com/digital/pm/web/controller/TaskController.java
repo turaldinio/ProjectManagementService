@@ -25,11 +25,22 @@ public class TaskController {
         return ResponseEntity.ok(taskService.create(createTaskDto));
     }
 
-    @PutMapping("/change/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<TaskDto> update(@PathVariable("id") Long taskId, @RequestBody CreateTaskDto createTaskDto) {
         return ResponseEntity.ok(taskService.update(taskId, createTaskDto));
     }
+    @PutMapping("/changeStatus/{id}")
+    public ResponseEntity<TaskDto> changeStatus(@PathVariable("id") Long taskId) {
+        return ResponseEntity.ok(taskService.changeStatus(taskId));
+    }
 
+
+    //{
+    //"statusList":[
+    //    "CLOSED",
+    //    "AT_WORK"
+    //]
+    //}
     @PostMapping("/find")
     public ResponseEntity<List<TaskDto>> findAll(@RequestBody TaskFilter taskFilter) {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
