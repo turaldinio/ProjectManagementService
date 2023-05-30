@@ -3,7 +3,6 @@ package com.digital.pm.app;
 import com.digital.pm.service.auth.CustomUserDetailService;
 import com.digital.pm.service.auth.JWTAuthFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,32 +24,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-        security.
-                csrf().
+
+        security.csrf().
                 disable().
                 formLogin().
                 disable().
                 authorizeHttpRequests().
-                requestMatchers("/auth/**").
+                requestMatchers("/private/**").
+                authenticated().
+                anyRequest().
                 permitAll().
                 and().
-                authorizeHttpRequests().
-                anyRequest().
-                authenticated().
-                and().
                 addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        security.csrf().
-//                disable().
-//                formLogin().
-//                disable().
-//                authorizeHttpRequests().
-//                anyRequest().
-//                permitAll().
-//                and().
-//                authorizeHttpRequests().
-//                requestMatchers("/private/**").
-//                authenticated();
 
         return security.build();
     }
