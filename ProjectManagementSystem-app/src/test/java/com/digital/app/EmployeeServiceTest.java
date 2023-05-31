@@ -2,7 +2,6 @@ package com.digital.app;
 
 import com.digital.pm.app.ProjectManagementSystemApplication;
 import com.digital.pm.repository.EmployeeRepository;
-import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.impl.EmployeeServiceImpl;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import org.junit.jupiter.api.Test;

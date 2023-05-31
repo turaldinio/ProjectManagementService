@@ -7,12 +7,9 @@
         <groupId>com.digital</groupId>
         <artifactId>pm-parent</artifactId>
         <version>${revision}${changelist}</version>
-
     </parent>
 
     <artifactId>pm-dto</artifactId>
-
-
 
     <dependencies>
         <dependency>
