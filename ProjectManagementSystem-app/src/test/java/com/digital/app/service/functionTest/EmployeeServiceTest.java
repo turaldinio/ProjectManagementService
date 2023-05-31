@@ -1,6 +1,7 @@
 package com.digital.app.service.functionTest;
 
 import com.digital.pm.app.ProjectManagementSystemApplication;
+import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.employee.Employee;
@@ -102,6 +103,28 @@ public class EmployeeServiceTest {
         var result = employeeService.update(1L, createMinRequiredCreateEmployeeDto());
 
         Assertions.assertEquals(newEmployeeDto.getFirstName(), result.getFirstName());
+
+    }
+
+    @Test
+    @DisplayName("delete employee")
+    public void delete() {
+        var employee = createMinRequiredEmployee(createMinRequiredCreateEmployeeDto());
+        employee.setStatus(EmployeeStatus.ACTIVE);
+
+        var deletedEmployeeDto = createMinRequiredEmployeeDto(employee);
+        deletedEmployeeDto.setStatus(EmployeeStatus.REMOTE);
+
+
+        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(employee));
+        when(employeeRepository.save(any())).thenReturn(employee);
+
+        when(employeeMapper.map(employee)).thenReturn(deletedEmployeeDto);
+
+        var result = employeeService.deleteById(1L);
+
+        Assertions.assertEquals(employee.getStatus(), result.getStatus());
+
 
     }
 
