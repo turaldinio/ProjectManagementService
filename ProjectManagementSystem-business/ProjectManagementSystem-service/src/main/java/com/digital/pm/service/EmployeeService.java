@@ -20,8 +20,8 @@ public interface EmployeeService {
     EmployeeDto getById(Long id);
 
     List<EmployeeDto> findAll();
-    @Transactional
 
+    @Transactional
     EmployeeDto deleteById(Long id);
 
     List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
