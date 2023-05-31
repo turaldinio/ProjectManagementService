@@ -1,7 +1,7 @@
 package com.digital.pm.app;
 
-import com.digital.pm.service.auth.CustomUserDetailService;
-import com.digital.pm.service.auth.JWTAuthFilter;
+import com.digital.pm.service.auth.impl.CustomUserDetailService;
+import com.digital.pm.service.auth.config.JWTAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -11,6 +11,7 @@
 
     <dependencies>
 
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -55,12 +56,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.digital</groupId>
-            <artifactId>pm-model</artifactId>
-            <version>${revision}${changelist}</version>
         </dependency>
 
         <dependency>

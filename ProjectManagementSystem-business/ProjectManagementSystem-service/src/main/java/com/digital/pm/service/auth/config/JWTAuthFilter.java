@@ -1,5 +1,6 @@
-package com.digital.pm.service.auth;
+package com.digital.pm.service.auth.config;
 
+import com.digital.pm.service.auth.impl.CustomUserDetailService;
 import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

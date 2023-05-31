@@ -1,6 +1,9 @@
-package com.digital.pm.service.auth;
+package com.digital.pm.service.auth.impl;
 
 import com.digital.pm.service.AuthorizationService;
+import com.digital.pm.service.auth.AuthorizationRequest;
+import com.digital.pm.service.auth.AuthorizationResponse;
+import com.digital.pm.service.auth.config.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

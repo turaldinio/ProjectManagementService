@@ -38,16 +38,6 @@
             <version>${revision}${changelist}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.digital</groupId>
-            <artifactId>pm-dto</artifactId>
-            <version>${revision}${changelist}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.digital</groupId>
-            <artifactId>pm-common</artifactId>
-            <version>${revision}${changelist}</version>
-        </dependency>
 
     </dependencies>
 

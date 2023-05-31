@@ -1,5 +1,6 @@
-package com.digital.pm.service.auth;
+package com.digital.pm.service.auth.config;
 
+import com.digital.pm.service.auth.impl.CustomUserDetailService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
