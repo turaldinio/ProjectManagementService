@@ -24,19 +24,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
 
-        //проверка;если указан уз пароль обязателен.
-        if (createEmployeeDto.getAccount() != null) {
-            checkPassword(createEmployeeDto);
-        }
-
         //проверка обязательных параметров
         if (!checkRequiredValue(createEmployeeDto)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
-        //проверка уникальности уз
 
+        //проверка;если указан уз пароль обязателен.
+        //проверка уникальности уз
         if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
             throw invalidAccount(createEmployeeDto.getAccount());
+        }
+        if (createEmployeeDto.getAccount() != null) {
+            checkPassword(createEmployeeDto);
+
         }
 
         var employee = employeeMapper.create(createEmployeeDto);
@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         var newEmployee = employeeMapper.update(employee, createEmployeeDto);
 
-        //проверка, после обновления поле password!=null если указана есть уз
+        //проверка, после обновления поле password!=null если есть уз
         if (newEmployee.getAccount() != null) {
             checkPassword(newEmployee);
         }

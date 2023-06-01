@@ -16,57 +16,85 @@ public class EmployeeRepositoryTest extends PsqlContainer {
     @Autowired
     EmployeeService employeeService;
 
+    /**
+     * проверка метода создания пользователя
+     * Создаем сущность, и записываем ее в бд
+     */
     @Test
     public void create() {
         var createEmployeeDto = CreateEmployeeDto.builder().
                 firstName("Евгений").
                 lastName("Романов").
-                account("evKe").
                 build();
-        employeeService.create(createEmployeeDto);
+        var result = employeeService.create(createEmployeeDto);
 
-        Assertions.assertNotNull(employeeService.findAll(EmployeeFilter.builder()
-                .firstName("Евгений").lastName("Романов").build()));
+        Assertions.assertNotNull(result);
     }
 
+    /**
+     * Проверка выбрасывания исключения при невалидных данных
+     * Создаем пользователя и записываем его в бд
+     * Пробуем повторно записать его в бд (ожидаем exception)
+     *
+     */
     @Test
     public void createWithException() {
-        var employee1 = createDefaultEmployer();
-        employee1.setAccount("employee");
+        var employee1 = CreateEmployeeDto.
+                builder().
+                firstName("Евгений").
+                lastName("Дамиров").
+                account("ioli").
+                password("user").
+                build();
 
         employeeService.create(employee1);
 
-        var employee2 = createDefaultEmployer();
-        employee2.setAccount("employee");
-
-        Assertions.assertThrows(BadRequest.class, () -> employeeService.create(employee2));
+        Assertions.assertThrows(BadRequest.class, () -> employeeService.create(employee1));
 
 
     }
 
+    /**
+     * Проверка обновления пользователя. Создаем сотрудника с именем Евгений,
+     * после чего обновляем его имя до Александр
+     */
     @Test
     public void updateEmployee() {
-        var createEmployeeDto = createDefaultEmployer();
+        var createEmployeeDto = CreateEmployeeDto.
+                builder().
+                firstName("Илья").
+                lastName("Ляхов").
+                account("ilyam!mv3").
+                password("user").
+                build();
 
-        var result = employeeService.create(createEmployeeDto);
+        var create = employeeService.create(createEmployeeDto);//Илья
 
         var updateEmployer = createDefaultEmployer();
-        updateEmployer.setAccount("venom98");
+        updateEmployer.setFirstName("Александр");//Александр
 
-        employeeService.update(result.getId(), updateEmployer);
+        var result = employeeService.update(create.getId(), updateEmployer);
 
-        Assertions.assertNotNull(employeeService.findAll(
-                EmployeeFilter.builder().
-                        account("venom98").build()
-        ));
+        Assertions.assertNotNull(result);
     }
+
+    /**
+     * Проверка метода получения всех сотрудников
+     * Направляем запрос на получение всх записей в бд(там точно есть записи liqubase)
+     */
 
     @Test
     public void findAll() {
         Assertions.assertNotNull(employeeService.findAll());
     }
 
-    //поиск по фильтру
+    /**
+     * Проверка возмонжости поиска сущности по фильтру
+     * Создаем сущность, записываем ее в бд
+     * Создаем фильтр с аккаунтом =employee.account
+     * Осуществляем поиск
+     * Проверяем что сотрудник найден
+     */
     @Test
     public void findAllWithFilter() {
         var employee = CreateEmployeeDto.builder().
@@ -79,11 +107,11 @@ public class EmployeeRepositoryTest extends PsqlContainer {
                 password("user").
                 build();
 
-        employeeService.create(employee);//записываем в бд
+        var create = employeeService.create(employee);//записываем в бд
 
         var filter = EmployeeFilter.
                 builder().
-                account("denisOc").
+                account(create.getAccount()).
                 build();
 
         var result = employeeService.findAll(filter);//ищем по фильтру account
@@ -91,7 +119,13 @@ public class EmployeeRepositoryTest extends PsqlContainer {
         Assertions.assertEquals(employee.getFirstName(), result.stream().findFirst().orElseThrow().getFirstName());
     }
 
-
+    /**
+     * Проверка удаления пользователя по id
+     * Получаем всех сотрудников
+     * Получаем id последнего сотрудника
+     * Удаляем пользователя по этому id
+     * Проверяем, что при повторном удалении пользователя выкинется исключение
+     */
     @Test
     public void deleteById() {
         var allUsers = employeeService.findAll();

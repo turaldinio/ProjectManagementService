@@ -156,6 +156,7 @@ public class EmployeeServiceTest {
                 firstName("Иван").
                 lastName("Романов").
                 account("user").
+                password("dea").
                 build();
     }
     //минимально-необходимый  Employee
@@ -166,6 +167,8 @@ public class EmployeeServiceTest {
                 firstName(createEmployeeDto.getFirstName()).
                 lastName(createEmployeeDto.getLastName()).
                 account(createEmployeeDto.getAccount()).
+                account(createEmployeeDto.getPassword()).
+                password(createEmployeeDto.getPassword()).
                 build();
     }
 
@@ -176,6 +179,7 @@ public class EmployeeServiceTest {
                 firstName(employee.getFirstName()).
                 lastName(employee.getLastName()).
                 account(employee.getAccount()).
+                patronymic(employee.getPassword()).
                 build();
     }
 }
