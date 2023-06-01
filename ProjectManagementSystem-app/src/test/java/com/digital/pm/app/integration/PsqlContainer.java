@@ -7,11 +7,18 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 public class PsqlContainer {
-    static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres");
+
+    static PostgreSQLContainer<?> postgreSQLContainer =
+            new PostgreSQLContainer<>("postgres:15.1");
 
     @BeforeAll
     public static void beforeAll() {
         postgreSQLContainer.start();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        postgreSQLContainer.stop();
     }
 
 

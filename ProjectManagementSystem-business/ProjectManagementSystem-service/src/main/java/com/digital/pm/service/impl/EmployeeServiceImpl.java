@@ -22,11 +22,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
 
-
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
+
+        //проверка;если указан уз пароль обязателен.
+        if (createEmployeeDto.getAccount() != null) {
+            checkPassword(createEmployeeDto);
+        }
+
+        //проверка обязательных параметров
         if (!checkRequiredValue(createEmployeeDto)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
+        //проверка уникальности уз
+
         if (employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
             throw invalidAccount(createEmployeeDto.getAccount());
         }
@@ -42,15 +50,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
         var employee = employeeRepository.findById(employeeId).orElseThrow(() -> invalidId(employeeId));
 
+        //если уз обновляется, проверяем что он уникальный
+        if (createEmployeeDto.getAccount() != null && employeeRepository.existsByAccount(createEmployeeDto.getAccount())) {
+            throw invalidAccount(createEmployeeDto.getAccount());
+        }
+
         var newEmployee = employeeMapper.update(employee, createEmployeeDto);
+
+        //проверка, после обновления поле password!=null если указана есть уз
+        if (newEmployee.getAccount() != null) {
+            checkPassword(newEmployee);
+        }
 
         if (!checkRequiredValue(newEmployee)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
 
-        if (newEmployee.getAccount() != null && employeeRepository.existsByAccount(newEmployee.getAccount())) {
-            throw invalidAccount(createEmployeeDto.getAccount());
-        }
 
         employeeRepository.save(newEmployee);
 
@@ -105,6 +120,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new BadRequest(String.format("the %s account  is already exists ", account));
     }
 
+    public BadRequest invalidAccountAndPassword() {
+        return new BadRequest("the password cannot be empty or blank");
+
+    }
 
     @Override
     public EmployeeDto findByAccount(String account) {
@@ -118,10 +137,25 @@ public class EmployeeServiceImpl implements EmployeeService {
                 !createEmployeeDto.getLastName().isBlank() &&
                 !createEmployeeDto.getFirstName().isBlank();
     }
+
     public boolean checkRequiredValue(Employee newEmployee) {
         return newEmployee.getFirstName() != null &&
                 newEmployee.getLastName() != null &&
                 !newEmployee.getLastName().isBlank() &&
                 !newEmployee.getFirstName().isBlank();
+    }
+
+    public void checkPassword(CreateEmployeeDto createEmployeeDto) {
+        if (!createEmployeeDto.getPassword().isBlank() && !createEmployeeDto.getPassword().isEmpty()) {
+            return;
+        }
+        throw invalidAccountAndPassword();
+    }
+
+    public void checkPassword(Employee employee) {
+        if (!employee.getPassword().isBlank() && !employee.getPassword().isEmpty()) {
+            return;
+        }
+        throw invalidAccountAndPassword();
     }
 }

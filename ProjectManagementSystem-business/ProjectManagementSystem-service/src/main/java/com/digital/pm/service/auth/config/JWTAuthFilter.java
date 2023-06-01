@@ -37,10 +37,12 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                 : request.getHeader("auth-token");
 
         if (token == null) {
-            writeForbiddenResponse(response,"no token provided");
+            writeForbiddenResponse(response, "no token provided");
             return;
         }
-        token = token.substring("Bearer ".length());
+        if (token.startsWith("Bearer ")) {
+            token = token.substring("Bearer ".length());
+        }
 
         if (jwtService.isTokenExpired(token)) {
             writeForbiddenResponse(response, "Token is expired.Get a new token at /auth/login");
@@ -54,7 +56,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } else {
-            writeForbiddenResponse(response,"invalidate token");
+            writeForbiddenResponse(response, "invalidate token");
         }
     }
 

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class EmployeeMapper {
     @Autowired
-    private  BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Employee create(CreateEmployeeDto createEmployeeDto) {
 
@@ -31,7 +31,7 @@ public class EmployeeMapper {
                 account(createEmployeeDto.getAccount()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
-                password(bCryptPasswordEncoder.encode(createEmployeeDto.getPassword())).
+                password(createEmployeeDto.getPassword() == null ? null : bCryptPasswordEncoder.encode(createEmployeeDto.getPassword())).
                 build();
 
 
@@ -57,7 +57,7 @@ public class EmployeeMapper {
             employee.setPost(createEmployeeDto.getPost());
         }
         if (createEmployeeDto.getPassword() != null) {
-            employee.setPassword( bCryptPasswordEncoder.encode(createEmployeeDto.getPassword()));
+            employee.setPassword(bCryptPasswordEncoder.encode(createEmployeeDto.getPassword()));
         }
         return employee;
     }
