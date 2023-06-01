@@ -1,6 +1,5 @@
-package com.digital.app.service.mock;
+package com.digital.pm.app.unit;
 
-import com.digital.pm.app.ProjectManagementSystemApplication;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
@@ -22,7 +21,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = ProjectManagementSystemApplication.class)
+@SpringBootTest()
 
 public class EmployeeServiceTest {
 

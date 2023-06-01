@@ -33,11 +33,27 @@
         <jwt>0.11.5</jwt>
         <spring-boot-starter-test>3.0.6</spring-boot-starter-test>
         <slf4j.version>2.0.7</slf4j.version>
+        <junit-jupiter-testcontainer>1.17.6</junit-jupiter-testcontainer>
+        <psql-testcontainer>1.16.3</psql-testcontainer>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit-jupiter-testcontainer}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${psql-testcontainer}</version>
+            </dependency>
+
+
 
             <dependency>
                 <groupId>org.slf4j</groupId>
