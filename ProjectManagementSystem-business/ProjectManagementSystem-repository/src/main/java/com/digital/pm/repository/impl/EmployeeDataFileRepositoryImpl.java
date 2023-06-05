@@ -2,9 +2,8 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.google.gson.reflect.TypeToken;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;

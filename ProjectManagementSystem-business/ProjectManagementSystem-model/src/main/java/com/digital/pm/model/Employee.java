@@ -1,4 +1,4 @@
-package com.digital.pm.model.employee;
+package com.digital.pm.model;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import jakarta.persistence.*;
@@ -19,10 +19,11 @@ public class Employee {
     @Column(nullable = false,
             name = "last_name")
     private String lastName;//фамилия
-    @Column(unique = true)
-    private String account;//четная запись (уникальная)
+    //    @Column(unique = true)
+//    private String account;//четная запись (уникальная)
+//    private String password;//пароль
+    private Long credential;//данные учетной записи (логин/пароль)
     private String patronymic;//отчество
-    private String password;//пароль
     private String post;//должность
 
     private String email;//адрес электронной почты

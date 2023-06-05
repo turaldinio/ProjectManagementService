@@ -3,7 +3,7 @@ package com.digital.pm.service.impl;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
-import com.digital.pm.model.team.Team;
+import com.digital.pm.model.Team;
 import com.digital.pm.repository.TeamRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.ProjectService;

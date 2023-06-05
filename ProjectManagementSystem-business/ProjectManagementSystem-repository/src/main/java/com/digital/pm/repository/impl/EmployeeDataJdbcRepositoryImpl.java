@@ -2,7 +2,7 @@ package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
 import lombok.RequiredArgsConstructor;
 

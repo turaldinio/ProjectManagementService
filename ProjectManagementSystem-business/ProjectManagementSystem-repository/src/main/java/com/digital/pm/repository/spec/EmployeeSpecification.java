@@ -2,7 +2,7 @@ package com.digital.pm.repository.spec;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;

@@ -3,7 +3,7 @@ package com.digital.pm.service.mapping;
 import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
-import com.digital.pm.model.project.Project;
+import com.digital.pm.model.Project;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.digital.pm.service.mapping;
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
-import com.digital.pm.model.task.Task;
+import com.digital.pm.model.Task;
 import com.digital.pm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

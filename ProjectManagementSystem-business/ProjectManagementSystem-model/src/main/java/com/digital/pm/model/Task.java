@@ -1,4 +1,4 @@
-package com.digital.pm.model.task;
+package com.digital.pm.model;
 
 import com.digital.pm.common.enums.TaskStatus;
 import jakarta.persistence.*;

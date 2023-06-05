@@ -2,8 +2,7 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
-import com.digital.pm.model.employee.Employee;
-import com.digital.pm.model.team.Team;
+import com.digital.pm.model.Team;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

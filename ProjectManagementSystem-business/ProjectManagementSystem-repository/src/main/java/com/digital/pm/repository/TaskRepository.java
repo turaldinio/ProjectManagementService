@@ -1,7 +1,6 @@
 package com.digital.pm.repository;
 
-import com.digital.pm.model.task.Task;
-import com.digital.pm.model.team.Team;
+import com.digital.pm.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

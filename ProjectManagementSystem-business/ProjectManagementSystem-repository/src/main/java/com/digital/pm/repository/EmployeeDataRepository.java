@@ -1,9 +1,8 @@
 package com.digital.pm.repository;
 
 import com.digital.pm.common.filters.EmployeeFilter;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface EmployeeDataRepository {

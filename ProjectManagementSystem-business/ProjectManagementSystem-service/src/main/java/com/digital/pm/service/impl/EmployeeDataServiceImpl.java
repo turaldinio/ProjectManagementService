@@ -3,7 +3,7 @@ package com.digital.pm.service.impl;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.common.filters.EmployeeFilter;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
 import com.digital.pm.service.EmployeeDataService;
 import com.digital.pm.service.mapping.EmployeeMapper;

@@ -1,4 +1,4 @@
-package com.digital.pm.model.project;
+package com.digital.pm.model;
 
 import com.digital.pm.common.enums.ProjectStatus;
 import jakarta.persistence.*;

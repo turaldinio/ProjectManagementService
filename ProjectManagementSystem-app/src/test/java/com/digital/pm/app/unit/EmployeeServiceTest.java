@@ -3,7 +3,7 @@ package com.digital.pm.app.unit;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.model.employee.Employee;
+import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.impl.EmployeeServiceImpl;
