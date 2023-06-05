@@ -17,7 +17,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="password" type="text">
-                <constraints checkConstraint="CHECK (password !='')"/>
             </column>
             <column name="patronymic" type="text">
                 <constraints nullable="true"/>
