@@ -12,22 +12,22 @@ import lombok.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//первичный ключ
     @Column(nullable = false,
             name = "first_name")
-    private String firstName;
+    private String firstName;//имя
     @Column(nullable = false,
             name = "last_name")
-    private String lastName;
+    private String lastName;//фамилия
     @Column(unique = true)
-    private String account;
-    private String patronymic;
-    private String password;
-    private String post;
+    private String account;//четная запись (уникальная)
+    private String patronymic;//отчество
+    private String password;//пароль
+    private String post;//должность
 
-    private String email;
+    private String email;//адрес электронной почты
     @Enumerated(EnumType.STRING)
-    private EmployeeStatus status;
+    private EmployeeStatus status;//статус сотрудника удаленный/активный
 
 
 }

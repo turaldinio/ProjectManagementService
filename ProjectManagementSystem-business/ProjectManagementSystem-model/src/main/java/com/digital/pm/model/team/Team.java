@@ -19,15 +19,15 @@ import java.util.List;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//первичный ключ команды
     @Column(name = "employee_id")
-    private Long employeeId;
+    private Long employeeId;//id участника команды
     @Column(name = "project_id")
 
-    private Long projectId;
+    private Long projectId;//id проекта
     @Enumerated(EnumType.STRING)
     @Column(name = "employee_role")
-    private Role role;
+    private Role role;//роль, которую сотрудник занимает в этом проекте
 
 
 }

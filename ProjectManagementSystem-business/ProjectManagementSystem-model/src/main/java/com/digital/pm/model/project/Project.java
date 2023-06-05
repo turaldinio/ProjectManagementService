@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//первичный ключ проекта
     @Column(nullable = false,unique = true,name = "project_code")
     private String projectCode;//уникальный код проекта
     @Column(nullable = false)
-    private String name;
-    private String description;
+    private String name;//название проекта
+    private String description;//описание проекта
     @Enumerated(EnumType.STRING)
-    private ProjectStatus status;
+    private ProjectStatus status;//статус, в котором находится проект
 
 }

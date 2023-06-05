@@ -18,14 +18,14 @@ import java.util.Date;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//первичный ключ задачи
     @Column(nullable = false)
-    private String name;
-    private String description;
+    private String name;//название задачи
+    private String description;//описание задачи
     @Column(name = "executor_id")
-    private Long executorId;
+    private Long executorId;//id исполнителя задачи
     @Column(name = "project_id")
-    private Long projectId;
+    private Long projectId;//id проекта, в котором находится эта задача
     @Column(nullable = false,
             name = "labor_cost")
     private Long laborCost;          //трудозатраты в часах
@@ -33,15 +33,15 @@ public class Task {
     @CreationTimestamp
     private Date deadline;      //не может быть меньше чем now +трудозатраты
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    private TaskStatus status;//статус в которой находится задача
 
     @Column(name = "author_id")
-    private Long authorId;
+    private Long authorId;//id автора задачи
     @CreationTimestamp
     @Column(name = "creation_date")
-    private Date creationDate;
+    private Date creationDate;//дата создания задачи
     @CreationTimestamp
     @Column(name = "updated")
-    private Date updateTime;
+    private Date updateTime;//дата обновления задачи
 
 }
