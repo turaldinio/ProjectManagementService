@@ -24,9 +24,9 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
             insert.setString(3, employee.getLastName());
             insert.setString(4, employee.getPatronymic());
             insert.setString(5, employee.getPost());
-            insert.setString(6, employee.getAccount());
-            insert.setString(7, employee.getEmail());
-            insert.setString(8, employee.getStatus().name());
+          //  insert.setString(6, employee.getAccount());
+            insert.setString(6, employee.getEmail());
+            insert.setString(7, employee.getStatus().name());
 
             insert.execute();
 
@@ -153,7 +153,7 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
                     firstName(resultSet.getString("first_name")).
                     lastName(resultSet.getString("last_name")).
                     patronymic(resultSet.getString("patronymic")).
-                    account(resultSet.getString("account")).
+             //       account(resultSet.getString("account")).
                     email(resultSet.getString("email")).
                     post(resultSet.getString("post")).
                     status(EmployeeStatus.valueOf(resultSet.getString("status"))).

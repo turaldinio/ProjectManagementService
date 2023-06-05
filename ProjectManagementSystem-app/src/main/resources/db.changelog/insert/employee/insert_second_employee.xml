@@ -12,9 +12,8 @@
             <column name="patronymic" value="Николаевич"/>
             <column name="post" value="top manager"/>
             <column name="email" value="kirilka-98@mail.ru"/>
-            <column name="account" value="kirAf32"/>
+            <column name="credential_id" value="2"/>
             <column name="status" value="ACTIVE"/>
-            <column name="password" value="$2y$10$R7gmkCvf2WfleaMiDskbkOrY.y1J3KvKYDTXlWZPTVeA34m8H9TUG"/>
 
         </insert>
     </changeSet>

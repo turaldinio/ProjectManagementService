@@ -138,9 +138,9 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
                         return true;
                     }
 
-                    if (isNotNullObjects(x.getAccount(), filterEmployee.getAccount()) && x.getAccount().equals(filterEmployee.getAccount())) {
-                        return true;
-                    }
+//                    if (isNotNullObjects(x.getAccount(), filterEmployee.getAccount()) && x.getAccount().equals(filterEmployee.getAccount())) {
+//                        return true;
+//                    }
 
                     return false;
                 }).collect(Collectors.toList());

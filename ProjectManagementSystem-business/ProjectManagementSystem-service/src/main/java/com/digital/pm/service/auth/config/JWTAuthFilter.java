@@ -1,6 +1,7 @@
 package com.digital.pm.service.auth.config;
 
 import com.digital.pm.common.enums.EmployeeStatus;
+import com.digital.pm.repository.CredentialRepository;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.auth.impl.CustomUserDetailService;
 import com.digital.pm.service.exceptions.BadRequest;
@@ -33,6 +34,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     private final Gson gson;
 
     private final EmployeeRepository employeeRepository;
+    private final CredentialRepository credentialRepository;
 
     @Autowired
     @Qualifier("handlerExceptionResolver")
@@ -67,10 +69,13 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             if (jwtService.isTokenValid(token)) {
                 var userDetail = customUserDetailService.loadUserByUsername(jwtService.extractUserAccount(token));
 
-                var currentEmployee = employeeRepository.findByAccount(jwtService.extractUserAccount(token)).get();
+                var credential = credentialRepository.findByLogin(jwtService.extractUserAccount(token)).get();
+                //var currentEmployee = employeeRepository.findByCredential_Login(jwtService.extractUserAccount(token)).get();
+
+                var currentEmployee = employeeRepository.findByCredentialId(credential.getId()).orElseThrow();
 
                 if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {
-                    resolver.resolveException(request,response,null,new BadRequest("Remote user cannot be authorized"));
+                    resolver.resolveException(request, response, null, new BadRequest("Remote user cannot be authorized"));
                 }
 
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetail.getUsername(),

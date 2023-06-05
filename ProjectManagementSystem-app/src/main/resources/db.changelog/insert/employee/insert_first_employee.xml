@@ -12,9 +12,8 @@
             <column name="patronymic" value="Иванович"/>
             <column name="post" value="junior developer"/>
             <column name="email" value="dimaSimba@mail.ru"/>
-            <column name="account" value="dimsim"/>
+            <column name="credential_id" value="1"/>
             <column name="status" value="ACTIVE"/>
-            <column name="password" value="$2y$10$R7gmkCvf2WfleaMiDskbkOrY.y1J3KvKYDTXlWZPTVeA34m8H9TUG"/>
         </insert>
     </changeSet>
 

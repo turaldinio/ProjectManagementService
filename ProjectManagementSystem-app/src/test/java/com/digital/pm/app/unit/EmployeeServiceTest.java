@@ -58,7 +58,7 @@ public class EmployeeServiceTest {
     @DisplayName("duplicate employeeAccount")
     public void negativeEmployeeCreateSecond() {
 //имитируем наличие в бд аккаунта
-        when(employeeRepository.existsByAccount(anyString())).thenReturn(true);
+        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(true);
 
         var employee = createMinRequiredCreateEmployeeDto();
 
@@ -93,7 +93,7 @@ public class EmployeeServiceTest {
         var newEmployeeDto = createMinRequiredEmployeeDto(newEmployee);
 
         when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(oldEmployee));
-        when(employeeRepository.existsByAccount(anyString())).thenReturn(false);
+        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
         when(employeeRepository.save(any())).thenReturn(newEmployee);
 
         when(employeeMapper.update(any(), any())).thenReturn(newEmployee);
@@ -134,7 +134,7 @@ public class EmployeeServiceTest {
         var employee = createMinRequiredEmployee(createEmployeeDto);
         var employeeDto = createMinRequiredEmployeeDto(employee);
 
-        when(employeeRepository.existsByAccount(anyString())).thenReturn(false);
+        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
         when(employeeRepository.save(any())).thenReturn(employee);
 
         when(employeeMapper.create(createEmployeeDto)).

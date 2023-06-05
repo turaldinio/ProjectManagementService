@@ -1,6 +1,7 @@
 package com.digital.pm.dto.employee;
 
 
+import com.digital.pm.dto.credential.CreateCredentialDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,7 @@ public class CreateEmployeeDto {
     private String post;
     @Schema(description = "Учетная запись")
 
-    private String account;
+    private Long credentialId;
     @Schema(description = "Адрес электронной почты")
 
     private String email;

@@ -19,10 +19,8 @@ public class Employee {
     @Column(nullable = false,
             name = "last_name")
     private String lastName;//фамилия
-    //    @Column(unique = true)
-//    private String account;//четная запись (уникальная)
-//    private String password;//пароль
-    private Long credential;//данные учетной записи (логин/пароль)
+    @Column(name = "credential_id")
+    private Long credentialId;//данные учетной записи (логин/пароль)
     private String patronymic;//отчество
     private String post;//должность
 

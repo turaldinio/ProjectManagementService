@@ -7,6 +7,9 @@
     <include file="create/create_project.xml" relativeToChangelogFile="true"/>
     <include file="create/create_team.xml" relativeToChangelogFile="true"/>
     <include file="create/create_task.xml" relativeToChangelogFile="true"/>
+    <include file="create/create_credential.xml" relativeToChangelogFile="true"/>
+    <include file="insert/credential/insert_first_credential.xml" relativeToChangelogFile="true"/>
+    <include file="insert/credential/insert_second_credential.xml" relativeToChangelogFile="true"/>
     <include file="insert/employee/insert_first_employee.xml" relativeToChangelogFile="true"/>
     <include file="insert/employee/insert_second_employee.xml" relativeToChangelogFile="true"/>
     <include file="insert/employee/insert_third_employee.xml" relativeToChangelogFile="true"/>

@@ -28,10 +28,9 @@ public class EmployeeMapper {
                 lastName(createEmployeeDto.getLastName()).
                 patronymic(createEmployeeDto.getPatronymic()).
                 post(createEmployeeDto.getPost()).
-                account(createEmployeeDto.getAccount()).
+                credentialId(createEmployeeDto.getCredentialId()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
-                password(createEmployeeDto.getPassword() == null ? null : bCryptPasswordEncoder.encode(createEmployeeDto.getPassword())).
                 build();
 
 
@@ -47,8 +46,8 @@ public class EmployeeMapper {
         if (createEmployeeDto.getPatronymic() != null) {
             employee.setPatronymic(createEmployeeDto.getPatronymic());
         }
-        if (createEmployeeDto.getAccount() != null) {
-            employee.setAccount(createEmployeeDto.getAccount());
+        if (createEmployeeDto.getCredentialId() != null) {
+            employee.setCredentialId(createEmployeeDto.getCredentialId());
         }
         if (createEmployeeDto.getEmail() != null) {
             employee.setEmail(createEmployeeDto.getEmail());
@@ -56,8 +55,8 @@ public class EmployeeMapper {
         if (createEmployeeDto.getPost() != null) {
             employee.setPost(createEmployeeDto.getPost());
         }
-        if (createEmployeeDto.getPassword() != null) {
-            employee.setPassword(bCryptPasswordEncoder.encode(createEmployeeDto.getPassword()));
+        if (createEmployeeDto.getCredentialId() != null) {
+            employee.setCredentialId(createEmployeeDto.getCredentialId());
         }
         return employee;
     }
@@ -70,8 +69,7 @@ public class EmployeeMapper {
                 lastName(employee.getLastName()).
                 patronymic(employee.getPatronymic()).
                 post(employee.getPost()).
-                account(employee.getAccount()).
-                email(employee.getEmail()).
+                credentialId(employee.getCredentialId()).
                 status(employee.getStatus()).
                 build();
 
@@ -86,8 +84,7 @@ public class EmployeeMapper {
                         firstName(x.getFirstName()).
                         lastName(x.getLastName()).
                         patronymic(x.getPatronymic()).post(x.getPost()).
-                        account(x.getAccount()).
-                        email(x.getEmail()).
+                        credentialId(x.getCredentialId()).
                         status(x.getStatus()).
                         build()).
                 collect(Collectors.toList());

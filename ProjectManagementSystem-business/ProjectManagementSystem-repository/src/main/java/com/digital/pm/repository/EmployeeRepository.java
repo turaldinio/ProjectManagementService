@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
-    Optional<Employee> findByAccount(String account);
+    Optional<Employee> findByCredentialId(Long id);
 
-    boolean existsByAccount(String account);
+    boolean existsByCredentialId(Long id);
 
 }
