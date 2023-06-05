@@ -55,31 +55,5 @@
 
     </dependencies>
 
-    <build>
-
-        <finalName>pm-sample</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <finalName>pm-sample-exec</finalName>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.digital.pm.app.ApplicationConfig
-                            </mainClass>
-                        </manifest>
-                    </archive>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
-
-            </plugin>
-        </plugins>
-    </build>
-
     <artifactId>pm-app</artifactId>
 </project>

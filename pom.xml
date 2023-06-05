@@ -23,15 +23,15 @@
         <maven.compiler.source>18</maven.compiler.source>
         <lombok.version>1.18.24</lombok.version>
         <gson.version>2.10.1</gson.version>
-        <spring-boot-starter-data-jpa>3.0.6</spring-boot-starter-data-jpa>
         <liqubase>4.17.2</liqubase>
         <postgresql>42.4.0</postgresql>
+        <spring-boot-starter-data-jpa>3.0.6</spring-boot-starter-data-jpa>
         <spring-boot-starter-web>3.0.5</spring-boot-starter-web>
         <spring-boot-starter-validation>3.0.5</spring-boot-starter-validation>
+        <spring-boot-starter-test>3.0.6</spring-boot-starter-test>
         <springdoc>2.0.0</springdoc>
         <spring-security>3.0.5</spring-security>
         <jwt>0.11.5</jwt>
-        <spring-boot-starter-test>3.0.6</spring-boot-starter-test>
         <slf4j.version>2.0.7</slf4j.version>
         <junit-jupiter-testcontainer>1.18.2</junit-jupiter-testcontainer>
         <psql-testcontainer>1.18.2</psql-testcontainer>
@@ -52,7 +52,6 @@
                 <artifactId>postgresql</artifactId>
                 <version>${psql-testcontainer}</version>
             </dependency>
-
 
 
             <dependency>
@@ -152,35 +151,14 @@
 
 
     <build>
-        <finalName>pm-sample</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
-                <!--                <executions>-->
-                <!--                    <execution>-->
-                <!--                        <id>make-assembly</id>-->
-                <!--                        <phase>package</phase>-->
-                <!--                        <goals>-->
-                <!--                            <goal>single</goal>-->
-                <!--                        </goals>-->
-                <!--                    </execution>-->
-                <!--                </executions>-->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <finalName>pm-sample-exec</finalName>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.digital.pm.app.ProjectManagementSystemApplication
-                            </mainClass>
-                        </manifest>
-                    </archive>
-                    <appendAssemblyId>false</appendAssemblyId>
+                    <mainClass>com.digital.pm.app.ProjectManagementSystemApplication</mainClass>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>
