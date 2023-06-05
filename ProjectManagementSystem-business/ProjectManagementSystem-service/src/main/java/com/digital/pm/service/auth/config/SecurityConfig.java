@@ -1,11 +1,10 @@
-package com.digital.pm.app;
+package com.digital.pm.service.auth.config;
 
 import com.digital.pm.service.auth.impl.CustomUserDetailService;
-import com.digital.pm.service.auth.config.JWTAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @RequiredArgsConstructor
+@PropertySource("classpath:security.properties")
+
 public class SecurityConfig {
     private final CustomUserDetailService customUserDetailService;
     private final JWTAuthFilter jwtAuthFilter;
