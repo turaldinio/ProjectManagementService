@@ -12,6 +12,7 @@ import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.TeamMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +27,7 @@ public class TeamServiceImpl implements TeamService {
 
     private final ProjectService projectService;
 
+    @Transactional
     @Override
     public TeamDto addEmployee(CreateTeamDto createTeamDto) {
         //существует ли сотрудник с таким id
@@ -56,6 +58,7 @@ public class TeamServiceImpl implements TeamService {
         return new BadRequest("the Role filed cannot be null");
     }
 
+    @Transactional
     @Override
     public TeamDto delete(Long employeeId, Long projectId) {
         //существует ли такой пользователь

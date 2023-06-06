@@ -12,6 +12,7 @@ import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
 
+    @Transactional
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
         if (!checkRequiredValue(createProjectDto)) {
@@ -38,6 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.map(project);
     }
 
+    @Transactional
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
@@ -55,6 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.map(newProject);
     }
 
+    @Transactional
     @Override
     public ProjectDto changeProjectStatus(Long projectId) {
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
@@ -70,8 +74,8 @@ public class ProjectServiceImpl implements ProjectService {
         }
         if (project.getStatus().equals(ProjectStatus.TESTING)) {
             project.setStatus(ProjectStatus.COMPLETED);
-
         }
+        projectRepository.save(project);
         return projectMapper.map(project);
     }
 

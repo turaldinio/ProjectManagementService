@@ -16,6 +16,7 @@ import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
 
     private final TeamService teamService;
 
+    @Transactional
     @Override
     public TaskDto create(CreateTaskDto createTaskDto) {
         //проверка обязательных полей
@@ -64,6 +66,8 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.map(task);
     }
 
+    @Transactional
+
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
         var task = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
@@ -92,6 +96,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.map(result);
     }
 
+    @Transactional
     public TaskDto changeStatus(Long taskId) {
         var currentTask = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
         if (currentTask.getStatus().equals(TaskStatus.CLOSED)) {
@@ -107,7 +112,7 @@ public class TaskServiceImpl implements TaskService {
         if (currentTask.getStatus().equals(TaskStatus.COMPLETED)) {
             currentTask.setStatus(TaskStatus.CLOSED);
         }
-
+        taskRepository.save(currentTask);
         return taskMapper.map(taskRepository.save(currentTask));
 
     }
