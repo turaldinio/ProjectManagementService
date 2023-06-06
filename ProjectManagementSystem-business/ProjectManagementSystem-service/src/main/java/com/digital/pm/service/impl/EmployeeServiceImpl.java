@@ -143,25 +143,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 !newEmployee.getFirstName().isBlank();
     }
 
-
-    public void checkPassword(String password) {
-        if (Objects.isNull(password) || password.isEmpty() || password.isBlank()) {
-            throw invalidPassword();
-        }
-
-    }
-
-
-    public BadRequest invalidPassword() {
-        return new BadRequest("the password cannot be empty/blank");
-    }
-
     public BadRequest invalidId(Long id) {
         return new BadRequest(String.format("the employee with %d id is not found", id));
-    }
-
-    public BadRequest invalidAccountAlreadyExists(String account) {
-        return new BadRequest(String.format("the %s account is already exists ", account));
     }
 
     public BadRequest invalidEmployeeAlreadyRemoved(Long id) {
@@ -170,10 +153,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public BadRequest invalidAccountNotFound(String account) {
         return new BadRequest(String.format("the %s account is not found ", account));
-    }
-
-    public BadRequest invalidPasswordAndEmptyAccount() {
-        return new BadRequest("it is not possible to update the password if there is no account");
-
     }
 }
