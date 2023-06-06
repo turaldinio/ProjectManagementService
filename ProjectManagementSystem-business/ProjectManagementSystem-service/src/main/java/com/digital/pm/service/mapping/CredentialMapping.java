@@ -24,10 +24,10 @@ public class CredentialMapping {
 
     public Credential update(Credential credential, CreateCredentialDto credentialDto) {
         if (credentialDto.getLogin() != null) {
-            credential.setLogin(credential.getLogin());
+            credential.setLogin(credentialDto.getLogin());
         }
         if (credentialDto.getPassword() != null) {
-            credential.setPassword(credential.getPassword());
+            credential.setPassword(credentialDto.getPassword());
         }
         return credential;
     }

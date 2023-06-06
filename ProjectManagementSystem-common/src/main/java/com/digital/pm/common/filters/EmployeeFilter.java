@@ -15,15 +15,11 @@ public class EmployeeFilter {
     @Schema(description = "Имя")
     private String firstName;
     @Schema(description = "Фамилия")
-
     private String lastName;
     @Schema(description = "Отчество")
-
     private String patronymic;
     @Schema(description = "Учетная запись")
-
     private String login;
     @Schema(description = "Адрес электронной почты")
-
     private String email;
 }
