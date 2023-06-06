@@ -10,9 +10,6 @@ import java.util.List;
 
 import jakarta.persistence.criteria.Predicate;
 
-import static com.digital.pm.repository.spec.FilterHandler.getFormatedString;
-
-
 public class ProjectSpecification {
     public static Specification<Project> getSpec(ProjectFilter projectFilter) {
         return ((root, query, criteriaBuilder) -> {
@@ -34,7 +31,7 @@ public class ProjectSpecification {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("name")), getFormatedString(projectFilter.getName()))).
+                                        like(criteriaBuilder.lower(root.get("name")), SpecHandler.getFormatedString(projectFilter.getName()))).
                                 getRestriction());
             }
 

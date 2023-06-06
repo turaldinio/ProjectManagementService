@@ -22,4 +22,6 @@ public class EmployeeFilter {
     private String login;
     @Schema(description = "Адрес электронной почты")
     private String email;
+    @Schema(description = "поиск по всем полям")
+    private String text;
 }

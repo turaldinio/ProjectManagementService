@@ -9,7 +9,6 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 
-import static com.digital.pm.repository.spec.FilterHandler.getFormatedString;
 
 public class TaskSpecification {
     public static Specification<Task> getSpec(TaskFilter taskFilter) {
@@ -25,7 +24,7 @@ public class TaskSpecification {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("name")), getFormatedString(taskFilter.getName()))).
+                                        like(criteriaBuilder.lower(root.get("name")), SpecHandler.getFormatedString(taskFilter.getName()))).
                                 getRestriction());
 
             }

@@ -12,8 +12,6 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.digital.pm.repository.spec.FilterHandler.getFormatedString;
-
 public class EmployeeSpecification {
     public static Specification<Employee> getSpec(EmployeeFilter employee) {
         return ((root, query, criteriaBuilder) -> {
@@ -29,41 +27,51 @@ public class EmployeeSpecification {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("email")), getFormatedString(employee.getEmail()))).
+                                        like(criteriaBuilder.lower(root.get("email")), SpecHandler.getFormatedString(employee.getEmail()))).
                                 getRestriction());
             }
             if (!ObjectUtils.isEmpty(employee.getFirstName())) {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("firstName")), getFormatedString(employee.getFirstName()))).
+                                        like(criteriaBuilder.lower(root.get("firstName")), SpecHandler.getFormatedString(employee.getFirstName()))).
                                 getRestriction());
             }
             if (!ObjectUtils.isEmpty(employee.getLastName())) {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("lastName")), getFormatedString(employee.getLastName()))).
+                                        like(criteriaBuilder.lower(root.get("lastName")), SpecHandler.getFormatedString(employee.getLastName()))).
                                 getRestriction());
             }
             if (!ObjectUtils.isEmpty(employee.getPatronymic())) {
                 predicates
                         .add(query.
                                 where(criteriaBuilder.
-                                        like(criteriaBuilder.lower(root.get("patronymic")), getFormatedString(employee.getPatronymic()))).
+                                        like(criteriaBuilder.lower(root.get("patronymic")), SpecHandler.getFormatedString(employee.getPatronymic()))).
                                 getRestriction());
             }
             if (!ObjectUtils.isEmpty(employee.getLogin())) {
                 Join<Credential, Employee> join = root.join("credential");
 
                 predicates.add(query.where(criteriaBuilder.like(criteriaBuilder.lower(join.get("login")),
-                        getFormatedString(employee.getLogin()))).getRestriction());
+                        SpecHandler.getFormatedString(employee.getLogin()))).getRestriction());
+            }
+
+            if (!ObjectUtils.isEmpty(employee.getText())) {
+                Join<Credential, Employee> join = root.join("credential");
+
+                predicates.add(query.where(criteriaBuilder.or(
+                                criteriaBuilder.like(criteriaBuilder.lower(join.get("login")), SpecHandler.getFormatedString(employee.getText())),
+                                criteriaBuilder.like(criteriaBuilder.lower(root.get("email")), SpecHandler.getFormatedString(employee.getText())),
+                                criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")), SpecHandler.getFormatedString(employee.getText())),
+                                criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")), SpecHandler.getFormatedString(employee.getText())),
+                                criteriaBuilder.like(criteriaBuilder.lower(root.get("patronymic")), SpecHandler.getFormatedString(employee.getText())))).
+                        getRestriction());
             }
 
             return query.where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).getRestriction();
 
         });
     }
-
-
 }
