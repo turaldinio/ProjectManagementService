@@ -6,6 +6,7 @@ import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,7 +44,8 @@ public class ProjectController {
             description = "Создает проект по указанным данным")
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectDto> update(@PathVariable Long id, @RequestBody CreateProjectDto createProjectDto) {
+    public ResponseEntity<ProjectDto> update(@Parameter(description = "id проекта, который собираемся обновить")
+                                             @PathVariable Long id, @RequestBody CreateProjectDto createProjectDto) {
         return ResponseEntity.ok(projectService.update(id, createProjectDto));
     }
 
@@ -51,7 +53,8 @@ public class ProjectController {
             description = "Позволяет перевести проект в следующий статус")
 
     @PutMapping(value = "/change/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectDto> changeStatus(@PathVariable Long id) {
+    public ResponseEntity<ProjectDto> changeStatus(@Parameter(description = "id проекта, который необходимо перевести в другой статус")
+                                                   @PathVariable Long id) {
         return ResponseEntity.ok(projectService.changeProjectStatus(id));
     }
 

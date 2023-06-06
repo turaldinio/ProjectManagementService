@@ -5,6 +5,7 @@ import com.digital.pm.dto.team.CreateTeamDto;
 import com.digital.pm.dto.team.TeamDto;
 import com.digital.pm.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,8 +39,11 @@ public class TeamController {
     @Operation(summary = "удаление сотрудника из команду",
             description = "Удаляет указанного сотрудника из команды")
 
-    @DeleteMapping(value = "/delete",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TeamDto> delete(Long employeeId, Long projectId) {
+    @DeleteMapping(value = "/delete/{employeeId}/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TeamDto> delete(@Parameter(description = "id сотрудника, которого хотим удалить из команды")
+                                          @PathVariable Long employeeId,
+                                          @Parameter(description = "id команды, из которой удаляем сотрудника")
+                                          @PathVariable Long projectId) {
         return ResponseEntity.ok(teamService.delete(employeeId, projectId));
     }
 
@@ -47,7 +51,8 @@ public class TeamController {
             description = "Выводит всех сотрудников, работающих на указанному проекте")
 
     @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllEmployeesByProjectId(@PathVariable("id") Long projectId) {
+    public ResponseEntity<?> getAllEmployeesByProjectId(@Parameter(description = "id проекта, для которого необходимо получить всех участников")
+                                                        @PathVariable("id") Long projectId) {
         return ResponseEntity.ok(teamService.getAllByProjectId(projectId));
     }
 }

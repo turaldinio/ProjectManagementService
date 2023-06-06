@@ -44,7 +44,8 @@ public class TaskController {
             description = "Оьновляет задачу по указанному id")
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDto> update(@PathVariable("id") Long taskId, @RequestBody CreateTaskDto createTaskDto) {
+    public ResponseEntity<TaskDto> update(@Parameter(description = "id задачи, которую обновляем")
+                                          @PathVariable("id") Long taskId, @RequestBody CreateTaskDto createTaskDto) {
         return ResponseEntity.ok(taskService.update(taskId, createTaskDto));
     }
 
@@ -52,7 +53,8 @@ public class TaskController {
             description = "Переводит задачу в следующий статус")
 
     @PutMapping(value = "/changeStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDto> changeStatus(@PathVariable("id") Long taskId) {
+    public ResponseEntity<TaskDto> changeStatus(@Parameter(description ="id задачи, которую необходимо перевести в следующий статус")
+                                                @PathVariable("id") Long taskId) {
         return ResponseEntity.ok(taskService.changeStatus(taskId));
     }
 

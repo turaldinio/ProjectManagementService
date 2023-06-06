@@ -6,6 +6,7 @@ import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,7 +44,8 @@ public class EmployeeController {
             description = "Удаляет сотрудника по указанному id")
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeDto> update(@PathVariable Long id, @RequestBody CreateEmployeeDto createEmployeeDto) {
+    public ResponseEntity<EmployeeDto> update(@Parameter(description = "id пользователя, которого необходимо обновить")
+                                              @PathVariable Long id, @RequestBody CreateEmployeeDto createEmployeeDto) {
         return ResponseEntity.ok(employeeService.update(id, createEmployeeDto));
     }
 
@@ -51,7 +53,8 @@ public class EmployeeController {
             description = "получает сотрудника по указанному id")
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeDto> getById(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDto> getById(@Parameter(description = "id сотрудника")
+                                               @PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getById(id));
     }
 
@@ -67,7 +70,8 @@ public class EmployeeController {
             description = "Удаление сотрудника по указанному id")
 
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeDto> deleteById(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDto> deleteById(@Parameter(description = "id сотрудника,которого необходимо удалить")
+                                                  @PathVariable Long id) {
         return ResponseEntity.ok(employeeService.deleteById(id));
     }
 
