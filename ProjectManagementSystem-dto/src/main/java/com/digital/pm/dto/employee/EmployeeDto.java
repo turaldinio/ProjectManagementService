@@ -26,7 +26,7 @@ public class EmployeeDto {
     private String post;
     @Schema(description = "id Учетной запись")
 
-    private Long credentialId;
+    private CredentialDto credentialDto;
     @Schema(description = "Адрес электронной почты")
 
     private String email;

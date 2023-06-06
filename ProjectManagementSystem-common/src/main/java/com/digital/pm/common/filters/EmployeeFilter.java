@@ -22,7 +22,7 @@ public class EmployeeFilter {
     private String patronymic;
     @Schema(description = "Учетная запись")
 
-    private String account;
+    private String login;
     @Schema(description = "Адрес электронной почты")
 
     private String email;

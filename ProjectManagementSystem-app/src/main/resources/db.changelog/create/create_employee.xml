@@ -39,6 +39,11 @@
             <column name="status" type="text"/>
 
         </createTable>
+
+        <addForeignKeyConstraint baseTableName="employee" baseColumnNames="credential_id" constraintName="credential_id"
+                                 referencedTableName="credential"
+                                 referencedColumnNames="id"/>
+
     </changeSet>
 
 </databaseChangeLog>

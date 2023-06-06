@@ -28,13 +28,11 @@ public class CreateEmployeeDto {
     private String post;
     @Schema(description = "Учетная запись")
 
-    private Long credentialId;
+    private CreateCredentialDto createCredentialDto;
     @Schema(description = "Адрес электронной почты")
 
     private String email;
-    @Schema(description = "Пароль")
 
-    private String password;
 
 
 }

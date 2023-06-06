@@ -15,15 +15,15 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
-    private final CredentialRepository credentialRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        var credential = credentialRepository.findByLogin(account).orElseThrow(
+        var employee = employeeRepository.findByCredential_Login(account).orElseThrow(
                 () -> new BadRequest(String.format("the employee with %s login is not found", account))
         );
 
 
-        return new User(credential.getLogin(), credential.getPassword(), Collections.emptyList());
+        return new User(employee.getCredential().getLogin(), employee.getCredential().getPassword(), Collections.emptyList());
     }
 }

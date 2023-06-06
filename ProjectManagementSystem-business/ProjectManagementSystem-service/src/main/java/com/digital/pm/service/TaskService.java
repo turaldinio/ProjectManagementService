@@ -8,15 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface TaskService {
-    @Transactional
     TaskDto create(CreateTaskDto createTaskDto);
 
-    @Transactional
     TaskDto update(Long taskId, CreateTaskDto createTaskDto);
 
     List<TaskDto> findAll(TaskFilter taskFilter);
 
-    @Transactional
     public TaskDto changeStatus(Long taskId);
 
 }

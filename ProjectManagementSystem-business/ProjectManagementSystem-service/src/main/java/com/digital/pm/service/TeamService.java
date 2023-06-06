@@ -9,10 +9,8 @@ import java.util.List;
 
 
 public interface TeamService {
-    @Transactional
     TeamDto addEmployee(CreateTeamDto createTeamDto);
 
-    @Transactional
     TeamDto delete(Long employeeId, Long projectId);
 
     List<EmployeeDto> getAllByProjectId(Long projectId);

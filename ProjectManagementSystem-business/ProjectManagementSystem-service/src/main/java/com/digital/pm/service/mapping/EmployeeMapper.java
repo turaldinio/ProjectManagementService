@@ -3,22 +3,21 @@ package com.digital.pm.service.mapping;
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.digital.pm.service.impl.CredentialService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeMapper {
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final CredentialService credentialService;
 
     public Employee create(CreateEmployeeDto createEmployeeDto) {
 
@@ -28,13 +27,29 @@ public class EmployeeMapper {
                 lastName(createEmployeeDto.getLastName()).
                 patronymic(createEmployeeDto.getPatronymic()).
                 post(createEmployeeDto.getPost()).
-                credentialId(createEmployeeDto.getCredentialId()).
                 email(createEmployeeDto.getEmail()).
                 status(EmployeeStatus.ACTIVE).
                 build();
 
 
     }
+
+    public Employee create(CreateEmployeeDto createEmployeeDto, Credential credential) {
+
+        return Employee.
+                builder().
+                firstName(createEmployeeDto.getFirstName()).
+                lastName(createEmployeeDto.getLastName()).
+                patronymic(createEmployeeDto.getPatronymic()).
+                post(createEmployeeDto.getPost()).
+                email(createEmployeeDto.getEmail()).
+                status(EmployeeStatus.ACTIVE).
+                credential(credential).
+                build();
+
+
+    }
+
 
     public Employee update(Employee employee, CreateEmployeeDto createEmployeeDto) {
         if (createEmployeeDto.getFirstName() != null) {
@@ -46,18 +61,22 @@ public class EmployeeMapper {
         if (createEmployeeDto.getPatronymic() != null) {
             employee.setPatronymic(createEmployeeDto.getPatronymic());
         }
-        if (createEmployeeDto.getCredentialId() != null) {
-            employee.setCredentialId(createEmployeeDto.getCredentialId());
-        }
+//        if (createEmployeeDto.getCredentialDto() != null) {
+//            if (createEmployeeDto.getCredentialDto().getPassword() != null) {
+//
+//            }
+//            if (createEmployeeDto.getCredentialDto().getLogin() != null) {
+//
+//            }
+//            employee.setCredential(credentialService.findByLogin(createEmployeeDto.getCredentialDto()));
+//        }
         if (createEmployeeDto.getEmail() != null) {
             employee.setEmail(createEmployeeDto.getEmail());
         }
         if (createEmployeeDto.getPost() != null) {
             employee.setPost(createEmployeeDto.getPost());
         }
-        if (createEmployeeDto.getCredentialId() != null) {
-            employee.setCredentialId(createEmployeeDto.getCredentialId());
-        }
+
         return employee;
     }
 
@@ -69,7 +88,8 @@ public class EmployeeMapper {
                 lastName(employee.getLastName()).
                 patronymic(employee.getPatronymic()).
                 post(employee.getPost()).
-                credentialId(employee.getCredentialId()).
+                email(employee.getEmail()).
+                credentialDto(credentialService.map(employee.getCredential())).
                 status(employee.getStatus()).
                 build();
 
@@ -84,8 +104,9 @@ public class EmployeeMapper {
                         firstName(x.getFirstName()).
                         lastName(x.getLastName()).
                         patronymic(x.getPatronymic()).post(x.getPost()).
-                        credentialId(x.getCredentialId()).
+                        credentialDto(credentialService.map(x.getCredential())).
                         status(x.getStatus()).
+                        email(x.getEmail()).
                         build()).
                 collect(Collectors.toList());
 

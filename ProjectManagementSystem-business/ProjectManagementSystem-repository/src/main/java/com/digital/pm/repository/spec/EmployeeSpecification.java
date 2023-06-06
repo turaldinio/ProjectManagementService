@@ -2,7 +2,9 @@ package com.digital.pm.repository.spec;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;
@@ -33,8 +35,12 @@ public class EmployeeSpecification {
             if (!ObjectUtils.isEmpty(employee.getPatronymic())) {
                 predicates.add(criteriaBuilder.equal(root.get("patronymic"), employee.getPatronymic()));
             }
-            if (!ObjectUtils.isEmpty(employee.getAccount())) {
-                predicates.add(criteriaBuilder.equal(root.get("account"), employee.getAccount()));
+            if (!ObjectUtils.isEmpty(employee.getLogin())) {
+
+                Join<Credential, Employee> join = root.join("credential");
+
+                predicates.add(criteriaBuilder.equal(join.get("login"),employee.getLogin()));
+
 
             }
 

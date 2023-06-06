@@ -4,6 +4,7 @@ import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
@@ -12,8 +13,10 @@ import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -21,55 +24,60 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+    private final CredentialService credentialService;
 
+    @Transactional
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
 
-        //проверка обязательных параметров
-        if (!checkRequiredValue(createEmployeeDto)) {
+        if (!checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
 
-        //проверка;если указан уз пароль обязателен.
-        //проверка уникальности уз
-//        if (employeeRepository.existsByCredential_Login(createEmployeeDto.getAccount())) {
-//            throw invalidAccount(createEmployeeDto.getAccount());
-//        }
-//        if (createEmployeeDto.getAccount() != null) {
-//            checkPassword(createEmployeeDto);
-//
-//        }
+        if (Objects.nonNull(createEmployeeDto.getCreateCredentialDto())) {//проверка. Если учетные данные(уд) создаются
 
-        var employee = employeeMapper.create(createEmployeeDto);
+            var employee = employeeMapper.create(createEmployeeDto, credentialService.//создаем сотрудника с уд
+                    create(createEmployeeDto.getCreateCredentialDto()));
+
+            employeeRepository.save(employee);
+
+            return employeeMapper.map(employee);
+        }
+
+        Employee employee = employeeMapper.create(createEmployeeDto);//иначе создаем сотрудника без уд
         employeeRepository.save(employee);
 
         return employeeMapper.map(employee);
     }
 
-
+    @Transactional
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
         var employee = employeeRepository.findById(employeeId).orElseThrow(() -> invalidId(employeeId));
 
-        //если уз обновляется, проверяем что он уникальный
-//        if (createEmployeeDto.getAccount() != null && employeeRepository.existsByCredential_Login(createEmployeeDto.getAccount())) {
-//            throw invalidAccount(createEmployeeDto.getAccount());
-//        }
-//
-        var newEmployee = employeeMapper.update(employee, createEmployeeDto);
-//
-//        //проверка, после обновления поле password!=null если есть уз
-//        if (newEmployee.getAccount() != null) {
-//            checkPassword(newEmployee);
-//        }
+        var newEmployee = employeeMapper.update(employee, createEmployeeDto);//обновляем все кроме уд
 
+        //проверка обязательных полей имя/фамилия
         if (!checkRequiredValue(newEmployee)) {
             throw new BadRequest("employee firstname or lastname cannot be null or blank");
         }
+        Credential credential = employee.getCredential();//создаем пустые уд
 
+        //если в запросе нам передали уд на обновление
+        if (Objects.nonNull(createEmployeeDto.getCreateCredentialDto())) {
+            if (Objects.isNull(credential)) {//если уд у нас не было
+                credential = credentialService.create(createEmployeeDto.getCreateCredentialDto());//создаем уд со всеми проверками (логин/пароль)
+            } else {
+                //если уд у нас был
+                credential = credentialService.update(employee.getCredential(), createEmployeeDto.getCreateCredentialDto());//получаем обновленный уд
+
+            }
+        }
+        newEmployee.setCredential(credential); // сетим обновленный|созданный|старый уд в обновленный объект Employee
 
         employeeRepository.save(newEmployee);
 
         return employeeMapper.map(newEmployee);
+
     }
 
     @Override
@@ -80,6 +88,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                         orElseThrow(() -> invalidId(id)));
     }
 
+    @Transactional
+
     @Override
     public EmployeeDto deleteById(Long id) {
         var currentEmployee = employeeRepository.
@@ -87,7 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 orElseThrow(() -> invalidId(id));
 
         if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {
-            throw new BadRequest(String.format("the user with %d id has already been deleted", id));
+            throw invalidEmployeeAlreadyRemoved(id);
         }
 
         currentEmployee.setStatus(EmployeeStatus.REMOTE);
@@ -112,24 +122,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.map(result);
     }
 
-    public BadRequest invalidId(Long id) {
-        return new BadRequest(String.format("the employee with %d id is not found", id));
-    }
-
-    public BadRequest invalidAccount(String account) {
-        return new BadRequest(String.format("the %s account  is already exists ", account));
-    }
-
-    public BadRequest invalidAccountAndPassword() {
-        return new BadRequest("the password cannot be empty or blank");
-
-    }
 
     @Override
     public EmployeeDto findByAccount(String account) {
-//        return employeeMapper.map(employeeRepository.findByCredential_Login(account).orElseThrow(
-//                () -> new BadRequest(String.format("the employee with %s account not found", account))));
-        return null;
+        return employeeMapper.map(employeeRepository.findByCredential_Login(account).orElseThrow(
+                () -> invalidAccountNotFound(account)));
+
     }
 
     public boolean checkRequiredValue(CreateEmployeeDto createEmployeeDto) {
@@ -146,17 +144,37 @@ public class EmployeeServiceImpl implements EmployeeService {
                 !newEmployee.getFirstName().isBlank();
     }
 
-    public void checkPassword(CreateEmployeeDto createEmployeeDto) {
-        if (!createEmployeeDto.getPassword().isBlank() && !createEmployeeDto.getPassword().isEmpty()) {
-            return;
+
+    public void checkPassword(String password) {
+        if (Objects.isNull(password) || password.isEmpty() || password.isBlank()) {
+            throw invalidPassword();
         }
-        throw invalidAccountAndPassword();
+
     }
 
-    public void checkPassword(Employee employee) {
-//        if (!employee.getPassword().isBlank() && !employee.getPassword().isEmpty()) {
-//            return;
-//        }
-        throw invalidAccountAndPassword();
+
+    public BadRequest invalidPassword() {
+        return new BadRequest("the password cannot be empty/blank");
+    }
+
+    public BadRequest invalidId(Long id) {
+        return new BadRequest(String.format("the employee with %d id is not found", id));
+    }
+
+    public BadRequest invalidAccountAlreadyExists(String account) {
+        return new BadRequest(String.format("the %s account is already exists ", account));
+    }
+
+    public BadRequest invalidEmployeeAlreadyRemoved(Long id) {
+        return new BadRequest(String.format("the %d account is already exists ", id));
+    }
+
+    public BadRequest invalidAccountNotFound(String account) {
+        return new BadRequest(String.format("the %s account is not found ", account));
+    }
+
+    public BadRequest invalidPasswordAndEmptyAccount() {
+        return new BadRequest("it is not possible to update the password if there is no account");
+
     }
 }

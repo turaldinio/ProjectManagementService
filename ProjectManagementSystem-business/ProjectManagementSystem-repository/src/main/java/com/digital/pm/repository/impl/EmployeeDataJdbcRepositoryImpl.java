@@ -116,9 +116,9 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
             map.put(paramCount++, filterEmployee.getPatronymic());
 
         }
-        if (filterEmployee.getAccount() != null) {
+        if (filterEmployee.getLogin() != null) {
             request = request + " and account=?";
-            map.put(paramCount++, filterEmployee.getAccount());
+            map.put(paramCount++, filterEmployee.getLogin());
 
         }
         if (filterEmployee.getEmail() != null) {

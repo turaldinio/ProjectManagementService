@@ -4,6 +4,8 @@ import com.digital.pm.common.enums.EmployeeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Data
 @Entity
@@ -19,8 +21,9 @@ public class Employee {
     @Column(nullable = false,
             name = "last_name")
     private String lastName;//фамилия
-    @Column(name = "credential_id")
-    private Long credentialId;//данные учетной записи (логин/пароль)
+    @OneToOne
+    @JoinColumn(name = "credential_id")
+    private Credential credential;//данные учетной записи (логин/пароль)
     private String patronymic;//отчество
     private String post;//должность
 
