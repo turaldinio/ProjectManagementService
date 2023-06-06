@@ -11,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EmployeeSpecification {
     public static Specification<Employee> getSpec(EmployeeFilter employee) {
@@ -19,7 +20,7 @@ public class EmployeeSpecification {
 
             predicates.add(criteriaBuilder.equal(root.get("status"), EmployeeStatus.ACTIVE));
 
-            if (employee == null) {
+            if (Objects.isNull(employee)) {
                 return query.where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).getRestriction();
             }
 

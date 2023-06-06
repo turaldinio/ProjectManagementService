@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -38,22 +39,22 @@ public class TaskMapper {
     }
 
     public Task update(Task task, CreateTaskDto createTaskDto) {
-        if (createTaskDto.getName() != null) {
+        if (Objects.nonNull(createTaskDto.getName() )) {
             task.setName(createTaskDto.getName());
         }
-        if (createTaskDto.getDeadline() != null) {
+        if (Objects.nonNull(createTaskDto.getDeadline() )) {
             task.setDeadline(createTaskDto.getDeadline());
         }
-        if (createTaskDto.getExecutorId() != null) {
+        if (Objects.nonNull(createTaskDto.getExecutorId() )) {
             task.setExecutorId(createTaskDto.getExecutorId());
         }
-        if (createTaskDto.getDescription() != null) {
+        if (Objects.nonNull(createTaskDto.getDescription() )) {
             task.setDescription(createTaskDto.getDescription());
         }
-        if (createTaskDto.getLaborCost() != null) {
+        if (Objects.nonNull(createTaskDto.getLaborCost() )) {
             task.setLaborCost(createTaskDto.getLaborCost());
         }
-        if (createTaskDto.getProjectId() != null) {
+        if (Objects.nonNull(createTaskDto.getProjectId() )) {
             task.setProjectId(createTaskDto.getProjectId());
         }
         return task;

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -145,16 +146,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkRequiredValues(CreateTaskDto createTaskDto) {
-        return createTaskDto.getName() != null &&
+        return Objects.nonNull(createTaskDto.getName()) &&
                 !createTaskDto.getName().isBlank() &&
-                createTaskDto.getLaborCost() != null &&
-                createTaskDto.getDeadline() != null;
+                Objects.nonNull(createTaskDto.getLaborCost()) &&
+                Objects.nonNull(createTaskDto.getDeadline());
     }
 
     public boolean checkRequiredValues(Task newTask) {
-        return newTask.getName() != null &&
+        return Objects.nonNull(newTask.getName())&&
                 !newTask.getName().isBlank() &&
-                newTask.getLaborCost() != null &&
-                newTask.getDeadline() != null;
+                Objects.nonNull(newTask.getLaborCost())&&
+                Objects.nonNull(newTask.getDeadline());
     }
 }

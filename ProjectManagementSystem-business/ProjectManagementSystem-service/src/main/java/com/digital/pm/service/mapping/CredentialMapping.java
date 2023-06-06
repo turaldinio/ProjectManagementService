@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class CredentialMapping {
     @Autowired
@@ -23,10 +25,10 @@ public class CredentialMapping {
 
 
     public Credential update(Credential credential, CreateCredentialDto credentialDto) {
-        if (credentialDto.getLogin() != null) {
+        if (Objects.nonNull(credentialDto.getLogin())) {
             credential.setLogin(credentialDto.getLogin());
         }
-        if (credentialDto.getPassword() != null) {
+        if (Objects.nonNull(credentialDto.getPassword())) {
             credential.setPassword(credentialDto.getPassword());
         }
         return credential;

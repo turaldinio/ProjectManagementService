@@ -7,6 +7,7 @@ import com.digital.pm.model.Project;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,13 +23,13 @@ public class ProjectMapper {
     }
 
     public Project update(Project project, CreateProjectDto createProjectDto) {
-        if (createProjectDto.getName() != null) {
-            project.setName(project.getName());
+        if (Objects.nonNull(createProjectDto.getName())) {
+            project.setName(createProjectDto.getName());
         }
-        if (createProjectDto.getProjectCode() != null) {
+        if (Objects.nonNull(createProjectDto.getProjectCode())) {
             project.setProjectCode(createProjectDto.getProjectCode());
         }
-        if (createProjectDto.getDescription() != null) {
+        if (Objects.nonNull(createProjectDto.getDescription())) {
             project.setDescription(createProjectDto.getDescription());
         }
         return project;

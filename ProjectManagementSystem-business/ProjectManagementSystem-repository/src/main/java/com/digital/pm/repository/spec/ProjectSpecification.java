@@ -7,6 +7,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.criteria.Predicate;
 
@@ -15,7 +16,7 @@ public class ProjectSpecification {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (projectFilter == null) {
+            if (Objects.isNull(projectFilter)) {
                 return query.where().getRestriction();
             }
 

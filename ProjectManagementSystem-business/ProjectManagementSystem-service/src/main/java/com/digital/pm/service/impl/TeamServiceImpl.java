@@ -44,7 +44,7 @@ public class TeamServiceImpl implements TeamService {
             throw invalidEmployeeAlreadyInvolved(createTeamDto.getEmployeeId(), createTeamDto.getProjectId());
         }
 
-        if (createTeamDto.getRole() == null) {
+        if (Objects.isNull(createTeamDto.getRole())) {
             throw invalidRole();
         }
         var team = teamMapper.create(createTeamDto);

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -52,28 +53,19 @@ public class EmployeeMapper {
 
 
     public Employee update(Employee employee, CreateEmployeeDto createEmployeeDto) {
-        if (createEmployeeDto.getFirstName() != null) {
+        if (Objects.nonNull(createEmployeeDto.getFirstName())) {
             employee.setFirstName(createEmployeeDto.getFirstName());
         }
-        if (createEmployeeDto.getLastName() != null) {
+        if (Objects.nonNull(createEmployeeDto.getLastName())) {
             employee.setLastName(createEmployeeDto.getLastName());
         }
-        if (createEmployeeDto.getPatronymic() != null) {
+        if (Objects.nonNull(createEmployeeDto.getPatronymic())) {
             employee.setPatronymic(createEmployeeDto.getPatronymic());
         }
-//        if (createEmployeeDto.getCredentialDto() != null) {
-//            if (createEmployeeDto.getCredentialDto().getPassword() != null) {
-//
-//            }
-//            if (createEmployeeDto.getCredentialDto().getLogin() != null) {
-//
-//            }
-//            employee.setCredential(credentialService.findByLogin(createEmployeeDto.getCredentialDto()));
-//        }
-        if (createEmployeeDto.getEmail() != null) {
+        if (Objects.nonNull(createEmployeeDto.getEmail())) {
             employee.setEmail(createEmployeeDto.getEmail());
         }
-        if (createEmployeeDto.getPost() != null) {
+        if (Objects.nonNull(createEmployeeDto.getPost())) {
             employee.setPost(createEmployeeDto.getPost());
         }
 

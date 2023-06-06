@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
 
         if (!checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
-            throw new BadRequest("employee firstname or lastname cannot be null or blank");
+            throw invalidRequiredFields();
         }
 
         if (Objects.nonNull(createEmployeeDto.getCreateCredentialDto())) {//проверка. Если учетные данные(уд) создаются
@@ -58,8 +58,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //проверка обязательных полей имя/фамилия
         if (!checkRequiredValue(newEmployee)) {
-            throw new BadRequest("employee firstname or lastname cannot be null or blank");
+            throw invalidRequiredFields();
         }
+
         Credential credential = employee.getCredential();//создаем пустые уд
 
         //если в запросе нам передали уд на обновление
@@ -130,18 +131,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public boolean checkRequiredValue(CreateEmployeeDto createEmployeeDto) {
-        return createEmployeeDto.getFirstName() != null &&
-                createEmployeeDto.getLastName() != null &&
-                !createEmployeeDto.getLastName().isBlank() &&
-                !createEmployeeDto.getFirstName().isBlank();
+        return
+                Objects.nonNull(createEmployeeDto.getFirstName()) &&
+                        Objects.nonNull(createEmployeeDto.getLastName()) &&
+                        !createEmployeeDto.getLastName().isBlank() &&
+                        !createEmployeeDto.getFirstName().isBlank();
     }
 
     public boolean checkRequiredValue(Employee newEmployee) {
-        return newEmployee.getFirstName() != null &&
-                newEmployee.getLastName() != null &&
+        return Objects.nonNull(newEmployee.getFirstName()) &&
+                Objects.nonNull(newEmployee.getLastName()) &&
                 !newEmployee.getLastName().isBlank() &&
                 !newEmployee.getFirstName().isBlank();
     }
+
 
     public BadRequest invalidId(Long id) {
         return new BadRequest(String.format("the employee with %d id is not found", id));
@@ -149,6 +152,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public BadRequest invalidEmployeeAlreadyRemoved(Long id) {
         return new BadRequest(String.format("the %d account is already exists ", id));
+    }
+
+    public BadRequest invalidRequiredFields() {
+        throw new BadRequest("employee firstname or lastname cannot be null or blank");
     }
 
     public BadRequest invalidAccountNotFound(String account) {

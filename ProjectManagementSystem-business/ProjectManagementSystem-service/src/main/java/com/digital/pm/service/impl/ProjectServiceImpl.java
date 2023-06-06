@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -107,15 +108,15 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
-        return createProjectDto.getProjectCode() != null &&
-                createProjectDto.getName() != null &&
+        return Objects.nonNull(createProjectDto.getProjectCode()) &&
+                Objects.nonNull(createProjectDto.getName()) &&
                 !createProjectDto.getProjectCode().isBlank() &&
                 !createProjectDto.getName().isBlank();
     }
 
     public boolean checkRequiredValue(Project newProject) {
-        return newProject.getProjectCode() != null &&
-                newProject.getName() != null &&
+        return Objects.nonNull(newProject.getProjectCode()) &&
+                Objects.nonNull(newProject.getName()) &&
                 !newProject.getProjectCode().isBlank() &&
                 !newProject.getName().isBlank();
     }
