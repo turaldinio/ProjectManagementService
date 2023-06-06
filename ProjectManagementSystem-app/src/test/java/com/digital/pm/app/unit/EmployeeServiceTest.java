@@ -2,12 +2,17 @@ package com.digital.pm.app.unit;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.credential.CreateCredentialDto;
+import com.digital.pm.dto.credential.CredentialDto;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
+import com.digital.pm.repository.CredentialRepository;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.exceptions.BadRequest;
+import com.digital.pm.service.impl.CredentialService;
 import com.digital.pm.service.impl.EmployeeServiceImpl;
+import com.digital.pm.service.mapping.CredentialMapping;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,163 +31,164 @@ import static org.mockito.Mockito.when;
 
 public class EmployeeServiceTest {
 
-//    @Spy
-//    private EmployeeRepository employeeRepository;
-//
-//    @Mock
-//    private EmployeeMapper employeeMapper;
-//
-//    @InjectMocks
-//    private EmployeeServiceImpl employeeService;
-//
-//
-//    /**
-//     * Проверка выбрасывания ошибок при отсутствии required полей (firstname & lastname)
-//     * expected:BadRequest
-//     */
-//    @Test
-//    @DisplayName("absence of first and last name")
-//    public void negativeEmployeeCreateFirst() {
-//        var createEmployeeDto = CreateEmployeeDto.
-//                builder().
-//                build();
-//
-//        Assertions.assertThrows(BadRequest.class, () -> employeeService.create(createEmployeeDto));
-//    }
-//
-//
-//    /**
-//     * Проверка выбрасывания ошибок при наличии в бд дубликатов аккаунтов
-//     * expected:BadRequest
-//     */
-//    @Test
-//    @DisplayName("duplicate employeeAccount")
-//    public void negativeEmployeeCreateSecond() {
-////имитируем наличие в бд аккаунта
-//        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(true);
-//
-//        var employee = createMinRequiredCreateEmployeeDto();
-//
-//        Assertions.assertThrows(BadRequest.class, () -> employeeService.create(employee));
-//
-//    }
-//
-//    /**
-//     * Проверка выбрасывания ошибок при отсутствии id в бд
-//     * expected:BadRequest
-//     */
-//    @Test
-//    @DisplayName("non-existing id")
-//    public void negativeEmployeeUpdateFirst() {
-//        when(employeeRepository.findById(any())).thenReturn(Optional.empty());
-//        Assertions.assertThrows(BadRequest.class, () -> employeeService.update(1L, createMinRequiredCreateEmployeeDto()));
-//
-//    }
-//
-//    /**
-//     * Проверка отработки метода update
-//     */
-//    @Test
-//    @DisplayName("update Employee")
-//    public void updateEmployee() {
-//        var createEmployeeDto = createMinRequiredCreateEmployeeDto();
-//        var oldEmployee = createMinRequiredEmployee(createEmployeeDto);
-//
-//        var newEmployee = createMinRequiredEmployee(createEmployeeDto);
-//        newEmployee.setFirstName("Денис");
-//
-//        var newEmployeeDto = createMinRequiredEmployeeDto(newEmployee);
-//
-//        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(oldEmployee));
-//        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
-//        when(employeeRepository.save(any())).thenReturn(newEmployee);
-//
-//        when(employeeMapper.update(any(), any())).thenReturn(newEmployee);
-//        when(employeeMapper.map(newEmployee)).thenReturn(newEmployeeDto);
-//
-//        var result = employeeService.update(1L, createMinRequiredCreateEmployeeDto());
-//
-//        Assertions.assertEquals(newEmployeeDto.getFirstName(), result.getFirstName());
-//
-//    }
-//
-//    @Test
-//    @DisplayName("delete employee")
-//    public void delete() {
-//        var employee = createMinRequiredEmployee(createMinRequiredCreateEmployeeDto());
-//        employee.setStatus(EmployeeStatus.ACTIVE);
-//
-//        var deletedEmployeeDto = createMinRequiredEmployeeDto(employee);
-//        deletedEmployeeDto.setStatus(EmployeeStatus.REMOTE);
-//
-//
-//        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(employee));
-//        when(employeeRepository.save(any())).thenReturn(employee);
-//
-//        when(employeeMapper.map(employee)).thenReturn(deletedEmployeeDto);
-//
-//        var result = employeeService.deleteById(1L);
-//
-//        Assertions.assertEquals(employee.getStatus(), result.getStatus());
-//
-//
-//    }
-//
-//    @Test
-//    @DisplayName("create employee ")
-//    public void createEmployee() {
-//        var createEmployeeDto = createMinRequiredCreateEmployeeDto();
-//        var employee = createMinRequiredEmployee(createEmployeeDto);
-//        var employeeDto = createMinRequiredEmployeeDto(employee);
-//
-//        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
-//        when(employeeRepository.save(any())).thenReturn(employee);
-//
-//        when(employeeMapper.create(createEmployeeDto)).
-//                thenReturn(employee);
-//
-//        when(employeeMapper.map(employee)).thenReturn(employeeDto);
-//
-//
-//        var result = employeeService.create(createEmployeeDto);
-//
-//        Assertions.assertEquals(employee.findByLogin().getLogin(), result.getCredentialDto().getLogin());
-//    }
-//
-//
-//    //создание сущности с минимально-необходимыми требованиями для сохранения
-//    public CreateEmployeeDto createMinRequiredCreateEmployeeDto() {
-//        return CreateEmployeeDto.
-//                builder().
-//                firstName("Иван").
-//                lastName("Романов").
-//                credentialDto(CreateCredentialDto.builder().
-//                        login("ioli").
-//                        password("user").build()).
-//                build();
-//    }
-    //минимально-необходимый  Employee
+    @Spy
+    private EmployeeRepository employeeRepository;
 
-//    public Employee createMinRequiredEmployee(CreateEmployeeDto createEmployeeDto) {
-//        return Employee.
-//                builder().
-//                firstName(createEmployeeDto.getFirstName()).
-//                lastName(createEmployeeDto.getLastName()).
-//                credential(createEmployeeDto.getCredentialDto()).
-//                account(createEmployeeDto.getPassword()).
-//                password(createEmployeeDto.getPassword()).
-//                build();
-//    }
+    @Mock
+    private EmployeeMapper employeeMapper;
+
+    @InjectMocks
+    private EmployeeServiceImpl employeeService;
+
+
+    /**
+     * Проверка выбрасывания ошибок при отсутствии required полей (firstname & lastname)
+     * expected:BadRequest
+     */
+    @Test
+    @DisplayName("absence of first and last name")
+    public void negativeEmployeeCreateFirst() {
+        var createEmployeeDto = CreateEmployeeDto.
+                builder().
+                build();
+
+        Assertions.assertThrows(BadRequest.class, () -> employeeService.create(createEmployeeDto));
+    }
+
+
+    /**
+     * Проверка выбрасывания ошибок при наличии в бд дубликатов аккаунтов
+     * expected:BadRequest
+     */
+    @Test
+    @DisplayName("duplicate employeeAccount")
+    public void negativeEmployeeCreateSecond() {
+//имитируем наличие в бд аккаунта
+
+        when(employeeRepository.findByCredential_Login(anyString())).thenReturn(Optional.empty());
+
+        var employee = createMinRequiredCreateEmployeeDto();
+        employee.setCreateCredentialDto(CreateCredentialDto.
+                builder().
+                login("uesr").
+                password("user").
+                build());
+
+        Assertions.assertThrows(BadRequest.class, () -> employeeService.findByAccount(employee.getCreateCredentialDto().getLogin()));
+
+    }
+
+    /**
+     * Проверка выбрасывания ошибок при отсутствии id в бд
+     * expected:BadRequest
+     */
+    @Test
+    @DisplayName("non-existing id")
+    public void negativeEmployeeUpdateFirst() {
+        when(employeeRepository.findById(any())).thenReturn(Optional.empty());
+        Assertions.assertThrows(BadRequest.class, () -> employeeService.update(1L, createMinRequiredCreateEmployeeDto()));
+
+    }
+
+    /**
+     * Проверка отработки метода update
+     */
+    @Test
+    @DisplayName("update Employee")
+    public void updateEmployee() {
+        var createEmployeeDto = createMinRequiredCreateEmployeeDto();
+        var oldEmployee = createMinRequiredEmployee(createEmployeeDto);
+
+        var newEmployee = createMinRequiredEmployee(createEmployeeDto);
+        newEmployee.setFirstName("Денис");
+
+        var newEmployeeDto = createMinRequiredEmployeeDto(newEmployee);
+
+        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(oldEmployee));
+        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
+        when(employeeRepository.save(any())).thenReturn(newEmployee);
+
+        when(employeeMapper.update(any(), any())).thenReturn(newEmployee);
+        when(employeeMapper.map(newEmployee)).thenReturn(newEmployeeDto);
+
+        var result = employeeService.update(1L, createMinRequiredCreateEmployeeDto());
+
+        Assertions.assertEquals(newEmployeeDto.getFirstName(), result.getFirstName());
+
+    }
+
+    @Test
+    @DisplayName("delete employee")
+    public void delete() {
+        var employee = createMinRequiredEmployee(createMinRequiredCreateEmployeeDto());
+        employee.setStatus(EmployeeStatus.ACTIVE);
+
+        var deletedEmployeeDto = createMinRequiredEmployeeDto(employee);
+        deletedEmployeeDto.setStatus(EmployeeStatus.REMOTE);
+
+
+        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(employee));
+        when(employeeRepository.save(any())).thenReturn(employee);
+
+        when(employeeMapper.map(employee)).thenReturn(deletedEmployeeDto);
+
+        var result = employeeService.deleteById(1L);
+
+        Assertions.assertEquals(employee.getStatus(), result.getStatus());
+
+
+    }
+
+    @Test
+    @DisplayName("create employee ")
+    public void createEmployee() {
+        var createEmployeeDto = createMinRequiredCreateEmployeeDto();
+        var employee = createMinRequiredEmployee(createEmployeeDto);
+        var employeeDto = createMinRequiredEmployeeDto(employee);
+
+        when(employeeRepository.existsByCredential_Login(anyString())).thenReturn(false);
+        when(employeeRepository.save(any())).thenReturn(employee);
+
+        when(employeeMapper.create(createEmployeeDto)).
+                thenReturn(employee);
+
+        when(employeeMapper.map(employee)).thenReturn(employeeDto);
+
+
+        var result = employeeService.create(createEmployeeDto);
+
+        Assertions.assertNotNull(result);
+    }
+
+
+    //создание сущности с минимально-необходимыми требованиями для сохранения
+    public CreateEmployeeDto createMinRequiredCreateEmployeeDto() {
+        return CreateEmployeeDto.
+                builder().
+                firstName("Иван").
+                lastName("Романов").
+                build();
+    }
+    // минимально-необходимый  Employee
+
+    public Employee createMinRequiredEmployee(CreateEmployeeDto createEmployeeDto) {
+        return Employee.
+                builder().
+                firstName(createEmployeeDto.getFirstName()).
+                lastName(createEmployeeDto.getLastName()).
+                email(createEmployeeDto.getEmail()).
+                patronymic(createEmployeeDto.getPatronymic()).
+                post(createEmployeeDto.getPost()).
+                build();
+    }
 
     //минимально-необходимый  EmployeeDto
-//    public EmployeeDto createMinRequiredEmployeeDto(Employee employee) {
-//        return EmployeeDto.
-//                builder().
-//                firstName(employee.getFirstName()).
-//                lastName(employee.getLastName()).
-//                account(employee.getAccount()).
-//                patronymic(employee.getPassword()).
-//                build();
-//    }
+    public EmployeeDto createMinRequiredEmployeeDto(Employee employee) {
+        return EmployeeDto.
+                builder().
+                firstName(employee.getFirstName()).
+                lastName(employee.getLastName()).
+                build();
+    }
 }
 
