@@ -1,6 +1,7 @@
 package com.digital.pm.dto.task;
 
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class    CreateTaskDto {
 
     private Long laborCost; //трудозатраты в часах
     @Schema(description = "Срок сдачи")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 
     private Date deadline;
 }

@@ -1,10 +1,9 @@
 package com.digital.pm.dto.task;
 
 import com.digital.pm.common.enums.TaskStatus;
-import com.digital.pm.dto.employee.EmployeeDto;
-
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,14 +37,18 @@ public class TaskDto {
 
     private Long projectId;
     @Schema(description = "Срок сдачи")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 
     private Date deadline;
     @Schema(description = "Дата создания")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 
     private Date creationDate;
     @Schema(description = "Дата обновления")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+
     private Date updateTime;
-    @Schema(description = "Статус задачи",defaultValue = "NEW")
+    @Schema(description = "Статус задачи", defaultValue = "NEW")
 
     private TaskStatus status;
 
