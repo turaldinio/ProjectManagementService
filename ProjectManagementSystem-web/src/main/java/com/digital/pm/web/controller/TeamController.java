@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.*;
         @ApiResponse(responseCode = "400", description = "Неправильные параметры аргумента", content = @Content(schema = @Schema(), mediaType = "application/json"))
 })
 
-@RequestMapping(value = "/private/team", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/private/team")
 public class TeamController {
     private final TeamService teamService;
 
     @Operation(summary = "добавление сотрудника в команду",
             description = "Добавляет указанного сотрудника в указанную команду. Если сотрудник уже состоит в этй команде, выбрасывает исключение")
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TeamDto> add(@RequestBody CreateTeamDto createTeamDto) {
         return ResponseEntity.ok(teamService.addEmployee(createTeamDto));
     }
@@ -38,7 +38,7 @@ public class TeamController {
     @Operation(summary = "удаление сотрудника из команду",
             description = "Удаляет указанного сотрудника из команды")
 
-    @DeleteMapping("/delete")
+    @DeleteMapping(value = "/delete",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TeamDto> delete(Long employeeId, Long projectId) {
         return ResponseEntity.ok(teamService.delete(employeeId, projectId));
     }
@@ -46,7 +46,7 @@ public class TeamController {
     @Operation(summary = "Список сотрудников",
             description = "Выводит всех сотрудников, работающих на указанному проекте")
 
-    @GetMapping("/all/{id}")
+    @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllEmployeesByProjectId(@PathVariable("id") Long projectId) {
         return ResponseEntity.ok(teamService.getAllByProjectId(projectId));
     }

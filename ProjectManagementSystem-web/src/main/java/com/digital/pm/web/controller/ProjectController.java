@@ -26,7 +26,7 @@ import java.util.List;
         @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProjectDto.class), mediaType = "application/json")),
         @ApiResponse(responseCode = "400", description = "Неправильные параметры аргумента", content = @Content(schema = @Schema(), mediaType = "application/json"))
 })
-@RequestMapping(value = "/private/project", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/private/project")
 
 public class ProjectController {
     private final ProjectService projectService;
@@ -34,7 +34,7 @@ public class ProjectController {
     @Operation(summary = "Создание проекта",
             description = "Создает проект по указанным данным")
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDto> create(@RequestBody CreateProjectDto createProjectDto) {
         return ResponseEntity.ok(projectService.create(createProjectDto));
     }
@@ -42,7 +42,7 @@ public class ProjectController {
     @Operation(summary = "Обновление проекта",
             description = "Создает проект по указанным данным")
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDto> update(@PathVariable Long id, @RequestBody CreateProjectDto createProjectDto) {
         return ResponseEntity.ok(projectService.update(id, createProjectDto));
     }
@@ -50,7 +50,7 @@ public class ProjectController {
     @Operation(summary = "Изменение статуса проекта по id",
             description = "Позволяет перевести проект в следующий статус")
 
-    @PutMapping("/change/{id}")
+    @PutMapping(value = "/change/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDto> changeStatus(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.changeProjectStatus(id));
     }
@@ -58,7 +58,7 @@ public class ProjectController {
     @Operation(summary = "Поиск проекта по фильтрам",
             description = "Поиск осуществляется на основе переданного объекта ProjectFilter, поля которого необязательны к заполнению")
 
-    @PostMapping("/find")
+    @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<ProjectDto>> findAll(@RequestBody(required = false) ProjectFilter projectFilter) {
         return ResponseEntity.ok(projectService.findAll(projectFilter));
     }

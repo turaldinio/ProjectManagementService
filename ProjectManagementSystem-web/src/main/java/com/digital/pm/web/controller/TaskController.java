@@ -28,21 +28,22 @@ import java.util.List;
         @ApiResponse(responseCode = "400", description = "Неправильные параметры аргумента", content = @Content(schema = @Schema(), mediaType = "application/json"))
 })
 
-@RequestMapping(value = "/private/task", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/private/task")
 public class TaskController {
     private final TaskService taskService;
 
     @Operation(summary = "создание задачи",
             description = "Создает задачу по указанным данным")
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDto> create(@RequestBody CreateTaskDto createTaskDto) {
         return ResponseEntity.ok(taskService.create(createTaskDto));
     }
+
     @Operation(summary = "обновление задачи",
             description = "Оьновляет задачу по указанному id")
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDto> update(@PathVariable("id") Long taskId, @RequestBody CreateTaskDto createTaskDto) {
         return ResponseEntity.ok(taskService.update(taskId, createTaskDto));
     }
@@ -50,7 +51,7 @@ public class TaskController {
     @Operation(summary = "Изменение статуса задачи",
             description = "Переводит задачу в следующий статус")
 
-    @PutMapping("/changeStatus/{id}")
+    @PutMapping(value = "/changeStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDto> changeStatus(@PathVariable("id") Long taskId) {
         return ResponseEntity.ok(taskService.changeStatus(taskId));
     }
@@ -65,7 +66,7 @@ public class TaskController {
     @Operation(summary = "Поиск задачи по фильтрам",
             description = "Осуществляет поиск задачи по указанным фильтрам TaskFilter, поля которого необязательны")
 
-    @PostMapping("/find")
+    @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TaskDto>> findAll(@RequestBody(required = false) TaskFilter taskFilter) {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
     }
