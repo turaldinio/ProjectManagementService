@@ -12,8 +12,10 @@ import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final CredentialService credentialService;
+    @Autowired
+    private Logger logger;
 
     @Transactional
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
@@ -112,6 +116,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public List<EmployeeDto> findAll() {
+        logger.warn("warn");
+        logger.info("info ");
+        logger.debug("debug ");
         return employeeMapper.map(employeeRepository.findAll());
     }
 
