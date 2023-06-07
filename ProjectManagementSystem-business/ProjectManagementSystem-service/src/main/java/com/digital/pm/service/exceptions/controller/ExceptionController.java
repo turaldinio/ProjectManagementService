@@ -3,12 +3,9 @@ package com.digital.pm.service.exceptions.controller;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.query.UnknownNamedQueryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,6 +28,16 @@ public class ExceptionController {
                 badRequest().
                 body(gson.
                         toJson(Map.of("message", badRequest.getMessage())));
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> exception(Exception exception) {
+        logger.error(exception.getMessage());
+        return ResponseEntity.
+                badRequest().
+                body(gson.
+                        toJson(Map.of("message", exception.getMessage())));
 
     }
 

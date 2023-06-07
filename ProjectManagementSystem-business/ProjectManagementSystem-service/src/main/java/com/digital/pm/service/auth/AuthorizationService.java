@@ -1,4 +1,4 @@
-package com.digital.pm.service;
+package com.digital.pm.service.auth;
 
 import com.digital.pm.service.auth.AuthorizationRequest;
 import com.digital.pm.service.auth.AuthorizationResponse;

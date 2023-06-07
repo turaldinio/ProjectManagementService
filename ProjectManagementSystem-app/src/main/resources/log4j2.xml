@@ -8,7 +8,7 @@
         </Console>
 
 
-        <RollingFile name="service-log" fileName="logs/service/service.log"
+        <RollingFile name="service-all-log" fileName="logs/service/allServices.log"
                      filePattern="logs/service-%d{yyyy-MM-dd}.log">
 
             <PatternLayout>
@@ -21,12 +21,142 @@
             </Policies>
         </RollingFile>
 
+
+        <RollingFile name="service-employee-log" fileName="logs/service/employee/employee.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="service-credential-log" fileName="logs/service/credential/credential.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="service-project-log" fileName="logs/service/project/project.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
+        <RollingFile name="service-task-log" fileName="logs/service/task/task.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
+        <RollingFile name="service-team-log" fileName="logs/service/team/team.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
+        <RollingFile name="service-auth-log" fileName="logs/service/auth/auth.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
+        <RollingFile name="service-exception-log" fileName="logs/service/exception/exception.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
     </Appenders>
 
     <Loggers>
-        <Logger name="com.digital.pm.service" level="debug" additivity="false">
-            <appender-ref ref="service-log" level="info"/>
+        <Logger name="com.digital.pm.service.EmployeeService" level="debug" additivity="false">
+            <appender-ref ref="service-employee-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
         </Logger>
+
+        <Logger name="com.digital.pm.service.CredentialService" level="debug" additivity="false">
+            <appender-ref ref="service-credential-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.ProjectService" level="debug" additivity="false">
+            <appender-ref ref="service-project-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.TaskService" level="debug" additivity="false">
+            <appender-ref ref="service-task-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.TeamService" level="debug" additivity="false">
+            <appender-ref ref="service-team-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.auth" level="debug" additivity="false">
+            <appender-ref ref="service-auth-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.exceptions.controller.ExceptionController" level="debug" additivity="false">
+            <appender-ref ref="service-exception-log" level="warn"/>
+            <appender-ref ref="service-all-log" level="warn"/>
+        </Logger>
+
+
         <Root level="INFO" additivity="false">
             <AppenderRef ref="console-log"/>
         </Root>

@@ -1,30 +1,25 @@
 package com.digital.pm.service.auth.config;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.repository.CredentialRepository;
 import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.auth.impl.CustomUserDetailService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.google.gson.Gson;
-import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -38,68 +33,69 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver resolver;
 
+    @Autowired
+    @Qualifier("jwtAuthFilterLogger")
+    private Logger logger;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             if (!isPrivateRequest(request)) {//если запрос не на закрытый ресур, пропускаем его без проверки токена
+                logger.info(String.format("the request %s for a open resource was accepted", request.getRequestURI()));
                 filterChain.doFilter(request, response);
                 return;
             }
+
+            logger.info(String.format("the request %s for a closed resource was accepted", request.getRequestURI()));
+
             String token = request.getHeader("auth-token") == null ?//запрос на приватный адрес.получаем токен
                     (request.getHeader("authorization") == null ?
                             null : request.getHeader("authorization"))
                     : request.getHeader("auth-token");
 
+            logger.info("checking the availability of a token");
             if (token == null) {//если токена нет- ошибка
-                writeForbiddenResponse(response, "no token provided");
-                return;
+                throw new BadRequest("no token provided");
             }
+
             if (token.startsWith("Bearer ")) {
                 token = token.substring("Bearer ".length());
             }
 
+            logger.info("checking the validity of the token");
+            if (!jwtService.isTokenValid(token)) {//токен валидный?
+                resolver.resolveException(request, response, null, new BadRequest("invalid token"));
+            }
+
+            logger.info("checking that the token is not outdated");
             if (jwtService.isTokenExpired(token)) {//токен не истек?
-                writeForbiddenResponse(response, "Token is expired.Get a new token at /auth/login");
-                return;
+                resolver.resolveException(request, response, null, new BadRequest("token is expired.Get a new token at /auth/login"));
+            }
+            logger.info("the request contains a valid token");
+
+            var userDetail = customUserDetailService.loadUserByUsername(jwtService.extractUserAccount(token));
+
+            var currentEmployee = employeeRepository.findByCredential_Login(jwtService.extractUserAccount(token)).get();
+
+            logger.info("verification: is the employee active?");
+
+            if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {//если тек пользователь удален - ошибка
+                resolver.resolveException(request, response, null, new BadRequest("Remote user cannot be authorized"));
             }
 
-            if (jwtService.isTokenValid(token)) {//токен валидный?
-                var userDetail = customUserDetailService.loadUserByUsername(jwtService.extractUserAccount(token));
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetail.getUsername(),
+                    userDetail.getPassword(), userDetail.getAuthorities()));//авторизовываем
 
-                var currentEmployee = employeeRepository.findByCredential_Login(jwtService.extractUserAccount(token)).get();
+            logger.info("the request was successfully authorized");
 
-                if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {//если тек пользователь удален - ошибка
-                    resolver.resolveException(request, response, null, new BadRequest("Remote user cannot be authorized"));
-                }
-
-
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetail.getUsername(),
-                        userDetail.getPassword(), userDetail.getAuthorities()));//авторизовываем
-
-                filterChain.doFilter(request, response);//передаем запрос дальше по фильтрам
-            } else {
-                writeForbiddenResponse(response, "invalidate token");
-            }
-        } catch (MalformedJwtException e) {
-            writeForbiddenResponse(response, "invalidate token");
+            filterChain.doFilter(request, response);//передаем запрос дальше по фильтрам
+        } catch (Exception e) {
+            resolver.resolveException(request, response, null, e);
         }
     }
 
     public boolean isPrivateRequest(HttpServletRequest request) {//запрос на приватный адрес?
         return request.getRequestURI().contains("/private");
-    }
-
-    public void writeForbiddenResponse(HttpServletResponse response, String message) throws IOException {//вернуть ответ с ошибкой
-        Map<String, Object> errorDetails = new HashMap<>();
-        errorDetails.put("message", message);
-
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        var gsonMap = gson.toJson(errorDetails);
-
-        response.getWriter().write(gsonMap);
-
     }
 
 

@@ -11,6 +11,9 @@ import com.digital.pm.service.TeamService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.TeamMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,58 +30,92 @@ public class TeamServiceImpl implements TeamService {
 
     private final ProjectService projectService;
 
+    @Autowired
+    @Qualifier("teamLogger")
+    private Logger logger;
+
     @Transactional
     @Override
     public TeamDto addEmployee(CreateTeamDto createTeamDto) {
+        logger.info("addEmployee method has started");
+
         //существует ли сотрудник с таким id
         if (!employeeService.existsById(createTeamDto.getEmployeeId())) {
+            logger.info("canceling the creation operation");
             throw invalidEmployeeId(createTeamDto.getEmployeeId());
         }
         //существует ли такой проект
         if (projectService.existsById(createTeamDto.getProjectId())) {
+            logger.info("canceling the creation operation");
             throw invalidProjectId(createTeamDto.getProjectId());
         }
 
+        logger.info(String.format("checking:is the employee %d involved in this project %d? ", createTeamDto.getEmployeeId(), createTeamDto.getProjectId()));
+
         //если сотрудник уже участвует в этом проекте ->ошибка
         if (teamRepository.existsByEmployeeIdAndProjectId(createTeamDto.getEmployeeId(), createTeamDto.getProjectId())) {
+            logger.info("canceling the creation operation");
             throw invalidEmployeeAlreadyInvolved(createTeamDto.getEmployeeId(), createTeamDto.getProjectId());
         }
 
         if (Objects.isNull(createTeamDto.getRole())) {
+            logger.info("canceling the creation operation");
             throw invalidRole();
         }
         var team = teamMapper.create(createTeamDto);
 
+        logger.info(String.format("the team %s is created", createTeamDto));
+
         teamRepository.save(team);
+
+        logger.info(String.format("the team %s has been saved ", createTeamDto));
 
         return teamMapper.map(team);
     }
 
-    private BadRequest invalidRole() {
-        return new BadRequest("the Role filed cannot be null");
-    }
 
     @Transactional
     @Override
     public TeamDto delete(Long employeeId, Long projectId) {
+        logger.info("delete method has started");
+
+        logger.info(String.format("find employee with %d id", employeeId));
+
         //существует ли такой пользователь
         if (!employeeService.existsById(employeeId)) {
+            logger.info("canceling the delete operation");
+
             throw invalidEmployeeId(employeeId);
         }
+        logger.info(String.format("find project with %d id", projectId));
+
         //существует ли такой проект
         if (projectService.existsById(projectId)) {
+            logger.info("canceling the delete operation");
+
             throw invalidProjectId(projectId);
         }
+        //сотрудник участвует в проекте
+        logger.info(String.format("checking:is the employee %d involved in this project %d? ", employeeId, projectId));
+
         if (!teamRepository.existsByEmployeeIdAndProjectId(employeeId, projectId)) {
+            logger.info("canceling the delete operation");
+
             throw invalidEmployeeNotParticipate(employeeId, projectId);
         }
         var result = teamRepository.deleteByEmployeeIdAndProjectId(employeeId, projectId);
+
+        logger.info(String.format("the employee %d was removed from the team", employeeId));
 
         return teamMapper.map(result);
     }
 
     @Override
     public List<EmployeeDto> getAllByProjectId(Long projectId) {
+        logger.info("getAllByProjectId method has started");
+
+        logger.info(String.format("get all employees involved in the project %d", projectId));
+
         return teamRepository.findAllByProjectId(projectId).
                 stream().
                 map(Team::getEmployeeId).
@@ -86,6 +123,11 @@ public class TeamServiceImpl implements TeamService {
                 filter(Objects::nonNull).
                 toList();
 
+    }
+
+    @Override
+    public Boolean existsByEmployeeIdAndProjectId(Long id, Long projectId) {
+        return teamRepository.existsByEmployeeIdAndProjectId(id, projectId);
     }
 
     public BadRequest invalidEmployeeNotParticipate(Long employeeId, Long projectId) {
@@ -104,8 +146,9 @@ public class TeamServiceImpl implements TeamService {
         return new BadRequest(String.format("the project with %d is not found", projectId));
     }
 
-    @Override
-    public Boolean existsByEmployeeIdAndProjectId(Long id, Long projectId) {
-        return teamRepository.existsByEmployeeIdAndProjectId(id, projectId);
+    private BadRequest invalidRole() {
+        return new BadRequest("the Role filed cannot be null");
     }
+
 }
+

@@ -1,7 +1,7 @@
 package com.digital.pm.web.controller;
 
 import com.digital.pm.service.auth.AuthorizationRequest;
-import com.digital.pm.service.AuthorizationService;
+import com.digital.pm.service.auth.AuthorizationService;
 import com.digital.pm.service.auth.AuthorizationResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

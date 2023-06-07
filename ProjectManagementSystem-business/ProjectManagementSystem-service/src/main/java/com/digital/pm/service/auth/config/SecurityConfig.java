@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @RequiredArgsConstructor
-@PropertySource("classpath:secret.properties")
 
 public class SecurityConfig {
     private final CustomUserDetailService customUserDetailService;

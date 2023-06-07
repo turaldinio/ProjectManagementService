@@ -3,10 +3,9 @@ package com.digital.pm.dto.employee;
 
 import com.digital.pm.dto.credential.CreateCredentialDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.lang.reflect.Field;
 
 
 @Data
@@ -30,7 +29,6 @@ public class CreateEmployeeDto {
 
     private CreateCredentialDto createCredentialDto;
     @Schema(description = "Адрес электронной почты")
-
     private String email;
 
 

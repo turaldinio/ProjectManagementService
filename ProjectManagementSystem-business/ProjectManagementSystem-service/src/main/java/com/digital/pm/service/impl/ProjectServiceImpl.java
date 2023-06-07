@@ -11,6 +11,9 @@ import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,36 +28,66 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
 
+    @Autowired
+    @Qualifier("projectLogger")
+    private Logger logger;
+
     @Transactional
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
+        logger.info("create method has started");
+
         if (!checkRequiredValue(createProjectDto)) {
+            logger.info("canceling the creation operation");
             throw invalidRequiredValues();
         }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
+            logger.info("canceling the creation operation");
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
 
         var project = projectMapper.create(createProjectDto);
 
+        logger.info(String.format("project %s is created", createProjectDto));
+
         projectRepository.save(project);
+
+        logger.info(String.format("project %s has been saved", createProjectDto));
+
         return projectMapper.map(project);
     }
 
     @Transactional
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
-        var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
+        logger.info("update method has started");
+
+        logger.info(String.format("find project with %d id", projectId));
+
+        var project = projectRepository.findById(projectId).orElseThrow(() -> {
+                    logger.info("canceling the update operation");
+
+                    return invalidId(projectId);
+                }
+        );
+
         var newProject = projectMapper.update(project, createProjectDto);
 
+        logger.info(String.format("project %s has been updated", newProject));
+
+
         if (!checkRequiredValue(newProject)) {
+            logger.info("canceling the update operation");
+
             throw invalidRequiredValues();
 
         }
         if (projectRepository.existsByProjectCode(newProject.getProjectCode())) {
+            logger.info("canceling the update operation");
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
         projectRepository.save(newProject);
+        logger.info(String.format("project %s has been saved", createProjectDto));
 
         return projectMapper.map(newProject);
     }
@@ -62,34 +95,57 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectDto changeProjectStatus(Long projectId) {
+        logger.info("changeProjectStatus method has started");
+
+        logger.info(String.format("find project with %d id", projectId));
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
 
-        if (project.getStatus().equals(ProjectStatus.COMPLETED)) {
-            throw new BadRequest("you cannot change the status for this project");
+
+        switch (project.getStatus().name().toUpperCase()) {
+            case "COMPLETED" -> {
+                logger.info("canceling the changeProjectStatus operation");
+                throw new BadRequest("you cannot change the status for this project");
+            }
+            case "DRAFT" -> {
+                project.setStatus(ProjectStatus.DEVELOPING);
+                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DRAFT, project.getStatus()));
+
+            }
+            case "DEVELOPING" -> {
+                project.setStatus(ProjectStatus.TESTING);
+                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DEVELOPING, project.getStatus()));
+            }
+            case "TESTING" -> {
+                project.setStatus(ProjectStatus.COMPLETED);
+                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.TESTING, project.getStatus()));
+            }
         }
-        if (project.getStatus().equals(ProjectStatus.DRAFT)) {
-            project.setStatus(ProjectStatus.DEVELOPING);
-        }
-        if (project.getStatus().equals(ProjectStatus.DEVELOPING)) {
-            project.setStatus(ProjectStatus.TESTING);
-        }
-        if (project.getStatus().equals(ProjectStatus.TESTING)) {
-            project.setStatus(ProjectStatus.COMPLETED);
-        }
+
         projectRepository.save(project);
+        logger.info(String.format("project %s has been saved", project));
+
         return projectMapper.map(project);
+
     }
 
     @Override
     public List<ProjectDto> findAll(ProjectFilter projectFilter) {
+        logger.info("findAll with filter method has started");
+
+        logger.info(String.format("find all projects by filter %s", projectFilter));
+
         var result = projectRepository.
                 findAll(ProjectSpecification.getSpec(projectFilter));
+
+        logger.info("projects successfully found");
 
         return projectMapper.map(result);
     }
 
     @Override
     public Boolean existsById(Long id) {
+        logger.info("existsById method has started");
+
         return projectRepository.existsById(id);
     }
 
@@ -108,6 +164,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
+        logger.info("checking required fields for a project");
+
         return Objects.nonNull(createProjectDto.getProjectCode()) &&
                 Objects.nonNull(createProjectDto.getName()) &&
                 !createProjectDto.getProjectCode().isBlank() &&
@@ -115,6 +173,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     public boolean checkRequiredValue(Project newProject) {
+        logger.info("checking required fields for a project");
+
         return Objects.nonNull(newProject.getProjectCode()) &&
                 Objects.nonNull(newProject.getName()) &&
                 !newProject.getProjectCode().isBlank() &&

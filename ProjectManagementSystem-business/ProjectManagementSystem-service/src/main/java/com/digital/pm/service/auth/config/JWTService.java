@@ -8,7 +8,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +24,22 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-
+@PropertySource("classpath:security.properties")
 public class JWTService {
     private final CustomUserDetailService customUserDetailService;
     @Value("${secret_key}")
     private String SECRET_KEY;
+
+    @Autowired
+    @Qualifier("jwtLogger")
+    private Logger logger;
 
     public String extractUserAccount(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
     public String generateToken(Map<String, Object> extractClaims, Authentication authentication) {
+        logger.info("creating a token");
         return Jwts.builder().
                 setClaims(extractClaims).
                 setSubject(authentication.getName()).

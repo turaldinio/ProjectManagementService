@@ -25,6 +25,7 @@ public class CredentialServiceImpl implements CredentialService {
     private Logger logger;
 
     public Credential create(CreateCredentialDto createCredentialDto) {
+        logger.info("create method has started");
 
         checkCredentialRequiredFields(createCredentialDto);//проверка наличия обязательных полей login/password
 
@@ -34,31 +35,50 @@ public class CredentialServiceImpl implements CredentialService {
 
         credentialRepository.save(credential);
 
-        logger.info(String.format("credential %s is created",credential));
+        logger.info("credential has been saved");
 
         return credential;
     }
 
     public Credential update(Credential oldCredential, CreateCredentialDto newCredentialDto) {
-        return credentialMapping.update(oldCredential, newCredentialDto);
+        logger.info("update method has started");
+
+        var result = credentialMapping.update(oldCredential, newCredentialDto);
+        logger.info("credentials have been updated");
+
+        return result;
     }
+
     public CredentialDto mapCredentialToCredentialDto(Credential credential) {
+        logger.info("mapCredentialToCredentialDto method has started");
+
         if (Objects.isNull(credential)) {
             return null;
         }
-        return credentialMapping.map(credential);
+        var result = credentialMapping.map(credential);
+        logger.info("mapping credential -> credentialDto");
+
+        return result;
     }
 
     public void checkCredentialRequiredFields(CreateCredentialDto credentialDto) {
+        logger.info("credential verification required fields");
+
         if (Objects.isNull(credentialDto.getLogin()) ||
                 Objects.isNull(credentialDto.getPassword())) {
+            logger.info("canceling of the operation");
+
             throw new BadRequest("the login or password cannot be null or blank");
         }
     }
 
 
     public void checkCredentialLoginAlreadyExists(CreateCredentialDto credentialDto) {
+        logger.info("credential checking the uniqueness of the account");
+
         if (credentialRepository.existsByLogin(credentialDto.getLogin())) {//проверяем что login свободен
+            logger.info("canceling of the operation");
+
             throw new BadRequest(String.format("the %s login already exists", credentialDto.getLogin()));
         }
     }
