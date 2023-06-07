@@ -34,7 +34,7 @@ public class CredentialServiceImpl implements CredentialService {
 
         credentialRepository.save(credential);
 
-      //  logger.info(String.format("credential %s is  created",));
+        logger.info(String.format("credential %s is created",credential));
 
         return credential;
     }
@@ -42,8 +42,7 @@ public class CredentialServiceImpl implements CredentialService {
     public Credential update(Credential oldCredential, CreateCredentialDto newCredentialDto) {
         return credentialMapping.update(oldCredential, newCredentialDto);
     }
-
-    public CredentialDto map(Credential credential) {
+    public CredentialDto mapCredentialToCredentialDto(Credential credential) {
         if (Objects.isNull(credential)) {
             return null;
         }

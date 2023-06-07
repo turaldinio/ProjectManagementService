@@ -81,7 +81,7 @@ public class EmployeeMapper {
                 patronymic(employee.getPatronymic()).
                 post(employee.getPost()).
                 email(employee.getEmail()).
-                credentialDto(credentialService.map(employee.getCredential())).
+                credentialDto(credentialService.mapCredentialToCredentialDto(employee.getCredential())).
                 status(employee.getStatus()).
                 build();
 
@@ -96,7 +96,7 @@ public class EmployeeMapper {
                         firstName(x.getFirstName()).
                         lastName(x.getLastName()).
                         patronymic(x.getPatronymic()).post(x.getPost()).
-                        credentialDto(credentialService.map(x.getCredential())).
+                        credentialDto(credentialService.mapCredentialToCredentialDto(x.getCredential())).
                         status(x.getStatus()).
                         email(x.getEmail()).
                         build()).

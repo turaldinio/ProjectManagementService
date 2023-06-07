@@ -7,6 +7,6 @@ import com.digital.pm.model.Credential;
 public interface CredentialService {
     Credential create(CreateCredentialDto createCredentialDto);
     Credential update(Credential oldCredential, CreateCredentialDto newCredentialDto);
-    CredentialDto map(Credential credential);
+    CredentialDto mapCredentialToCredentialDto(Credential credential);
 
 }

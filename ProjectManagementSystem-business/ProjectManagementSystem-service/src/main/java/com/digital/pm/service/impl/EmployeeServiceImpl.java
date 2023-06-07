@@ -39,21 +39,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
             throw invalidRequiredFields();
         }
+        Employee employee;
 
         if (Objects.nonNull(createEmployeeDto.getCreateCredentialDto())) {//проверка. Если учетные данные(уд) создаются
-
-            var employee = employeeMapper.create(createEmployeeDto, credentialService.//создаем сотрудника с уд
+            employee = employeeMapper.create(createEmployeeDto, credentialService.//создаем сотрудника с уд
                     create(createEmployeeDto.getCreateCredentialDto()));
-
-            employeeRepository.save(employee);
-
-            logger.info(String.format("employee %s is created", createEmployeeDto));
-
-            return employeeMapper.map(employee);
+        } else {
+            employee = employeeMapper.create(createEmployeeDto);//иначе создаем сотрудника без уд
 
         }
+        logger.info(String.format("employee %s is created", createEmployeeDto));
 
-        Employee employee = employeeMapper.create(createEmployeeDto);//иначе создаем сотрудника без уд
         employeeRepository.save(employee);
 
         return employeeMapper.map(employee);

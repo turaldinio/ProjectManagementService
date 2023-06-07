@@ -40,6 +40,11 @@ public class ApplicationConfig {
         return LogManager.getLogger(TeamServiceImpl.class);
 
     }
+    @Bean
+    public Logger exceptionLogger() {
+        return LogManager.getLogger("com.digital.pm.service.ExceptionLogger");
+
+    }
 
 
 }
