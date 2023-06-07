@@ -4,18 +4,25 @@ import com.digital.pm.dto.credential.CreateCredentialDto;
 import com.digital.pm.dto.credential.CredentialDto;
 import com.digital.pm.model.Credential;
 import com.digital.pm.repository.CredentialRepository;
+import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.CredentialMapping;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class CredentialService {
+public class CredentialServiceImpl implements CredentialService {
     private final CredentialRepository credentialRepository;
     private final CredentialMapping credentialMapping;
+    @Autowired
+    @Qualifier("credentialLogger")
+    private Logger logger;
 
     public Credential create(CreateCredentialDto createCredentialDto) {
 
@@ -27,6 +34,8 @@ public class CredentialService {
 
         credentialRepository.save(credential);
 
+      //  logger.info(String.format("credential %s is  created",));
+
         return credential;
     }
 
@@ -34,14 +43,8 @@ public class CredentialService {
         return credentialMapping.update(oldCredential, newCredentialDto);
     }
 
-    public Credential findByLogin(CreateCredentialDto credentialDto) {
-        return credentialRepository.
-                findByLogin(credentialDto.getLogin()).
-                orElseThrow();
-    }
-
     public CredentialDto map(Credential credential) {
-        if (credential == null) {
+        if (Objects.isNull(credential)) {
             return null;
         }
         return credentialMapping.map(credential);

@@ -8,7 +8,7 @@
         </Console>
 
 
-        <RollingFile name="service-log" fileName="logs/service.log"
+        <RollingFile name="service-log" fileName="logs/service/service.log"
                      filePattern="logs/service-%d{yyyy-MM-dd}.log">
 
             <PatternLayout>
@@ -24,8 +24,8 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.digital.pm.service.impl.EmployeeServiceImpl" level="info" additivity="false">
-            <appender-ref ref="service-log"/>
+        <Logger name="com.digital.pm.service" level="debug" additivity="false">
+            <appender-ref ref="service-log" level="info"/>
         </Logger>
         <Root level="INFO" additivity="false">
             <AppenderRef ref="console-log"/>

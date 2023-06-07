@@ -8,11 +8,13 @@ import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.spec.EmployeeSpecification;
 import com.digital.pm.repository.EmployeeRepository;
+import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeMapper employeeMapper;
     private final CredentialService credentialService;
     @Autowired
+    @Qualifier("employeeLogger")
     private Logger logger;
 
     @Transactional
@@ -44,7 +47,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             employeeRepository.save(employee);
 
+            logger.info(String.format("employee %s is created", createEmployeeDto));
+
             return employeeMapper.map(employee);
+
         }
 
         Employee employee = employeeMapper.create(createEmployeeDto);//иначе создаем сотрудника без уд
@@ -116,9 +122,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public List<EmployeeDto> findAll() {
-        logger.warn("warn");
-        logger.info("info ");
-        logger.debug("debug ");
         return employeeMapper.map(employeeRepository.findAll());
     }
 

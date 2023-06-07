@@ -1,0 +1,2 @@
+[INFO ] 2023-06-07 14:42:18 CredentialServiceImpl - credential created
+[INFO ] 2023-06-07 14:42:18 EmployeeServiceImpl - employee CreateEmployeeDto(firstName=Trual, lastName=Guluev, patronymic=null, post=null, createCredentialDto=CreateCredentialDto(login=turaldinios, password=Argidagi98), email=null) is created

@@ -1,6 +1,6 @@
 package com.digital.pm.app;
 
-import com.digital.pm.service.impl.EmployeeServiceImpl;
+import com.digital.pm.service.impl.*;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,10 +16,30 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Logger servicelogger() {
+    public Logger employeeLogger() {
         return LogManager.getLogger(EmployeeServiceImpl.class);
     }
 
+    @Bean
+    public Logger credentialLogger() {
+        return LogManager.getLogger(CredentialServiceImpl.class);
+    }
+
+    @Bean
+    public Logger projectLogger() {
+        return LogManager.getLogger(ProjectServiceImpl.class);
+    }
+
+    @Bean
+    public Logger taskLogger() {
+        return LogManager.getLogger(TaskServiceImpl.class);
+    }
+
+    @Bean
+    public Logger teamLogger() {
+        return LogManager.getLogger(TeamServiceImpl.class);
+
+    }
 
 
 }

@@ -5,7 +5,7 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
-import com.digital.pm.service.impl.CredentialService;
+import com.digital.pm.service.impl.CredentialServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmployeeMapper {
 
-    private final CredentialService credentialService;
+    private final CredentialServiceImpl credentialService;
 
     public Employee create(CreateEmployeeDto createEmployeeDto) {
 
