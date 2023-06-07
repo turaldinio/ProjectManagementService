@@ -5,7 +5,7 @@ services:
 #      - java-2023
 
   db:
-    image: postgres
+    image: postgres:15.1
     container_name: db
     environment:
       - POSTGRES_USER=postgres
