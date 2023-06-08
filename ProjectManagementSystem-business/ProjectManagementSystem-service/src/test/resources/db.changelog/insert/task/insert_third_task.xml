@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="insert_third_task" author="Guluev">
+        <insert tableName="task">
+            <column name="name" value="Поднятие необходимого окружения"/>
+            <column name="executor_id" value="3"/>
+            <column name="labor_cost" value="89"/>
+            <column name="deadline" value="2020-02-23 12:16:23" type="TIMESTAMP"/>
+            <column name="author_id" value="1"/>
+            <column name="status" value="NEW"/>
+            <column name="creation_date" value="2018-09-18 12:16:23" type="TIMESTAMP"/>
+            <column name="project_id" value="1"/>
+
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

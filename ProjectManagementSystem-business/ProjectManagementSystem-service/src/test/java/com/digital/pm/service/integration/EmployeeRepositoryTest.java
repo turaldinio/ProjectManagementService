@@ -1,4 +1,4 @@
-package com.digital.pm.app.integration;
+package com.digital.pm.service.integration;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.filters.EmployeeFilter;

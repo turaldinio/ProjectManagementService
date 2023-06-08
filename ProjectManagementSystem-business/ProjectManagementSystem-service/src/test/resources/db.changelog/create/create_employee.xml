@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="create_table_employee" author="Guluev">
+
+        <createTable tableName="employee">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="patronymic" type="text">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="post" type="text">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="email" type="varchar(30)">
+                <constraints nullable="true" unique="true"/>
+            </column>
+
+            <column name="credential_id" type="bigint">
+                <constraints nullable="true" unique="true"/>
+            </column>
+
+            <column name="status" type="text"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="employee" baseColumnNames="credential_id" constraintName="credential_id"
+                                 referencedTableName="credential"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

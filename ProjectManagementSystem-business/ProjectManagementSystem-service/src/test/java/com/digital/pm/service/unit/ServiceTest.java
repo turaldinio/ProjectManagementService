@@ -1,4 +1,4 @@
-package com.digital.pm.app.unit;
+package com.digital.pm.service.unit;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.dto.credential.CreateCredentialDto;
@@ -6,9 +6,11 @@ import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeRepository;
+import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.impl.EmployeeServiceImpl;
 import com.digital.pm.service.mapping.EmployeeMapper;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,15 +22,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest()
-
-public class EmployeeServiceTest {
-
+public class ServiceTest {
     @Spy
     private EmployeeRepository employeeRepository;
+    @Spy
+    private Logger employeeLogger;
 
+    @Spy
+    private CredentialService credentialService;
     @Mock
     private EmployeeMapper employeeMapper;
 
@@ -186,4 +191,5 @@ public class EmployeeServiceTest {
                 build();
     }
 }
+
 

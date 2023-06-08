@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="insert_first_task" author="Guluev">
+        <insert tableName="task">
+            <column name="name" value="Подбор людей в рекомендации"/>
+            <column name="description" value="необходимо на основе общей музык между двумя пользователями,предложить им дружбу в 'рекомендациях'"/>
+            <column name="executor_id" value="1"/>
+            <column name="labor_cost" value="32"/>
+            <column name="deadline" value="2022-10-12 12:16:23" type="TIMESTAMP"/>
+            <column name="author_id" value="2"/>
+            <column name="status" value="NEW"/>
+            <column name="creation_date" value="2022-09-12 12:16:23" type="TIMESTAMP"/>
+            <column name="project_id" value="1"/>
+
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

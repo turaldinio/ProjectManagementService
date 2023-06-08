@@ -13,8 +13,6 @@ import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.Logger;
@@ -29,15 +27,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final CredentialService credentialService;
-    @Autowired
-    @Qualifier("employeeLogger")
-    private Logger logger;
+    private final Logger employeeLogger;
 
     @Transactional
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
-        logger.info("create method has started");
+        employeeLogger.info("create method has started");
         if (!checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
-            logger.info("canceling the creation operation");
+            employeeLogger.info("canceling the creation operation");
 
             throw invalidRequiredFields();
         }
@@ -52,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employeeRepository.save(employee);
 
-        logger.info(String.format("employee %s has been saved", createEmployeeDto));
+        employeeLogger.info(String.format("employee %s has been saved", createEmployeeDto));
 
         return employeeMapper.map(employee);
     }
@@ -60,18 +56,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public EmployeeDto update(Long employeeId, CreateEmployeeDto createEmployeeDto) {
-        logger.info("update method has started");
+        employeeLogger.info("update method has started");
 
         var employee = employeeRepository.findById(employeeId).orElseThrow(() -> invalidId(employeeId));
-        logger.info(String.format("employee with %d is found", employeeId));
+        employeeLogger.info(String.format("employee with %d is found", employeeId));
 
         var newEmployee = employeeMapper.update(employee, createEmployeeDto);//обновляем все кроме уд
 
-        logger.info(String.format("created new employee %s", newEmployee));
+        employeeLogger.info(String.format("created new employee %s", newEmployee));
 
         //проверка обязательных полей имя/фамилия
         if (!checkRequiredValue(newEmployee)) {
-            logger.info("canceling the update operation");
+            employeeLogger.info("canceling the update operation");
             throw invalidRequiredFields();
         }
 
@@ -88,11 +84,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         newEmployee.setCredential(credential); // сетим обновленный|созданный|старый уд в обновленный объект Employee
-        logger.info("credentials are installed");
+        employeeLogger.info("credentials are installed");
 
         employeeRepository.save(newEmployee);
 
-        logger.info(String.format("employee %s has been saved", newEmployee));
+        employeeLogger.info(String.format("employee %s has been saved", newEmployee));
 
         return employeeMapper.map(newEmployee);
 
@@ -100,16 +96,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto getById(Long id) {
-        logger.info("getById method has started");
+        employeeLogger.info("getById method has started");
 
-        logger.info(String.format("search for a user with id %d", id));
+        employeeLogger.info(String.format("search for a user with id %d", id));
 
         return employeeMapper.
                 map(employeeRepository.
                         findById(id).
                         orElseThrow(() ->
                                 {
-                                    logger.info("canceling the getById operation");
+                                    employeeLogger.info("canceling the getById operation");
                                     return invalidId(id);
                                 }
                         ));
@@ -118,51 +114,51 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public EmployeeDto deleteById(Long id) {
-        logger.info("deleteById method has started");
+        employeeLogger.info("deleteById method has started");
 
-        logger.info(String.format("deleting user with id %d", id));
+        employeeLogger.info(String.format("deleting user with id %d", id));
 
         var currentEmployee = employeeRepository.
                 findById(id).
                 orElseThrow(() -> invalidId(id));
 
         if (currentEmployee.getStatus().equals(EmployeeStatus.REMOTE)) {
-            logger.info("canceling the deleteById operation");
+            employeeLogger.info("canceling the deleteById operation");
 
             throw invalidEmployeeAlreadyRemoved(id);
         }
 
         currentEmployee.setStatus(EmployeeStatus.REMOTE);
-        logger.info("changed employee status ACTIVE -> REMOTE");
+        employeeLogger.info("changed employee status ACTIVE -> REMOTE");
 
         var result = employeeRepository.save(currentEmployee);
-        logger.info(String.format("employee %s has been saved", currentEmployee));
+        employeeLogger.info(String.format("employee %s has been saved", currentEmployee));
 
         return employeeMapper.map(result);
     }
 
     @Override
     public Boolean existsById(Long executorId) {
-        logger.info("existsById method has started");
+        employeeLogger.info("existsById method has started");
 
         return employeeRepository.existsById(executorId);
     }
 
     public List<EmployeeDto> findAll() {
-        logger.info("findAll method has started");
+        employeeLogger.info("findAll method has started");
 
-        logger.info("search for all employees");
+        employeeLogger.info("search for all employees");
         return employeeMapper.map(employeeRepository.findAll());
     }
 
     public List<EmployeeDto> findAll(EmployeeFilter employeeFilter) {
-        logger.info("findAll with filter method has started");
+        employeeLogger.info("findAll with filter method has started");
 
-        logger.info(String.format("search for all employees by filter %s", employeeFilter));
+        employeeLogger.info(String.format("search for all employees by filter %s", employeeFilter));
 
         var result = employeeRepository.
                 findAll(EmployeeSpecification.getSpec(employeeFilter));
-        logger.info("employees successfully found");
+        employeeLogger.info("employees successfully found");
 
         return employeeMapper.map(result);
     }
@@ -170,13 +166,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto findByAccount(String account) {
-        logger.info("findByAccount method has started");
+        employeeLogger.info("findByAccount method has started");
 
-        logger.info(String.format("search for an employee by account %s ", account));
+        employeeLogger.info(String.format("search for an employee by account %s ", account));
 
         return employeeMapper.map(employeeRepository.findByCredential_Login(account).orElseThrow(
                 () -> {
-                    logger.info("canceling the findByAccount operation");
+                    employeeLogger.info("canceling the findByAccount operation");
 
                     return invalidAccountNotFound(account);
                 }
@@ -186,7 +182,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public boolean checkRequiredValue(CreateEmployeeDto createEmployeeDto) {
-        logger.info("checking required fields for a employee");
+        employeeLogger.info("checking required fields for a employee");
 
         return
                 Objects.nonNull(createEmployeeDto.getFirstName()) &&
@@ -196,7 +192,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public boolean checkRequiredValue(Employee newEmployee) {
-        logger.info("checking required fields for a employee");
+        employeeLogger.info("checking required fields for a employee");
         return Objects.nonNull(newEmployee.getFirstName()) &&
                 Objects.nonNull(newEmployee.getLastName()) &&
                 !newEmployee.getLastName().isBlank() &&

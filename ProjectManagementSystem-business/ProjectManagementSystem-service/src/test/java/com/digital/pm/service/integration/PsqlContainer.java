@@ -1,4 +1,4 @@
-package com.digital.pm.app.integration;
+package com.digital.pm.service.integration;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
