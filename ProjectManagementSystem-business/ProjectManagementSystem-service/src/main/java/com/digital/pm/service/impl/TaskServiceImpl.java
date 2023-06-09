@@ -1,6 +1,5 @@
 package com.digital.pm.service.impl;
 
-import com.digital.pm.common.enums.ProjectStatus;
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.common.filters.TaskFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
@@ -16,8 +15,6 @@ import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,23 +33,21 @@ public class TaskServiceImpl implements TaskService {
 
     private final TeamService teamService;
 
-    @Autowired
-    @Qualifier("taskLogger")
-    private Logger logger;
+    private final Logger taskLogger;
 
     @Transactional
     @Override
     public TaskDto create(CreateTaskDto createTaskDto) {
-        logger.info("create method has started");
+        taskLogger.info("create method has started");
 
         //проверка обязательных полей
         if (!checkRequiredValues(createTaskDto)) {
-            logger.info("canceling the creating operation");
+            taskLogger.info("canceling the creating operation");
             throw invalidRequiredValues();
         }
         //проверка дедлайн>время на работу+тек время
         if (createTaskDto.getDeadline().before(new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()))) {
-            logger.info("canceling the creating operation");
+            taskLogger.info("canceling the creating operation");
             throw invalidDeadline(createTaskDto);
         }
 
@@ -61,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
 
         //проверка является ли сотрудник участником проекта
         if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
-            logger.info("canceling the creating operation");
+            taskLogger.info("canceling the creating operation");
             throw invalidEmployeeNotAPartTeam(createTaskDto, employeeDto);
         }
         //проверка является ли тек автор участником проекта
@@ -71,16 +66,16 @@ public class TaskServiceImpl implements TaskService {
                                 getName()).
                         getId(),
                 createTaskDto.getProjectId())) {
-            logger.info("canceling the creating operation");
+            taskLogger.info("canceling the creating operation");
             throw invalidAuthorId(createTaskDto, employeeDto);
         }
 
         var task = taskMapper.create(createTaskDto);
-        logger.info(String.format("created task %s", createTaskDto));
+        taskLogger.info(String.format("created task %s", createTaskDto));
 
         taskRepository.save(task);
 
-        logger.info(String.format("task %s has been saved", createTaskDto));
+        taskLogger.info(String.format("task %s has been saved", createTaskDto));
 
 
         return taskMapper.map(task);
@@ -90,76 +85,76 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
-        logger.info("update method has started");
+        taskLogger.info("update method has started");
 
-        logger.info(String.format("find task with %d id", taskId));
+        taskLogger.info(String.format("find task with %d id", taskId));
 
         var task = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
-        logger.info(String.format(" task with %d id is found", taskId));
+        taskLogger.info(String.format(" task with %d id is found", taskId));
 
         var newTask = taskMapper.update(task, createTaskDto);
-        logger.info(String.format("created new task %s", newTask));
+        taskLogger.info(String.format("created new task %s", newTask));
 
         if (checkRequiredValues(newTask)) {
-            logger.info("canceling the update operation");
+            taskLogger.info("canceling the update operation");
             throw invalidRequiredValues();
         }
 
         if (!employeeService.existsById(createTaskDto.getExecutorId())) {
-            logger.info("canceling the update operation");
+            taskLogger.info("canceling the update operation");
             throw invalidEmployeeId(createTaskDto.getExecutorId());
         }
 
         newTask.setUpdateTime(new Date());
-        logger.info("set updateTime in task");
+        taskLogger.info("set updateTime in task");
 
 
         taskRepository.save(newTask);
-        logger.info(String.format("new task has been saved %s", newTask));
+        taskLogger.info(String.format("new task has been saved %s", newTask));
 
         return taskMapper.map(newTask);
     }
 
     @Override
     public List<TaskDto> findAll(TaskFilter taskFilter) {
-        logger.info("findAll with filter method has started");
+        taskLogger.info("findAll with filter method has started");
 
-        logger.info(String.format("find all task with filter %s", taskFilter));
+        taskLogger.info(String.format("find all task with filter %s", taskFilter));
 
         var result = taskRepository.
                 findAll(TaskSpecification.getSpec(taskFilter));
 
-        logger.info("tasks successfully found");
+        taskLogger.info("tasks successfully found");
 
         return taskMapper.map(result);
     }
 
     @Transactional
     public TaskDto changeStatus(Long taskId) {
-        logger.info("changeStatus method has started");
+        taskLogger.info("changeStatus method has started");
 
-        logger.info(String.format("find task with %d id", taskId));
+        taskLogger.info(String.format("find task with %d id", taskId));
 
         var currentTask = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
 
         switch (currentTask.getStatus().name().toUpperCase()) {
 
             case "CLOSED" -> {
-                logger.info("canceling the taskChangeStatus operation");
+                taskLogger.info("canceling the taskChangeStatus operation");
 
                 throw new BadRequest("you cannot change the status for this task");
             }
             case "NEW" -> {
                 currentTask.setStatus(TaskStatus.AT_WORK);
-                logger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.NEW, currentTask.getStatus()));
+                taskLogger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.NEW, currentTask.getStatus()));
             }
             case "AT_WORK" -> {
                 currentTask.setStatus(TaskStatus.COMPLETED);
-                logger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.AT_WORK, currentTask.getStatus()));
+                taskLogger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.AT_WORK, currentTask.getStatus()));
             }
             case "COMPLETED" -> {
                 currentTask.setStatus(TaskStatus.CLOSED);
-                logger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.COMPLETED, currentTask.getStatus()));
+                taskLogger.info(String.format("the project statute has been changed from %s to %s", TaskStatus.COMPLETED, currentTask.getStatus()));
             }
         }
 
@@ -197,7 +192,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkRequiredValues(CreateTaskDto createTaskDto) {
-        logger.info("checking required fields for a task");
+        taskLogger.info("checking required fields for a task");
 
         return Objects.nonNull(createTaskDto.getName()) &&
                 !createTaskDto.getName().isBlank() &&
@@ -206,7 +201,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public boolean checkRequiredValues(Task newTask) {
-        logger.info("checking required fields for a task");
+        taskLogger.info("checking required fields for a task");
 
         return Objects.nonNull(newTask.getName()) &&
                 !newTask.getName().isBlank() &&

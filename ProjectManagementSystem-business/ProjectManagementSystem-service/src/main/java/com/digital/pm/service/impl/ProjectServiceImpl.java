@@ -12,8 +12,6 @@ import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,31 +26,29 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
 
-    @Autowired
-    @Qualifier("projectLogger")
-    private Logger logger;
+    private final Logger projectLogger;
 
     @Transactional
     @Override
     public ProjectDto create(CreateProjectDto createProjectDto) {
-        logger.info("create method has started");
+        projectLogger.info("create method has started");
 
         if (!checkRequiredValue(createProjectDto)) {
-            logger.info("canceling the creation operation");
+            projectLogger.info("canceling the creation operation");
             throw invalidRequiredValues();
         }
         if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
-            logger.info("canceling the creation operation");
+            projectLogger.info("canceling the creation operation");
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
 
         var project = projectMapper.create(createProjectDto);
 
-        logger.info(String.format("project %s is created", createProjectDto));
+        projectLogger.info(String.format("project %s is created", createProjectDto));
 
         projectRepository.save(project);
 
-        logger.info(String.format("project %s has been saved", createProjectDto));
+        projectLogger.info(String.format("project %s has been saved", createProjectDto));
 
         return projectMapper.map(project);
     }
@@ -60,12 +56,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
-        logger.info("update method has started");
+        projectLogger.info("update method has started");
 
-        logger.info(String.format("find project with %d id", projectId));
+        projectLogger.info(String.format("find project with %d id", projectId));
 
         var project = projectRepository.findById(projectId).orElseThrow(() -> {
-                    logger.info("canceling the update operation");
+                    projectLogger.info("canceling the update operation");
 
                     return invalidId(projectId);
                 }
@@ -73,21 +69,21 @@ public class ProjectServiceImpl implements ProjectService {
 
         var newProject = projectMapper.update(project, createProjectDto);
 
-        logger.info(String.format("project %s has been updated", newProject));
+        projectLogger.info(String.format("project %s has been updated", newProject));
 
 
         if (!checkRequiredValue(newProject)) {
-            logger.info("canceling the update operation");
+            projectLogger.info("canceling the update operation");
 
             throw invalidRequiredValues();
 
         }
         if (projectRepository.existsByProjectCode(newProject.getProjectCode())) {
-            logger.info("canceling the update operation");
+            projectLogger.info("canceling the update operation");
             throw invalidProjectCode(createProjectDto.getProjectCode());
         }
         projectRepository.save(newProject);
-        logger.info(String.format("project %s has been saved", createProjectDto));
+        projectLogger.info(String.format("project %s has been saved", createProjectDto));
 
         return projectMapper.map(newProject);
     }
@@ -95,34 +91,34 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectDto changeProjectStatus(Long projectId) {
-        logger.info("changeProjectStatus method has started");
+        projectLogger.info("changeProjectStatus method has started");
 
-        logger.info(String.format("find project with %d id", projectId));
+        projectLogger.info(String.format("find project with %d id", projectId));
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
 
 
         switch (project.getStatus().name().toUpperCase()) {
             case "COMPLETED" -> {
-                logger.info("canceling the changeProjectStatus operation");
+                projectLogger.info("canceling the changeProjectStatus operation");
                 throw new BadRequest("you cannot change the status for this project");
             }
             case "DRAFT" -> {
                 project.setStatus(ProjectStatus.DEVELOPING);
-                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DRAFT, project.getStatus()));
+                projectLogger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DRAFT, project.getStatus()));
 
             }
             case "DEVELOPING" -> {
                 project.setStatus(ProjectStatus.TESTING);
-                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DEVELOPING, project.getStatus()));
+                projectLogger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DEVELOPING, project.getStatus()));
             }
             case "TESTING" -> {
                 project.setStatus(ProjectStatus.COMPLETED);
-                logger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.TESTING, project.getStatus()));
+                projectLogger.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.TESTING, project.getStatus()));
             }
         }
 
         projectRepository.save(project);
-        logger.info(String.format("project %s has been saved", project));
+        projectLogger.info(String.format("project %s has been saved", project));
 
         return projectMapper.map(project);
 
@@ -130,21 +126,21 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDto> findAll(ProjectFilter projectFilter) {
-        logger.info("findAll with filter method has started");
+        projectLogger.info("findAll with filter method has started");
 
-        logger.info(String.format("find all projects by filter %s", projectFilter));
+        projectLogger.info(String.format("find all projects by filter %s", projectFilter));
 
         var result = projectRepository.
                 findAll(ProjectSpecification.getSpec(projectFilter));
 
-        logger.info("projects successfully found");
+        projectLogger.info("projects successfully found");
 
         return projectMapper.map(result);
     }
 
     @Override
     public Boolean existsById(Long id) {
-        logger.info("existsById method has started");
+        projectLogger.info("existsById method has started");
 
         return projectRepository.existsById(id);
     }
@@ -164,7 +160,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
-        logger.info("checking required fields for a project");
+        projectLogger.info("checking required fields for a project");
 
         return Objects.nonNull(createProjectDto.getProjectCode()) &&
                 Objects.nonNull(createProjectDto.getName()) &&
@@ -173,7 +169,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     public boolean checkRequiredValue(Project newProject) {
-        logger.info("checking required fields for a project");
+        projectLogger.info("checking required fields for a project");
 
         return Objects.nonNull(newProject.getProjectCode()) &&
                 Objects.nonNull(newProject.getName()) &&
