@@ -30,6 +30,7 @@
         <spring-boot-starter-validation>3.0.5</spring-boot-starter-validation>
         <spring-boot-starter-test>3.0.6</spring-boot-starter-test>
         <spring-boot-starter-log4j2>3.0.4</spring-boot-starter-log4j2>
+        <spring-boot-starter-amqp>3.0.4</spring-boot-starter-amqp>
         <springdoc>2.0.0</springdoc>
         <spring-security>3.0.5</spring-security>
         <jwt>0.11.5</jwt>
@@ -42,6 +43,19 @@
     <dependencyManagement>
 
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${spring-boot-starter-amqp}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter</artifactId>
+                    </exclusion>
+                </exclusions>
+
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
