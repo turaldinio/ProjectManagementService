@@ -11,6 +11,7 @@ import com.digital.pm.repository.TaskRepository;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.TaskService;
 import com.digital.pm.service.TeamService;
+import com.digital.pm.service.amqp.MessageProduce;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class TaskServiceImpl implements TaskService {
     private final EmployeeService employeeService;
 
     private final TeamService teamService;
+    private final MessageProduce messageProduce;
 
     private final Logger taskLogger;
 
@@ -51,38 +53,43 @@ public class TaskServiceImpl implements TaskService {
             throw invalidDeadline(createTaskDto);
         }
 
-        //получим назначенного сотрудника
-        var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
+        if (Objects.nonNull(createTaskDto.getExecutorId())) {
+            //получим назначенного сотрудника
+            var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
 
-        //проверка является ли сотрудник участником проекта
-        if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
-            taskLogger.info("canceling the creating operation");
-            throw invalidEmployeeNotAPartTeam(createTaskDto, employeeDto);
+            //проверка является ли сотрудник участником проекта
+            if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
+                taskLogger.info("canceling the creating operation");
+                throw invalidEmployeeNotAPartTeam(createTaskDto, employeeDto);
+            }
+
         }
+
         //проверка является ли тек автор участником проекта
-        if (!teamService.existsByEmployeeIdAndProjectId(
-                employeeService.findByAccount(SecurityContextHolder.getContext().
+        if (!teamService.existsByEmployeeIdAndProjectId(employeeService.
+                        findByAccount(SecurityContextHolder.
+                                getContext().
                                 getAuthentication().
                                 getName()).
                         getId(),
                 createTaskDto.getProjectId())) {
             taskLogger.info("canceling the creating operation");
-            throw invalidAuthorId(createTaskDto, employeeDto);
+            throw invalidAuthorId();
         }
 
         var task = taskMapper.create(createTaskDto);
         taskLogger.info(String.format("created task %s", createTaskDto));
 
-        taskRepository.save(task);
-
+        var taskResult = taskRepository.save(task);
         taskLogger.info(String.format("task %s has been saved", createTaskDto));
 
-
+        if (Objects.nonNull(createTaskDto.getExecutorId())) {
+            messageProduce.notifyAnEmployee(taskResult.getId(), createTaskDto.getExecutorId());
+        }
         return taskMapper.map(task);
     }
 
     @Transactional
-
     @Override
     public TaskDto update(Long taskId, CreateTaskDto createTaskDto) {
         taskLogger.info("update method has started");
@@ -172,8 +179,8 @@ public class TaskServiceImpl implements TaskService {
         return new BadRequest(String.format("the employee with id %s is not a member of team with %d", employeeDto.getId(), createTaskDto.getProjectId()));
     }
 
-    public BadRequest invalidAuthorId(CreateTaskDto createTaskDto, EmployeeDto employeeDto) {
-        return new BadRequest(String.format("the author of the task must be a participant in the project", employeeDto.getId(), createTaskDto.getProjectId()));
+    public BadRequest invalidAuthorId() {
+        return new BadRequest("the author of the task must be a participant in the project");
 
     }
 

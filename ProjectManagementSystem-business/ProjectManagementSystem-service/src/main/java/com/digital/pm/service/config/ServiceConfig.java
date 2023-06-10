@@ -1,6 +1,8 @@
 package com.digital.pm.service.config;
 
 import com.digital.pm.service.*;
+import com.digital.pm.service.amqp.MessageConsume;
+import com.digital.pm.service.amqp.MessageProduce;
 import com.digital.pm.service.amqp.RabbitMqConfig;
 import com.digital.pm.service.auth.AuthorizationService;
 import com.digital.pm.service.CredentialService;
@@ -14,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:security.properties")
+@PropertySource("classpath:service.properties")
 
 public class ServiceConfig {
     @Bean
@@ -71,5 +73,18 @@ public class ServiceConfig {
         return LogManager.getLogger(RabbitMqConfig.class);
 
     }
+
+    @Bean
+    public Logger consumeLogger() {
+        return LogManager.getLogger(MessageConsume.class);
+
+    }
+
+    @Bean
+    public Logger produceLogger() {
+        return LogManager.getLogger(MessageProduce.class);
+
+    }
+
 
 }

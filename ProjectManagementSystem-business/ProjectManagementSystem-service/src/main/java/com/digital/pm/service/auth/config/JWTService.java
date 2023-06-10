@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-@PropertySource("classpath:security.properties")
+@PropertySource("classpath:service.properties")
 public class JWTService {
     private final CustomUserDetailService customUserDetailService;
     @Value("${secret_key}")

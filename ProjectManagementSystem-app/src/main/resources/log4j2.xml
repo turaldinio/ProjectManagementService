@@ -118,6 +118,21 @@
 
         </RollingFile>
 
+        <RollingFile name="service-rabbit-log" fileName="logs/service/rabbit/rabbit.log"
+                     filePattern="logs/service-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+
+        </RollingFile>
+
+
     </Appenders>
 
     <Loggers>
@@ -154,6 +169,11 @@
         <Logger name="com.digital.pm.service.exceptions.controller.ExceptionController" level="debug" additivity="false">
             <appender-ref ref="service-exception-log" level="warn"/>
             <appender-ref ref="service-all-log" level="warn"/>
+        </Logger>
+
+        <Logger name="com.digital.pm.service.amqp" level="debug" additivity="false">
+            <appender-ref ref="service-rabbit-log" level="info"/>
+            <appender-ref ref="service-all-log" level="info"/>
         </Logger>
 
 
