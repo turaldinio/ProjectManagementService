@@ -1,6 +1,7 @@
 package com.digital.pm.service.config;
 
 import com.digital.pm.service.*;
+import com.digital.pm.service.amqp.RabbitMqConfig;
 import com.digital.pm.service.auth.AuthorizationService;
 import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.auth.config.JWTAuthFilter;
@@ -62,6 +63,12 @@ public class ServiceConfig {
     @Bean
     public Logger jwtAuthFilterLogger() {
         return LogManager.getLogger(JWTAuthFilter.class);
+
+    }
+
+    @Bean
+    public Logger rabbitLogger() {
+        return LogManager.getLogger(RabbitMqConfig.class);
 
     }
 
