@@ -26,7 +26,6 @@ import java.io.IOException;
 public class JWTAuthFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
     private final CustomUserDetailService customUserDetailService;
-    private final Gson gson;
     private final EmployeeRepository employeeRepository;
 
     @Autowired

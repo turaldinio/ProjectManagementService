@@ -1,4 +1,4 @@
-package com.digital.pm.service.amqp;
+package com.digital.pm.service.amqp.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,19 +28,19 @@ public class RabbitMqConfig {
 
     @Bean
     public Queue queue() {
-        rabbitLogger.info("создание очереди");
+        rabbitLogger.info("creating queue...");
         return new Queue(queue, false);
     }
 
     @Bean
     public DirectExchange directExchange() {
-        rabbitLogger.info("создание  exchange");
+        rabbitLogger.info("creating exchange...");
         return new DirectExchange(exchange);
     }
 
     @Bean
     public Binding binding(Queue queue, DirectExchange directExchange) {
-        rabbitLogger.info("create Binding ");
+        rabbitLogger.info("create Binding...");
         return BindingBuilder.bind(queue).to(directExchange).with(routingKey);
     }
 

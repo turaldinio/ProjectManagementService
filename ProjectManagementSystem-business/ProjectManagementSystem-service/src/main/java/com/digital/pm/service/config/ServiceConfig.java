@@ -3,12 +3,13 @@ package com.digital.pm.service.config;
 import com.digital.pm.service.*;
 import com.digital.pm.service.amqp.MessageConsume;
 import com.digital.pm.service.amqp.MessageProduce;
-import com.digital.pm.service.amqp.RabbitMqConfig;
+import com.digital.pm.service.amqp.config.RabbitMqConfig;
 import com.digital.pm.service.auth.AuthorizationService;
 import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.auth.config.JWTAuthFilter;
 import com.digital.pm.service.auth.config.JWTService;
 import com.digital.pm.service.exceptions.controller.ExceptionController;
+import com.digital.pm.service.mail.TestMailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +63,7 @@ public class ServiceConfig {
         return LogManager.getLogger(JWTService.class);
 
     }
+
     @Bean
     public Logger jwtAuthFilterLogger() {
         return LogManager.getLogger(JWTAuthFilter.class);
@@ -83,6 +85,12 @@ public class ServiceConfig {
     @Bean
     public Logger produceLogger() {
         return LogManager.getLogger(MessageProduce.class);
+
+    }
+
+    @Bean
+    public Logger emailLogger() {
+        return LogManager.getLogger(TestMailSender.class);
 
     }
 

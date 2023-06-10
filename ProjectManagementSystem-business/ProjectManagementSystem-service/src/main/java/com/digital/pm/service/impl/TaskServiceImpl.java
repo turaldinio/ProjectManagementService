@@ -84,7 +84,10 @@ public class TaskServiceImpl implements TaskService {
         taskLogger.info(String.format("task %s has been saved", createTaskDto));
 
         if (Objects.nonNull(createTaskDto.getExecutorId())) {
-            messageProduce.notifyAnEmployee(taskResult.getId(), createTaskDto.getExecutorId());
+            var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
+            if (Objects.nonNull(employeeDto.getEmail())) {
+                messageProduce.notifyAnEmployee(taskResult.getId(), employeeDto.getEmail());
+            }
         }
         return taskMapper.map(task);
     }
