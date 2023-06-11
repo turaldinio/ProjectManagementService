@@ -15,11 +15,11 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 @Slf4j
 public class RabbitMqConfig {
-    @Value("${rabbit.queue}")
+    @Value("${notification.queue}")
     private String queue;
-    @Value("${rabbit.routing_key}")
+    @Value("${notification.routing_key}")
     private String routingKey;
-    @Value("${rabbit.exchange}")
+    @Value("${notification.exchange}")
     private String exchange;
 
     @Bean
