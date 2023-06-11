@@ -1,4 +1,4 @@
-package com.digital.pm.common.filters;
+package com.digital.pm.common.filters.task;
 
 import com.digital.pm.common.enums.TaskStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskFilter {
+public class TaskDaoFilter {
     @Schema(description = "Имя задачи")
     private String name;
     private List<TaskStatus> statusList;
@@ -22,12 +22,12 @@ public class TaskFilter {
     private Long authorId;
     @Schema(description = "Id исполнителя задачи")
     private Long executorId;
-    @Schema(description = "Созданные после",example = "yyyy-mm-dd")
+    @Schema(description = "Созданные после", example = "yyyy-mm-dd")
     private Date createdAfter;
-    @Schema(description = "Созданные до",example = "yyyy-mm-dd")
+    @Schema(description = "Созданные до", example = "yyyy-mm-dd")
     private Date createdBefore;
-    @Schema(description = "Срок сдачи до",example = "yyyy-mm-dd")
+    @Schema(description = "Срок сдачи до", example = "yyyy-mm-dd")
     private Date deadlineBefore;
-    @Schema(description = "Срок сдачи после",example = "yyyy-mm-dd")
+    @Schema(description = "Срок сдачи после", example = "yyyy-mm-dd")
     private Date deadlineAfter;
 }

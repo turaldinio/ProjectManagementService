@@ -1,11 +1,9 @@
 package com.digital.pm.web.controller;
 
-import com.digital.pm.common.filters.TaskFilter;
-import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
 import com.digital.pm.service.TaskService;
-import com.google.gson.Gson;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -66,10 +64,10 @@ public class TaskController {
     //]
     //}
     @Operation(summary = "Поиск задачи по фильтрам",
-            description = "Осуществляет поиск задачи по указанным фильтрам TaskFilter, поля которого необязательны")
+            description = "Осуществляет поиск задачи по указанным фильтрам TaskDtoFilter, поля которого необязательны")
 
     @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TaskDto>> findAll(@RequestBody(required = false) TaskFilter taskFilter) {
+    public ResponseEntity<List<TaskDto>> findAll(@RequestBody(required = false) TaskDtoFilter taskFilter) {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
     }
 

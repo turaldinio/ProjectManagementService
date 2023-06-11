@@ -1,7 +1,7 @@
 package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.TaskStatus;
-import com.digital.pm.common.filters.TaskFilter;
+import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
@@ -126,7 +126,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> findAll(TaskFilter taskFilter) {
+    public List<TaskDto> findAll(TaskDtoFilter taskFilter) {
         log.info("findAll with filter method has started");
 
         log.info(String.format("find all task with filter %s", taskFilter));

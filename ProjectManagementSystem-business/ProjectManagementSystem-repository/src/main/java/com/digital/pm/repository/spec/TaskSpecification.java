@@ -1,7 +1,7 @@
 package com.digital.pm.repository.spec;
 
 
-import com.digital.pm.common.filters.TaskFilter;
+import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.model.Task;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,7 +11,7 @@ import java.util.*;
 
 
 public class TaskSpecification {
-    public static Specification<Task> getSpec(TaskFilter taskFilter) {
+    public static Specification<Task> getSpec(TaskDtoFilter taskFilter) {
 
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
