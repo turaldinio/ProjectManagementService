@@ -138,27 +138,27 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.digital.pm.service.EmployeeService" level="debug" additivity="false">
+        <Logger name="com.digital.pm.service.impl.EmployeeServiceImpl" level="debug" additivity="false">
             <appender-ref ref="service-employee-log" level="info"/>
             <appender-ref ref="service-all-log" level="info"/>
         </Logger>
 
-        <Logger name="com.digital.pm.service.CredentialService" level="debug" additivity="false">
+        <Logger name="com.digital.pm.service.impl.CredentialServiceImpl" level="debug" additivity="false">
             <appender-ref ref="service-credential-log" level="info"/>
             <appender-ref ref="service-all-log" level="info"/>
         </Logger>
 
-        <Logger name="com.digital.pm.service.ProjectService" level="debug" additivity="false">
+        <Logger name="com.digital.pm.service.impl.ProjectServiceImpl" level="debug" additivity="false">
             <appender-ref ref="service-project-log" level="info"/>
             <appender-ref ref="service-all-log" level="info"/>
         </Logger>
 
-        <Logger name="com.digital.pm.service.TaskService" level="debug" additivity="false">
+        <Logger name="com.digital.pm.service.impl.TaskServiceImpl" level="debug" additivity="false">
             <appender-ref ref="service-task-log" level="info"/>
             <appender-ref ref="service-all-log" level="info"/>
         </Logger>
 
-        <Logger name="com.digital.pm.service.TeamService" level="debug" additivity="false">
+        <Logger name="com.digital.pm.service.impl.TeamServiceImpl" level="debug" additivity="false">
             <appender-ref ref="service-team-log" level="info"/>
             <appender-ref ref="service-all-log" level="info"/>
         </Logger>

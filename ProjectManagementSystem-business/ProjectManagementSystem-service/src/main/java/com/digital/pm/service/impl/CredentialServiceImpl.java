@@ -8,21 +8,20 @@ import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.CredentialMapping;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CredentialServiceImpl implements CredentialService {
     private final CredentialRepository credentialRepository;
     private final CredentialMapping credentialMapping;
-    private final Logger credentialLogger;
 
     public Credential create(CreateCredentialDto createCredentialDto) {
-        credentialLogger.info("create method has started");
-
+        log.info("create method has started");
         checkCredentialRequiredFields(createCredentialDto);//проверка наличия обязательных полей login/password
 
         checkCredentialLoginAlreadyExists(createCredentialDto);//проверка свободен ли логин
@@ -31,38 +30,38 @@ public class CredentialServiceImpl implements CredentialService {
 
         credentialRepository.save(credential);
 
-        credentialLogger.info("credential has been saved");
+        log.info("credential has been saved");
 
         return credential;
     }
 
     public Credential update(Credential oldCredential, CreateCredentialDto newCredentialDto) {
-        credentialLogger.info("update method has started");
+        log.info("update method has started");
 
         var result = credentialMapping.update(oldCredential, newCredentialDto);
-        credentialLogger.info("credentials have been updated");
+        log.info("credentials have been updated");
 
         return result;
     }
 
     public CredentialDto mapCredentialToCredentialDto(Credential credential) {
-        credentialLogger.info("mapCredentialToCredentialDto method has started");
+        log.info("mapCredentialToCredentialDto method has started");
 
         if (Objects.isNull(credential)) {
             return null;
         }
         var result = credentialMapping.map(credential);
-        credentialLogger.info("mapping credential -> credentialDto");
+        log.info("mapping credential -> credentialDto");
 
         return result;
     }
 
     public void checkCredentialRequiredFields(CreateCredentialDto credentialDto) {
-        credentialLogger.info("credential verification required fields");
+        log.info("credential verification required fields");
 
         if (Objects.isNull(credentialDto.getLogin()) ||
                 Objects.isNull(credentialDto.getPassword())) {
-            credentialLogger.info("canceling of the operation");
+            log.info("canceling of the operation");
 
             throw new BadRequest("the login or password cannot be null or blank");
         }
@@ -70,10 +69,10 @@ public class CredentialServiceImpl implements CredentialService {
 
 
     public void checkCredentialLoginAlreadyExists(CreateCredentialDto credentialDto) {
-        credentialLogger.info("credential checking the uniqueness of the account");
+        log.info("credential checking the uniqueness of the account");
 
         if (credentialRepository.existsByLogin(credentialDto.getLogin())) {//проверяем что login свободен
-            credentialLogger.info("canceling of the operation");
+            log.info("canceling of the operation");
 
             throw new BadRequest(String.format("the %s login already exists", credentialDto.getLogin()));
         }

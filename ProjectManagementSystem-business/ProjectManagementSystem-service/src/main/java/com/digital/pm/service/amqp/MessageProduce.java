@@ -2,7 +2,7 @@ package com.digital.pm.service.amqp;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MessageProduce {
     @Value("${rabbit.exchange}")
     private String exchange;
@@ -19,11 +20,10 @@ public class MessageProduce {
     private String routingKey;
 
     private final RabbitTemplate rabbitTemplate;
-    private final Logger produceLogger;
     private final Gson gson;
 
     public void notifyAnEmployee(Long taskId, String employeeEmail) {
-        produceLogger.info("sending a massage to the rabbitmq server");
+        log.info("sending a massage to the rabbitmq server");
 
         var messageProperties = new MessageProperties();
         messageProperties.setHeader("email", employeeEmail);

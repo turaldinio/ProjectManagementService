@@ -3,7 +3,7 @@ package com.digital.pm.service.amqp;
 import com.digital.pm.service.mail.TestMailSender;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MessageConsume {
     private final TestMailSender mailSender;
-    private final Logger consumeLogger;
+
     private final Gson gson;
     @Value("${mail.mock:null}")
     private String mailMock;
@@ -21,7 +22,7 @@ public class MessageConsume {
     @RabbitListener(queues = "${rabbit.queue}")
 
     public void receiveMessage(Message message) {
-        consumeLogger.info("reading a massage");
+        log.info("reading a massage");
 
         var rabbitMessage = gson.fromJson(new String(message.getBody()), RabbitMessage.class);
 
@@ -32,6 +33,6 @@ public class MessageConsume {
 
         mailSender.sendMail(rabbitMessage.getBody(), mail);
 
-        consumeLogger.info(String.format("the message was sent to the %s mail", mail));
+        log.info(String.format("the message was sent to the %s mail", mail));
     }
 }

@@ -2,18 +2,18 @@ package com.digital.pm.service.amqp.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class RabbitMqConfig {
     @Value("${rabbit.queue}")
     private String queue;
@@ -22,24 +22,21 @@ public class RabbitMqConfig {
     @Value("${rabbit.exchange}")
     private String exchange;
 
-
-    private final Logger rabbitLogger;
-
     @Bean
     public Queue queue() {
-        rabbitLogger.info("creating queue...");
+        log.info("creating queue...");
         return new Queue(queue, false);
     }
 
     @Bean
     public DirectExchange directExchange() {
-        rabbitLogger.info("creating exchange...");
+        log.info("creating exchange...");
         return new DirectExchange(exchange);
     }
 
     @Bean
     public Binding binding(Queue queue, DirectExchange directExchange) {
-        rabbitLogger.info("create Binding...");
+        log.info("create Binding...");
         return BindingBuilder.bind(queue).to(directExchange).with(routingKey);
     }
 

@@ -3,9 +3,7 @@ package com.digital.pm.service.exceptions.controller;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,16 +12,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
+@Slf4j
 public class ExceptionController {
     private final Gson gson;
 
-    @Autowired
-    @Qualifier("exceptionLogger")
-    private Logger logger;
 
     @ExceptionHandler(BadRequest.class)
     public ResponseEntity<?> badRequest(BadRequest badRequest) {
-        logger.warn(badRequest.getMessage());
+        log.warn(badRequest.getMessage());
         return ResponseEntity.
                 badRequest().
                 body(gson.
@@ -33,7 +29,7 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exception(Exception exception) {
-        logger.error(exception.getMessage());
+        log.error(exception.getMessage());
         return ResponseEntity.
                 badRequest().
                 body(gson.
