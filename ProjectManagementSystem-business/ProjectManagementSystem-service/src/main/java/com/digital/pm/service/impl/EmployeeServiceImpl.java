@@ -11,6 +11,7 @@ import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.exceptions.BadRequest;
+import com.digital.pm.service.mapping.EmployeeFilterMapping;
 import com.digital.pm.service.mapping.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
     private final CredentialService credentialService;
-    //private final Logger employeeLogger;
+    private final EmployeeFilterMapping employeeFilterMapping;
 
     @Transactional
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
@@ -154,11 +155,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<EmployeeDto> findAll(EmployeeDtoFilter employeeFilter) {
         log.info("findAll with filter method has started");
-
         log.info(String.format("search for all employees by filter %s", employeeFilter));
 
+        var employeeDaoFilter = employeeFilterMapping.create(employeeFilter);
         var result = employeeRepository.
-                findAll(EmployeeSpecification.getSpec(employeeFilter));
+                findAll(EmployeeSpecification.getSpec(employeeDaoFilter));
         log.info("employees successfully found");
 
         return employeeMapper.map(result);

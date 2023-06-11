@@ -2,7 +2,15 @@ package com.digital.pm.common.filters.employee;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeDaoFilter {
 
     @Schema(description = "Имя")
