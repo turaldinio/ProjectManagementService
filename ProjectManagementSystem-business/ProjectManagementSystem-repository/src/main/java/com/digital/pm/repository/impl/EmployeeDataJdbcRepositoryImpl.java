@@ -1,7 +1,7 @@
 package com.digital.pm.repository.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -95,7 +95,7 @@ public class EmployeeDataJdbcRepositoryImpl implements EmployeeDataRepository {
         return employee;
     }
 
-    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception {
+    public List<Employee> searchWithFilter(EmployeeDtoFilter filterEmployee) throws Exception {
         String request = "select * from employee where 1=1";
         Map<Integer, Object> map = new HashMap<>();
         int paramCount = 1;

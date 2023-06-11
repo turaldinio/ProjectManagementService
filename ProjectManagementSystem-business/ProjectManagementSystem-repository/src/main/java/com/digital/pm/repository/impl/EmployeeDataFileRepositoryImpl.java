@@ -1,6 +1,6 @@
 package com.digital.pm.repository.impl;
 
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.google.gson.reflect.TypeToken;
 import com.digital.pm.model.Employee;
 
@@ -119,7 +119,7 @@ public class EmployeeDataFileRepositoryImpl extends FileStorage {
     }
 
     @Override
-    public List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception {
+    public List<Employee> searchWithFilter(EmployeeDtoFilter filterEmployee) throws Exception {
         return getAll().
                 stream().
                 filter(x -> {

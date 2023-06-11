@@ -1,8 +1,8 @@
 package com.digital.pm.service.impl;
 
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
 import com.digital.pm.service.EmployeeDataService;
@@ -87,7 +87,7 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     }
 
     @Override
-    public List<EmployeeDto> searchWithFilter(EmployeeFilter filterEmployee) {
+    public List<EmployeeDto> searchWithFilter(EmployeeDtoFilter filterEmployee) {
         try {
             var listEmployee = dataStorage.searchWithFilter(filterEmployee);
             return employeeMapper.map(listEmployee);

@@ -1,6 +1,6 @@
 package com.digital.pm.repository;
 
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.model.Employee;
 
 import java.util.List;
@@ -16,5 +16,5 @@ public interface EmployeeDataRepository {
 
     Employee deleteById(Long id) throws Exception;
 
-    List<Employee> searchWithFilter(EmployeeFilter filterEmployee) throws Exception;
+    List<Employee> searchWithFilter(EmployeeDtoFilter filterEmployee) throws Exception;
 }

@@ -1,7 +1,7 @@
 package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Credential;
@@ -152,7 +152,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.map(employeeRepository.findAll());
     }
 
-    public List<EmployeeDto> findAll(EmployeeFilter employeeFilter) {
+    public List<EmployeeDto> findAll(EmployeeDtoFilter employeeFilter) {
         log.info("findAll with filter method has started");
 
         log.info(String.format("search for all employees by filter %s", employeeFilter));

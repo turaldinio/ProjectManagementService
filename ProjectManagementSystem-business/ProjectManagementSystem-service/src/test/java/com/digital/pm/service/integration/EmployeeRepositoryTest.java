@@ -1,7 +1,7 @@
 package com.digital.pm.service.integration;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.dto.credential.CreateCredentialDto;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.service.EmployeeService;
@@ -109,7 +109,7 @@ public class EmployeeRepositoryTest extends PsqlContainer {
 
         var create = employeeService.create(employee);//записываем в бд
 
-        var filter = EmployeeFilter.
+        var filter = EmployeeDtoFilter.
                 builder().
                 login(create.getCredentialDto().getLogin()).
                 build();

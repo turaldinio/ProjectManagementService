@@ -1,8 +1,8 @@
 package com.digital.pm.web.controller;
 
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 
-import com.digital.pm.common.filters.EmployeeFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,10 +76,10 @@ public class EmployeeController {
     }
 
     @Operation(summary = "Поиск сотрудника по фильтрам",
-            description = "Поиск осуществляется на основе переданного объекта EmployeeFilter, поля которого необязательны к заполнению")
+            description = "Поиск осуществляется на основе переданного объекта EmployeeDtoFilter, поля которого необязательны к заполнению")
 
     @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmployeeDto>> findAll(@RequestBody(required = false) EmployeeFilter employeeFilter) {
+    public ResponseEntity<List<EmployeeDto>> findAll(@RequestBody(required = false) EmployeeDtoFilter employeeFilter) {
         return ResponseEntity.ok(employeeService.findAll(employeeFilter));
     }
 }

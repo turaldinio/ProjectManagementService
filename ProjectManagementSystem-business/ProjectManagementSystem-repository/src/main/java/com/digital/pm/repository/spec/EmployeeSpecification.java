@@ -1,7 +1,7 @@
 package com.digital.pm.repository.spec;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.EmployeeFilter;
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
 import jakarta.persistence.criteria.Join;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class EmployeeSpecification {
-    public static Specification<Employee> getSpec(EmployeeFilter employee) {
+    public static Specification<Employee> getSpec(EmployeeDtoFilter employee) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 

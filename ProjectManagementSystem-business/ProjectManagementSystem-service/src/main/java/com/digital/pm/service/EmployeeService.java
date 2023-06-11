@@ -1,9 +1,8 @@
 package com.digital.pm.service;
 
+import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import com.digital.pm.dto.employee.CreateEmployeeDto;
 import com.digital.pm.dto.employee.EmployeeDto;
-import com.digital.pm.common.filters.EmployeeFilter;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public interface EmployeeService {
 
     EmployeeDto deleteById(Long id);
 
-    List<EmployeeDto> findAll(EmployeeFilter filterEmployee);
+    List<EmployeeDto> findAll(EmployeeDtoFilter filterEmployee);
 
     EmployeeDto findByAccount(String account);
 
