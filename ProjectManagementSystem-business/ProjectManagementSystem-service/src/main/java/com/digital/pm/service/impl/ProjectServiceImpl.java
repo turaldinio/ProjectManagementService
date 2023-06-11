@@ -130,9 +130,12 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDto> findAll(ProjectDtoFilter projectFilter) {
         log.info("findAll with filter method has started");
 
-        log.info(String.format("find all projects by filter %s", projectFilter));
+        log.info("mapping ProjectDtoFilter to ProjectDaoFilter");
 
         var projectDaoFilter = projectFilterMapping.create(projectFilter);
+
+        log.info(String.format("find all projects by filter %s", projectDaoFilter));
+
 
         var result = projectRepository.
                 findAll(ProjectSpecification.getSpec(projectDaoFilter));

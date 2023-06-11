@@ -132,9 +132,11 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> findAll(TaskDtoFilter taskFilter) {
         log.info("findAll with filter method has started");
 
-        log.info(String.format("find all task with filter %s", taskFilter));
+        log.info("mapping TaskDtoFilter to TaskDaoFilter");
 
-        var taskDaoFilter=taskFilterMapping.create(taskFilter);
+        var taskDaoFilter = taskFilterMapping.create(taskFilter);
+
+        log.info(String.format("find all task with filter %s", taskDaoFilter));
 
         var result = taskRepository.
                 findAll(TaskSpecification.getSpec(taskDaoFilter));
@@ -212,7 +214,7 @@ public class TaskServiceImpl implements TaskService {
         return Objects.nonNull(createTaskDto.getName()) &&
                 !createTaskDto.getName().isBlank() &&
                 Objects.nonNull(createTaskDto.getLaborCost()) &&
-                Objects.nonNull(createTaskDto.getProjectId())&&
+                Objects.nonNull(createTaskDto.getProjectId()) &&
                 Objects.nonNull(createTaskDto.getDeadline());
     }
 

@@ -155,9 +155,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<EmployeeDto> findAll(EmployeeDtoFilter employeeFilter) {
         log.info("findAll with filter method has started");
-        log.info(String.format("search for all employees by filter %s", employeeFilter));
+        
+        log.info("mapping EmployeeDtoFilter to EmployeeDaoFilter");
 
         var employeeDaoFilter = employeeFilterMapping.create(employeeFilter);
+
+        log.info(String.format("search for all employees by filter %s", employeeDaoFilter));
+
         var result = employeeRepository.
                 findAll(EmployeeSpecification.getSpec(employeeDaoFilter));
         log.info("employees successfully found");
