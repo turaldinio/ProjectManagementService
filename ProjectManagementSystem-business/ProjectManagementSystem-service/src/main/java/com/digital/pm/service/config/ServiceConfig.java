@@ -13,11 +13,11 @@ import com.digital.pm.service.mail.TestMailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-
+@ComponentScan("com.digital.pm.repository")
 public class ServiceConfig {
     @Bean
     public Logger employeeLogger() {
