@@ -1,15 +1,12 @@
 package com.digital.pm.app;
 
-import com.google.gson.Gson;
-import org.springframework.context.annotation.Bean;
+import com.digital.pm.web.controller.ControllerConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 
 @Configuration
+@Import(value = {ControllerConfig.class})
 public class ApplicationConfig {
-    @Bean
-    public Gson gson() {
-        return new Gson();
-    }
 
 }

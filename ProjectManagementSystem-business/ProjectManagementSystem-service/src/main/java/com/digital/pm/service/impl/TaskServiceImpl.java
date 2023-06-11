@@ -188,7 +188,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public BadRequest invalidRequiredValues() {
-        return new BadRequest("task name,labor-cost and deadline fields are required");
+        return new BadRequest("task name/laborCost/deadline/projectId fields are required");
 
     }
 
@@ -207,6 +207,7 @@ public class TaskServiceImpl implements TaskService {
         return Objects.nonNull(createTaskDto.getName()) &&
                 !createTaskDto.getName().isBlank() &&
                 Objects.nonNull(createTaskDto.getLaborCost()) &&
+                Objects.nonNull(createTaskDto.getProjectId())&&
                 Objects.nonNull(createTaskDto.getDeadline());
     }
 
