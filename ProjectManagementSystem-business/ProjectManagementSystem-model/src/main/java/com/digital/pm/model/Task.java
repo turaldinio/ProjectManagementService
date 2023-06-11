@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -43,5 +44,8 @@ public class Task {
     @CreationTimestamp
     @Column(name = "updated")
     private Date updateTime;//дата обновления задачи
+
+    @OneToMany
+    private List<TaskFile> files;
 
 }
