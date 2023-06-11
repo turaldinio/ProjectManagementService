@@ -13,6 +13,7 @@ import com.digital.pm.service.TaskService;
 import com.digital.pm.service.TeamService;
 import com.digital.pm.service.amqp.MessageProduce;
 import com.digital.pm.service.exceptions.BadRequest;
+import com.digital.pm.service.mapping.TaskFilterMapping;
 import com.digital.pm.service.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,8 @@ public class TaskServiceImpl implements TaskService {
 
     private final TeamService teamService;
     private final MessageProduce messageProduce;
+
+    private final TaskFilterMapping taskFilterMapping;
 
 
     @Transactional
@@ -131,8 +134,10 @@ public class TaskServiceImpl implements TaskService {
 
         log.info(String.format("find all task with filter %s", taskFilter));
 
+        var taskDaoFilter=taskFilterMapping.create(taskFilter);
+
         var result = taskRepository.
-                findAll(TaskSpecification.getSpec(taskFilter));
+                findAll(TaskSpecification.getSpec(taskDaoFilter));
 
         log.info("tasks successfully found");
 

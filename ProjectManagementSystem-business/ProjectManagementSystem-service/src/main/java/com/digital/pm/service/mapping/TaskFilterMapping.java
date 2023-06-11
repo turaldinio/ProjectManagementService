@@ -2,7 +2,9 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.common.filters.task.TaskDaoFilter;
 import com.digital.pm.common.filters.task.TaskDtoFilter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TaskFilterMapping {
     public TaskDaoFilter create(TaskDtoFilter taskDtoFilter){
         return TaskDaoFilter.builder().
