@@ -2,7 +2,9 @@ package com.digital.pm.service.mapping;
 
 import com.digital.pm.common.filters.project.ProjectDaoFilter;
 import com.digital.pm.common.filters.project.ProjectDtoFilter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectFilterMapping {
 
     public ProjectDaoFilter create(ProjectDtoFilter projectDtoFilter) {

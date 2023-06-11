@@ -9,6 +9,7 @@ import com.digital.pm.repository.spec.ProjectSpecification;
 import com.digital.pm.repository.ProjectRepository;
 import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.exceptions.BadRequest;
+import com.digital.pm.service.mapping.ProjectFilterMapping;
 import com.digital.pm.service.mapping.ProjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
 
+    private final ProjectFilterMapping projectFilterMapping;
 
     @Transactional
     @Override
@@ -130,8 +132,10 @@ public class ProjectServiceImpl implements ProjectService {
 
         log.info(String.format("find all projects by filter %s", projectFilter));
 
+        var projectDaoFilter = projectFilterMapping.create(projectFilter);
+
         var result = projectRepository.
-                findAll(ProjectSpecification.getSpec(projectFilter));
+                findAll(ProjectSpecification.getSpec(projectDaoFilter));
 
         log.info("projects successfully found");
 

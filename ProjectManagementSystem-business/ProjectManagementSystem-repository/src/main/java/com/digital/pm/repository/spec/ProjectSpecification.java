@@ -1,5 +1,6 @@
 package com.digital.pm.repository.spec;
 
+import com.digital.pm.common.filters.project.ProjectDaoFilter;
 import com.digital.pm.common.filters.project.ProjectDtoFilter;
 import com.digital.pm.model.Project;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,7 +13,7 @@ import java.util.Objects;
 import jakarta.persistence.criteria.Predicate;
 
 public class ProjectSpecification {
-    public static Specification<Project> getSpec(ProjectDtoFilter projectFilter) {
+    public static Specification<Project> getSpec(ProjectDaoFilter projectFilter) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
