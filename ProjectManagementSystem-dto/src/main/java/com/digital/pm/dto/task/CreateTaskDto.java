@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.time.TimeZones;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 @Data
 @Builder
@@ -32,7 +34,7 @@ public class    CreateTaskDto {
 
     private Long laborCost; //трудозатраты в часах
     @Schema(description = "Срок сдачи")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape = JsonFormat.Shape.STRING)
 
     private Date deadline;
 }

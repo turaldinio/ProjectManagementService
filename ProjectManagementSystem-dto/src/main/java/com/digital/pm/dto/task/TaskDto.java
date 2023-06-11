@@ -1,6 +1,7 @@
 package com.digital.pm.dto.task;
 
 import com.digital.pm.common.enums.TaskStatus;
+
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -37,15 +38,17 @@ public class TaskDto {
 
     private Long projectId;
     @Schema(description = "Срок сдачи")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd Z", shape = JsonFormat.Shape.STRING)
+
 
     private Date deadline;
     @Schema(description = "Дата создания")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd Z", shape = JsonFormat.Shape.STRING)
+
 
     private Date creationDate;
     @Schema(description = "Дата обновления")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd Z", shape = JsonFormat.Shape.STRING)
 
     private Date updateTime;
     @Schema(description = "Статус задачи", defaultValue = "NEW")
