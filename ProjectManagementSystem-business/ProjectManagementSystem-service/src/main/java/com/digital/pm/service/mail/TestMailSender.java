@@ -22,7 +22,8 @@ public class TestMailSender {
         simpleMailMessage.setSubject("New task");
         simpleMailMessage.setText(text);
 
-        log.info("sending a message");
+        log.info(String.format("the message was sent to the %s mail", email));
+
 
         javaMailSender.send(simpleMailMessage);
 

@@ -1,7 +1,6 @@
 package com.digital.pm.service.amqp;
 
 import com.digital.pm.service.mail.TestMailSender;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
@@ -42,6 +41,6 @@ public class MessageConsume {
 
         mailSender.sendMail((String) rabbitMessage, mail);
 
-        log.info(String.format("the message was sent to the %s mail", mail));
+        log.info("the message has been successfully subtracted from the queue");
     }
 }

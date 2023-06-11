@@ -1,11 +1,11 @@
 package com.digital.pm.service.amqp;
 
+import com.digital.pm.service.amqp.config.NotificationConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageProduce {
-    @Value("${notification.exchange}")
-    private String exchange;
-    @Value("${notification.routing_key}")
-    private String routingKey;
+    private final NotificationConfig notificationConfig;
 
     private final MessageConverter messageConverter;
     private final RabbitTemplate rabbitTemplate;
@@ -30,7 +27,7 @@ public class MessageProduce {
 
         var rabbitMessage = messageConverter.toMessage(String.format("you have been assigned task with %d id", taskId), messageProperties);
 
-        rabbitTemplate.convertAndSend(exchange, routingKey, rabbitMessage);
+        rabbitTemplate.convertAndSend(notificationConfig.getExchange(), notificationConfig.getRoutingKey(), rabbitMessage);
 
 
     }
