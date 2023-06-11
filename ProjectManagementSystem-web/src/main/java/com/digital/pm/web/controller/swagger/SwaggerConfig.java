@@ -1,4 +1,4 @@
-package com.digital.pm.app;
+package com.digital.pm.web.controller.swagger;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-
 public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
