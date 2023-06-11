@@ -13,7 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @Configuration
-@PropertySource("classpath:service.properties")
 @RequiredArgsConstructor
 public class RabbitMqConfig {
     @Value("${rabbit.queue}")

@@ -25,7 +25,9 @@ public class MessageConsume {
 
         var rabbitMessage = gson.fromJson(new String(message.getBody()), RabbitMessage.class);
 
-        String mail = mailMock.equals("null") ? message.getMessageProperties().getHeader("email") :
+        String mail = mailMock.equals("null") ? message.
+                getMessageProperties().
+                getHeader("email") :
                 mailMock;
 
         mailSender.sendMail(rabbitMessage.getBody(), mail);
