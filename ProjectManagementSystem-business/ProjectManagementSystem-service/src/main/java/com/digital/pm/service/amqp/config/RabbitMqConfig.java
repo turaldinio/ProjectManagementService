@@ -22,23 +22,6 @@ public class RabbitMqConfig {
     @Value("${notification.exchange}")
     private String exchange;
 
-    @Bean
-    public Queue queue() {
-        log.info("creating queue...");
-        return new Queue(queue, false);
-    }
-
-    @Bean
-    public DirectExchange directExchange() {
-        log.info("creating exchange...");
-        return new DirectExchange(exchange);
-    }
-
-    @Bean
-    public Binding binding(Queue queue, DirectExchange directExchange) {
-        log.info("create Binding...");
-        return BindingBuilder.bind(queue).to(directExchange).with(routingKey);
-    }
 
     @Bean
     public MessageConverter jsonConverter() {

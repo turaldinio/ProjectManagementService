@@ -4,7 +4,11 @@ import com.digital.pm.service.mail.TestMailSender;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +24,11 @@ public class MessageConsume {
     @Value("${mail.mock:null}")
     private String mailMock;
 
-    @RabbitListener(queues = "${rabbit.queue}")
+    @RabbitListener(containerFactory = "rabbitListenerContainerFactory",
+            bindings = @QueueBinding(value = @Queue(value = "${notification.queue}", durable = "false"),
+                    key = "${notification.routing_key}",
+                    exchange = @Exchange(value = "${notification.exchange}", type = ExchangeTypes.DIRECT)
+            ))
     public void receiveMessage(Message message) {
         log.info("reading a massage");
 

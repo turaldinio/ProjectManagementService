@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageProduce {
-    @Value("${rabbit.exchange}")
+    @Value("${notification.exchange}")
     private String exchange;
-    @Value("${rabbit.routing_key}")
+    @Value("${notification.routing_key}")
     private String routingKey;
 
     private final MessageConverter messageConverter;
