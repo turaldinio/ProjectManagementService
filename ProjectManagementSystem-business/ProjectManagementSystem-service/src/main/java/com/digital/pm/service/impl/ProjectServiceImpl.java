@@ -99,21 +99,21 @@ public class ProjectServiceImpl implements ProjectService {
         var project = projectRepository.findById(projectId).orElseThrow(() -> invalidId(projectId));
 
 
-        switch (project.getStatus().name().toUpperCase()) {
-            case "COMPLETED" -> {
+        switch (project.getStatus()) {
+            case COMPLETED -> {
                 log.info("canceling the changeProjectStatus operation");
                 throw new BadRequest("you cannot change the status for this project");
             }
-            case "DRAFT" -> {
+            case DRAFT -> {
                 project.setStatus(ProjectStatus.DEVELOPING);
                 log.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DRAFT, project.getStatus()));
 
             }
-            case "DEVELOPING" -> {
+            case DEVELOPING -> {
                 project.setStatus(ProjectStatus.TESTING);
                 log.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.DEVELOPING, project.getStatus()));
             }
-            case "TESTING" -> {
+            case TESTING -> {
                 project.setStatus(ProjectStatus.COMPLETED);
                 log.info(String.format("the project statute has been changed from %s to %s", ProjectStatus.TESTING, project.getStatus()));
             }

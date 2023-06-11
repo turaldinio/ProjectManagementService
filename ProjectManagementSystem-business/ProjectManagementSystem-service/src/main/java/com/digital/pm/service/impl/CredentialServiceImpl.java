@@ -45,7 +45,6 @@ public class CredentialServiceImpl implements CredentialService {
     }
 
     public CredentialDto mapCredentialToCredentialDto(Credential credential) {
-        log.info("mapCredentialToCredentialDto method has started");
 
         if (Objects.isNull(credential)) {
             return null;

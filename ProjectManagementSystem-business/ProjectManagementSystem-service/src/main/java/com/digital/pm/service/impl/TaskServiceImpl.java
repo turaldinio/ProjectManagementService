@@ -154,22 +154,22 @@ public class TaskServiceImpl implements TaskService {
 
         var currentTask = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
 
-        switch (currentTask.getStatus().name().toUpperCase()) {
+        switch (currentTask.getStatus()) {
 
-            case "CLOSED" -> {
+            case CLOSED -> {
                 log.info("canceling the taskChangeStatus operation");
 
                 throw new BadRequest("you cannot change the status for this task");
             }
-            case "NEW" -> {
+            case NEW -> {
                 currentTask.setStatus(TaskStatus.AT_WORK);
                 log.info(String.format("the project statute has been changed from %s to %s", TaskStatus.NEW, currentTask.getStatus()));
             }
-            case "AT_WORK" -> {
+            case AT_WORK -> {
                 currentTask.setStatus(TaskStatus.COMPLETED);
                 log.info(String.format("the project statute has been changed from %s to %s", TaskStatus.AT_WORK, currentTask.getStatus()));
             }
-            case "COMPLETED" -> {
+            case COMPLETED -> {
                 currentTask.setStatus(TaskStatus.CLOSED);
                 log.info(String.format("the project statute has been changed from %s to %s", TaskStatus.COMPLETED, currentTask.getStatus()));
             }
