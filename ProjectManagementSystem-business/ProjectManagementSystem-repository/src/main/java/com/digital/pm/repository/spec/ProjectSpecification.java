@@ -20,9 +20,7 @@ public class ProjectSpecification {
                 return query.where().getRestriction();
             }
 
-            if (!ObjectUtils.isEmpty(projectFilter.getId())) {
-                predicates.add(criteriaBuilder.equal(root.get("id"), projectFilter.getId()));
-            }
+
 
             if (!ObjectUtils.isEmpty(projectFilter.getProjectCode())) {
                 predicates.add(criteriaBuilder.equal(root.get("project_code"), projectFilter.getProjectCode()));

@@ -14,8 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectDtoFilter {
-    @Schema(description = "Идентификатор")
-    private Long id;
+
     @Schema(description = "Код проекта")
 
     private String projectCode;
