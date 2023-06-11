@@ -3,7 +3,9 @@ package com.digital.pm.web.controller;
 import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
+import com.digital.pm.model.TaskFile;
 import com.digital.pm.service.TaskService;
+import com.digital.pm.service.impl.TaskFileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,11 +13,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -29,6 +33,7 @@ import java.util.List;
 @RequestMapping("/private/task")
 public class TaskController {
     private final TaskService taskService;
+    private final TaskFileService taskFileService;
 
     @Operation(summary = "создание задачи",
             description = "Создает задачу по указанным данным")
@@ -51,7 +56,7 @@ public class TaskController {
             description = "Переводит задачу в следующий статус")
 
     @PutMapping(value = "/changeStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDto> changeStatus(@Parameter(description ="id задачи, которую необходимо перевести в следующий статус")
+    public ResponseEntity<TaskDto> changeStatus(@Parameter(description = "id задачи, которую необходимо перевести в следующий статус")
                                                 @PathVariable("id") Long taskId) {
         return ResponseEntity.ok(taskService.changeStatus(taskId));
     }
@@ -69,6 +74,22 @@ public class TaskController {
     @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TaskDto>> findAll(@RequestBody(required = false) TaskDtoFilter taskFilter) {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
+    }
+
+    @Operation(summary = "Скачать файлы задач",
+            description = "Осуществляет поиск файлов для указанной задачи")
+
+    @GetMapping(value = "/files/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<File> download(
+            @Parameter(description = "id задачи, файлы которой необходимо загрузить")
+            @PathVariable("id") Long id, HttpServletResponse response) {
+        response.setHeader("Content-Disposition", " attachment; filename=newfile.zip");
+        return taskFileService.downloadFile(id);
+    }
+
+    @PostMapping(value = "/files/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createFile(@RequestBody TaskFile taskFile) {
+        return ResponseEntity.ok(taskFileService.saveFile(taskFile));
     }
 
 }

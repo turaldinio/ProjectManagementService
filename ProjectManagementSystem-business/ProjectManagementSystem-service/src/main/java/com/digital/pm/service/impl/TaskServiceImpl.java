@@ -181,6 +181,11 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Override
+    public Boolean existsById(Long id) {
+        return taskRepository.existsById(id);
+    }
+
     public BadRequest invalidDeadline(CreateTaskDto createTaskDto) {
         return new BadRequest("the deadline cannot come earlier than " + new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()));
     }

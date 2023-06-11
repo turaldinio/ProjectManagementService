@@ -13,6 +13,8 @@ public interface TaskService {
 
     List<TaskDto> findAll(TaskDtoFilter taskFilter);
 
-    public TaskDto changeStatus(Long taskId);
+     TaskDto changeStatus(Long taskId);
+
+     Boolean existsById(Long id);
 
 }
