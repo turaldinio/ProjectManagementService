@@ -1,7 +1,7 @@
 package com.digital.pm.service.impl;
 
 import com.digital.pm.common.enums.ProjectStatus;
-import com.digital.pm.common.filters.ProjectFilter;
+import com.digital.pm.common.filters.project.ProjectDtoFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.model.Project;
@@ -125,7 +125,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDto> findAll(ProjectFilter projectFilter) {
+    public List<ProjectDto> findAll(ProjectDtoFilter projectFilter) {
         log.info("findAll with filter method has started");
 
         log.info(String.format("find all projects by filter %s", projectFilter));

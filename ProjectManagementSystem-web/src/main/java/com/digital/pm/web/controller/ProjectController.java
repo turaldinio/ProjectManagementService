@@ -1,7 +1,6 @@
 package com.digital.pm.web.controller;
 
-import com.digital.pm.common.filters.ProjectFilter;
-import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.common.filters.project.ProjectDtoFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
 import com.digital.pm.service.ProjectService;
@@ -12,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -59,10 +57,10 @@ public class ProjectController {
     }
 
     @Operation(summary = "Поиск проекта по фильтрам",
-            description = "Поиск осуществляется на основе переданного объекта ProjectFilter, поля которого необязательны к заполнению")
+            description = "Поиск осуществляется на основе переданного объекта ProjectDtoFilter, поля которого необязательны к заполнению")
 
     @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<List<ProjectDto>> findAll(@RequestBody(required = false) ProjectFilter projectFilter) {
+    private ResponseEntity<List<ProjectDto>> findAll(@RequestBody(required = false) ProjectDtoFilter projectFilter) {
         return ResponseEntity.ok(projectService.findAll(projectFilter));
     }
 

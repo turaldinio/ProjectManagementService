@@ -1,4 +1,4 @@
-package com.digital.pm.common.filters;
+package com.digital.pm.common.filters.project;
 
 import com.digital.pm.common.enums.ProjectStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectFilter {
+public class ProjectDtoFilter {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Код проекта")

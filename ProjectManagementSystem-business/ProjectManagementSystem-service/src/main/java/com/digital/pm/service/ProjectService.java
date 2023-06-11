@@ -1,9 +1,8 @@
 package com.digital.pm.service;
 
-import com.digital.pm.common.filters.ProjectFilter;
+import com.digital.pm.common.filters.project.ProjectDtoFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public interface ProjectService {
 
     ProjectDto changeProjectStatus(Long id);
 
-    List<ProjectDto> findAll(ProjectFilter projectFilter);
+    List<ProjectDto> findAll(ProjectDtoFilter projectFilter);
 
     Boolean existsById(Long id);
 }
