@@ -1,7 +1,7 @@
 package com.digital.pm.repository.spec;
 
 
-import com.digital.pm.common.filters.task.TaskDaoFilter;
+import com.digital.pm.repository.filter.TaskDaoFilter;
 import com.digital.pm.model.Task;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

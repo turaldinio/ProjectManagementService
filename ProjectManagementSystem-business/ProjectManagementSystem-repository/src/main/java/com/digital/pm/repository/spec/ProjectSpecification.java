@@ -1,7 +1,6 @@
 package com.digital.pm.repository.spec;
 
-import com.digital.pm.common.filters.project.ProjectDaoFilter;
-import com.digital.pm.common.filters.project.ProjectDtoFilter;
+import com.digital.pm.repository.filter.ProjectDaoFilter;
 import com.digital.pm.model.Project;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;

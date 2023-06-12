@@ -1,7 +1,7 @@
 package com.digital.pm.service.mapping;
 
 import com.digital.pm.common.enums.EmployeeStatus;
-import com.digital.pm.common.filters.employee.EmployeeDaoFilter;
+import com.digital.pm.repository.filter.EmployeeDaoFilter;
 import com.digital.pm.common.filters.employee.EmployeeDtoFilter;
 import org.springframework.stereotype.Component;
 

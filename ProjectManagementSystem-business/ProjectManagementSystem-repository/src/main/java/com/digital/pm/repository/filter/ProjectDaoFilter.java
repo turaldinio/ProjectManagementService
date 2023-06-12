@@ -1,4 +1,4 @@
-package com.digital.pm.common.filters.project;
+package com.digital.pm.repository.filter;
 
 import com.digital.pm.common.enums.ProjectStatus;
 import io.swagger.v3.oas.annotations.media.Schema;

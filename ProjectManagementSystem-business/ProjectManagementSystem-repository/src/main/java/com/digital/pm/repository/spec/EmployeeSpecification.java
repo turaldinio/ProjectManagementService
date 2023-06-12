@@ -1,6 +1,6 @@
 package com.digital.pm.repository.spec;
 
-import com.digital.pm.common.filters.employee.EmployeeDaoFilter;
+import com.digital.pm.repository.filter.EmployeeDaoFilter;
 import com.digital.pm.model.Credential;
 import com.digital.pm.model.Employee;
 import jakarta.persistence.criteria.Join;
