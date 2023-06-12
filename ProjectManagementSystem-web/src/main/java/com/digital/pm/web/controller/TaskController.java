@@ -17,9 +17,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,13 +82,15 @@ public class TaskController {
             description = "Осуществляет поиск файлов для указанной задачи и скачивает их в zip формате")
 
     @GetMapping(value = "/file/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<byte[]> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
+    public ResponseEntity<?> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
                                            @PathVariable("id") Long id) {
 
         var file = taskFileService.downloadFile(id);//получаем архив файлов задачи
 
+        if(Objects.isNull(file)){
+           return ResponseEntity.ok(String.format("the task with id %d has no files to upload",id));
+        }
         String downloadFileName = String.format("task_%d_files", id);
-
         return ResponseEntity.ok().
                 header("Content-Disposition", String.format(" attachment; filename=%s.zip", downloadFileName)).
                 contentLength(file.length()).
