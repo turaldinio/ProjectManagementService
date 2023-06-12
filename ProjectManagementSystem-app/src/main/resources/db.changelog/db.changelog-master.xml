@@ -20,4 +20,6 @@
     <include file="insert/task/insert_first_task.xml" relativeToChangelogFile="true"/>
     <include file="insert/task/insert_second_task.xml" relativeToChangelogFile="true"/>
     <include file="insert/task/insert_third_task.xml" relativeToChangelogFile="true"/>
+    <include file="insert/taskFile/insert_first_task_file.xml" relativeToChangelogFile="true"/>
+    <include file="insert/taskFile/insert_second_task_file.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

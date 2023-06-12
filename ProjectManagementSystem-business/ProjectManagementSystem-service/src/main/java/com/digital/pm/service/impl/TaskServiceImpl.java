@@ -31,12 +31,9 @@ import java.util.Objects;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-
     private final EmployeeService employeeService;
-
     private final TeamService teamService;
     private final MessageProduce messageProduce;
-
     private final TaskFilterMapping taskFilterMapping;
 
 

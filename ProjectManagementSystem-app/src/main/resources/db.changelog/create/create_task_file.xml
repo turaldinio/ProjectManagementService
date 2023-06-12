@@ -19,6 +19,7 @@
             </column>
 
         </createTable>
+
         <addForeignKeyConstraint baseTableName="task_file" baseColumnNames="task_id" constraintName="task_id"
                                  referencedTableName="task"
                                  referencedColumnNames="id"/>

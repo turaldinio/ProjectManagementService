@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TaskFileRepository extends JpaRepository<TaskFile, Long> {
     List<TaskFile> findByTaskId(Long id);
+
+    Boolean existsByPath(String path);
 }

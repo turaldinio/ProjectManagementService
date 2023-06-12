@@ -38,6 +38,4 @@ public class CreateTaskDto {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 
     private Date deadline;
-
-    private CreateTaskFilesDto createTaskFilesDto;
 }

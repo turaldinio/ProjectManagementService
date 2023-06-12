@@ -3,6 +3,7 @@ package com.digital.pm.dto.task;
 import com.digital.pm.common.enums.TaskStatus;
 
 import java.util.Date;
+import java.util.List;
 
 import com.digital.pm.dto.taskFiles.TaskFilesDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -56,5 +57,5 @@ public class TaskDto {
 
     private TaskStatus status;
 
-    private TaskFilesDto taskFilesDto;
+    private List<TaskFilesDto> taskFilesDto;
 }

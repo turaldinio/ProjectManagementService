@@ -45,7 +45,8 @@ public class Task {
     @Column(name = "updated")
     private Date updateTime;//дата обновления задачи
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "task_id")
     private List<TaskFile> files;
 
 }

@@ -3,9 +3,10 @@ package com.digital.pm.web.controller;
 import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.dto.task.CreateTaskDto;
 import com.digital.pm.dto.task.TaskDto;
-import com.digital.pm.model.TaskFile;
+import com.digital.pm.dto.taskFiles.CreateTaskFilesDto;
+import com.digital.pm.dto.taskFiles.TaskFilesDto;
+import com.digital.pm.service.TaskFileService;
 import com.digital.pm.service.TaskService;
-import com.digital.pm.service.impl.TaskFileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -74,11 +75,11 @@ public class TaskController {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
     }
 
+
     @Operation(summary = "Скачать файлы задачи",
             description = "Осуществляет поиск файлов для указанной задачи и скачивает их в zip формате")
 
-    @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-
+    @GetMapping(value = "/file/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<byte[]> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
                                            @PathVariable("id") Long id) {
 
@@ -92,9 +93,14 @@ public class TaskController {
                 body(taskFileService.getFileBytes(file));
     }
 
-    @PostMapping(value = "/files/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createFile(@RequestBody TaskFile taskFile) {
-        return ResponseEntity.ok(taskFileService.saveFile(taskFile));
+    @Operation(summary = "Сохранить файл для задачи",
+            description = "Сохраняет файл для указанной задачи")
+
+    @PostMapping(value = "/file/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TaskFilesDto> create(@Parameter(description = "id задачи, для которой сохраняем файл") @PathVariable("id") Long taskId,
+                                               @RequestBody CreateTaskFilesDto taskFile) {
+        var result = taskFileService.saveFile(taskFile, taskId);
+        return ResponseEntity.ok(result);
     }
 
 }
