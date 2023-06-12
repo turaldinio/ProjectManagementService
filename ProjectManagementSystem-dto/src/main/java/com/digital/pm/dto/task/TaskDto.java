@@ -4,6 +4,7 @@ import com.digital.pm.common.enums.TaskStatus;
 
 import java.util.Date;
 
+import com.digital.pm.dto.taskFiles.TaskFilesDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -55,4 +56,5 @@ public class TaskDto {
 
     private TaskStatus status;
 
+    private TaskFilesDto taskFilesDto;
 }

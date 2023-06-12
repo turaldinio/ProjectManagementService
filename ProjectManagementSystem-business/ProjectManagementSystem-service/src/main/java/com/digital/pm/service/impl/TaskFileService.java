@@ -24,10 +24,10 @@ public class TaskFileService {
 
     public ResponseEntity<?> saveFile(TaskFile taskFile) {
         if (Files.notExists(Path.of(taskFile.getPath()))) {
-            throw new BadRequest(String.format("the file %s is not exists", taskFile.getTaskId()));
+            throw new BadRequest(String.format("the file %s is not exists", taskFile.getTask().getId()));
         }
-        if (!taskService.existsById(taskFile.getTaskId())) {
-            throw new BadRequest(String.format("the task with %d id is not found", taskFile.getTaskId()));
+        if (!taskService.existsById(taskFile.getTask().getId())) {
+            throw new BadRequest(String.format("the task with %d id is not found", taskFile.getTask().getId()));
         }
 
         return ResponseEntity.ok(taskFileRepository.save(taskFile));
@@ -68,7 +68,7 @@ public class TaskFileService {
 
     }
 
-    public byte[] getFileBytes(File file){
+    public byte[] getFileBytes(File file) {
         try {
             return Files.readAllBytes(file.toPath());
         } catch (IOException e) {

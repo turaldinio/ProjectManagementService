@@ -1,6 +1,7 @@
 package com.digital.pm.dto.task;
 
 import com.digital.pm.dto.employee.EmployeeDto;
+import com.digital.pm.dto.taskFiles.CreateTaskFilesDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import java.util.TimeZone;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class    CreateTaskDto {
+public class CreateTaskDto {
     @Schema(description = "Имя задачи")
 
     private String name;
@@ -34,7 +35,9 @@ public class    CreateTaskDto {
 
     private Long laborCost; //трудозатраты в часах
     @Schema(description = "Срок сдачи")
-    @JsonFormat(pattern = "yyyy-MM-dd",shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
 
     private Date deadline;
+
+    private CreateTaskFilesDto createTaskFilesDto;
 }

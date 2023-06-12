@@ -16,8 +16,9 @@ public class TaskFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "task_id")
-    private Long taskId;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
     @Column(name = "file_path")
     private String path;
 }

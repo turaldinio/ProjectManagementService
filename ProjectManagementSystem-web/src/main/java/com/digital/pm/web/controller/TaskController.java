@@ -78,6 +78,7 @@ public class TaskController {
             description = "Осуществляет поиск файлов для указанной задачи и скачивает их в zip формате")
 
     @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+
     public ResponseEntity<byte[]> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
                                            @PathVariable("id") Long id) {
 
