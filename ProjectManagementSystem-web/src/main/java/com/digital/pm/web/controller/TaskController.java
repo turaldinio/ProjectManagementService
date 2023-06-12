@@ -19,7 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -79,12 +80,21 @@ public class TaskController {
     @Operation(summary = "Скачать файлы задач",
             description = "Осуществляет поиск файлов для указанной задачи")
 
-    @GetMapping(value = "/files/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<File> download(
+    @GetMapping(value = "/download/{id}")
+    public ResponseEntity<byte[]> download(
             @Parameter(description = "id задачи, файлы которой необходимо загрузить")
             @PathVariable("id") Long id, HttpServletResponse response) {
-        response.setHeader("Content-Disposition", " attachment; filename=newfile.zip");
-        return taskFileService.downloadFile(id);
+        //        response.setHeader("Content-Disposition", " attachment; filename=newfile.zip");
+        var result = taskFileService.downloadFile(id);
+        try {
+            return ResponseEntity.ok().
+                    header("Content-Disposition", " attachment; filename=newfile.zip").
+                    contentLength(result.length()).
+                    contentType(MediaType.APPLICATION_OCTET_STREAM).
+                    body(Files.readAllBytes(result.toPath()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping(value = "/files/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

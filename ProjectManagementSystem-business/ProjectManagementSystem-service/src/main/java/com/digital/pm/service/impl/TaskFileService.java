@@ -38,11 +38,11 @@ public class TaskFileService {
     }
 
     @SneakyThrows
-    public ResponseEntity<File> downloadFile(Long taskId) {
+    public File downloadFile(Long taskId) {
         if (!taskService.existsById(taskId)) {
             throw new BadRequest(String.format("the task with %d id is not found", taskId));
         }
-        File result = File.createTempFile("result", ".zip");
+        File result = File.createTempFile("task_file",".zip");
         ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(result));
 
         var taskFiles = taskFileRepository.findByTaskId(taskId);
@@ -54,6 +54,7 @@ public class TaskFileService {
                 zipOutputStream.putNextEntry(zipEntry);
                 zipOutputStream.write(Files.readAllBytes(file.toPath()));
 
+                zipOutputStream.closeEntry();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -62,16 +63,9 @@ public class TaskFileService {
 
         zipOutputStream.close();
 
-        return ResponseEntity.ok(result);
+        return result;
 
     }
 
-    private byte[] readFile(String filePath) {
-        try {
-            return Files.readAllBytes(Path.of(filePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }
