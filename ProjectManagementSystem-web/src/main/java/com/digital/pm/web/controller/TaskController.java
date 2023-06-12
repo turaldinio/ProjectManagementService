@@ -13,14 +13,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -77,24 +74,21 @@ public class TaskController {
         return ResponseEntity.ok(taskService.findAll(taskFilter));
     }
 
-    @Operation(summary = "Скачать файлы задач",
-            description = "Осуществляет поиск файлов для указанной задачи")
+    @Operation(summary = "Скачать файлы задачи",
+            description = "Осуществляет поиск файлов для указанной задачи и скачивает их в zip формате")
 
-    @GetMapping(value = "/download/{id}")
-    public ResponseEntity<byte[]> download(
-            @Parameter(description = "id задачи, файлы которой необходимо загрузить")
-            @PathVariable("id") Long id, HttpServletResponse response) {
-        //        response.setHeader("Content-Disposition", " attachment; filename=newfile.zip");
-        var result = taskFileService.downloadFile(id);
-        try {
-            return ResponseEntity.ok().
-                    header("Content-Disposition", " attachment; filename=newfile.zip").
-                    contentLength(result.length()).
-                    contentType(MediaType.APPLICATION_OCTET_STREAM).
-                    body(Files.readAllBytes(result.toPath()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping(value = "/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
+                                           @PathVariable("id") Long id) {
+
+        var file = taskFileService.downloadFile(id);//получаем архив файлов задачи
+
+        String downloadFileName = String.format("task_%d_files", id);
+
+        return ResponseEntity.ok().
+                header("Content-Disposition", String.format(" attachment; filename=%s.zip", downloadFileName)).
+                contentLength(file.length()).
+                body(taskFileService.getFileBytes(file));
     }
 
     @PostMapping(value = "/files/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
