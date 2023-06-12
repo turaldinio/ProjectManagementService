@@ -1,6 +1,6 @@
 package com.digital.pm.service.mapping;
 
-import com.digital.pm.common.filters.task.TaskDaoFilter;
+import com.digital.pm.repository.filter.TaskDaoFilter;
 import com.digital.pm.common.filters.task.TaskDtoFilter;
 import org.springframework.stereotype.Component;
 

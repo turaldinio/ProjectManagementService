@@ -1,4 +1,4 @@
-package com.digital.pm.common.filters.employee;
+package com.digital.pm.repository.filter;
 
 import com.digital.pm.common.enums.EmployeeStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
