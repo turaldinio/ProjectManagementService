@@ -6,6 +6,7 @@
     <include file="create/create_credential.xml" relativeToChangelogFile="true"/>
     <include file="create/create_employee.xml" relativeToChangelogFile="true"/>
     <include file="create/create_project.xml" relativeToChangelogFile="true"/>
+    <include file="create/create_project_file.xml" relativeToChangelogFile="true"/>
     <include file="create/create_team.xml" relativeToChangelogFile="true"/>
     <include file="create/create_task.xml" relativeToChangelogFile="true"/>
     <include file="create/create_task_file.xml" relativeToChangelogFile="true"/>

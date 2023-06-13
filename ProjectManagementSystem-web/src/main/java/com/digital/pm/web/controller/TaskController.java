@@ -81,7 +81,7 @@ public class TaskController {
     @Operation(summary = "Скачать файлы задачи",
             description = "Осуществляет поиск файлов для указанной задачи и скачивает их в zip формате")
 
-    @GetMapping(value = "/file/download/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/file/download/{id}")
     public ResponseEntity<?> download(@Parameter(description = "id задачи, файлы которой необходимо загрузить")
                                            @PathVariable("id") Long id) {
 
@@ -100,7 +100,7 @@ public class TaskController {
     @Operation(summary = "Сохранить файл для задачи",
             description = "Сохраняет файл для указанной задачи")
 
-    @PostMapping(value = "/file/create/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/file/save/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskFilesDto> create(@Parameter(description = "id задачи, для которой сохраняем файл") @PathVariable("id") Long taskId,
                                                @RequestBody CreateTaskFilesDto taskFile) {
         var result = taskFileService.saveFile(taskFile, taskId);

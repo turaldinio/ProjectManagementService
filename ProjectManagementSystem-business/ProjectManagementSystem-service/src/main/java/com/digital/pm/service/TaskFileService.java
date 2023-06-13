@@ -14,5 +14,4 @@ public interface TaskFileService {
 
     byte[] getFileBytes(File file);
 
-    TaskFilesDto map(List<TaskFile> files);
 }

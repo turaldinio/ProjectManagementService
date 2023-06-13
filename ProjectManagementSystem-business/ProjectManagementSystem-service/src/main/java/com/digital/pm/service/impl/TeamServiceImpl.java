@@ -9,7 +9,7 @@ import com.digital.pm.service.EmployeeService;
 import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.TeamService;
 import com.digital.pm.service.exceptions.BadRequest;
-import com.digital.pm.service.mapping.TeamMapper;
+import com.digital.pm.service.mapping.team.TeamMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.digital.pm.service.mapping;
+package com.digital.pm.service.mapping.task;
 
 import com.digital.pm.dto.taskFiles.CreateTaskFilesDto;
 import com.digital.pm.dto.taskFiles.TaskFilesDto;

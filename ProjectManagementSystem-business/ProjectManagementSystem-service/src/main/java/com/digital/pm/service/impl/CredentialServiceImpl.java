@@ -6,7 +6,7 @@ import com.digital.pm.model.Credential;
 import com.digital.pm.repository.CredentialRepository;
 import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.exceptions.BadRequest;
-import com.digital.pm.service.mapping.CredentialMapping;
+import com.digital.pm.service.mapping.credential.CredentialMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

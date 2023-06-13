@@ -9,7 +9,7 @@ import com.digital.pm.repository.EmployeeRepository;
 import com.digital.pm.service.CredentialService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.impl.EmployeeServiceImpl;
-import com.digital.pm.service.mapping.EmployeeMapper;
+import com.digital.pm.service.mapping.employee.EmployeeMapper;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

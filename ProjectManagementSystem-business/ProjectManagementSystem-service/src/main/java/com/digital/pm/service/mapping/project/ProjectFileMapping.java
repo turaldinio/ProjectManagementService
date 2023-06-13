@@ -1,12 +1,14 @@
-package com.digital.pm.service.mapping;
+package com.digital.pm.service.mapping.project;
 
 import com.digital.pm.dto.projectFiles.CreateProjectFileDto;
 import com.digital.pm.dto.projectFiles.ProjectFilesDto;
 import com.digital.pm.model.ProjectFile;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ProjectFileMapping {
 
     public ProjectFile create(CreateProjectFileDto createProjectFileDto, Long projectId) {

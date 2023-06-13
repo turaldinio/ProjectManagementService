@@ -1,4 +1,4 @@
-package com.digital.pm.service.mapping;
+package com.digital.pm.service.mapping.task;
 
 import com.digital.pm.repository.filter.TaskDaoFilter;
 import com.digital.pm.common.filters.task.TaskDtoFilter;

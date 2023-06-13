@@ -3,6 +3,9 @@ package com.digital.pm.web.controller;
 import com.digital.pm.common.filters.project.ProjectDtoFilter;
 import com.digital.pm.dto.project.CreateProjectDto;
 import com.digital.pm.dto.project.ProjectDto;
+import com.digital.pm.dto.projectFiles.CreateProjectFileDto;
+import com.digital.pm.dto.projectFiles.ProjectFilesDto;
+import com.digital.pm.service.ProjectFileService;
 import com.digital.pm.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ import java.util.List;
 
 public class ProjectController {
     private final ProjectService projectService;
+    private final ProjectFileService projectFileService;
 
     @Operation(summary = "Создание проекта",
             description = "Создает проект по указанным данным")
@@ -62,6 +67,36 @@ public class ProjectController {
     @PostMapping(value = "/find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<ProjectDto>> findAll(@RequestBody(required = false) ProjectDtoFilter projectFilter) {
         return ResponseEntity.ok(projectService.findAll(projectFilter));
+    }
+
+    @Operation(summary = "Скачать файлы проекта",
+            description = "Осуществляет поиск файлов для указанного проекта и скачивает их в zip формате")
+
+    @GetMapping(value = "/file/download/{id}")
+
+    public ResponseEntity<?> download(@Parameter(description = "id проекта, файлы которой необходимо загрузить")
+                                      @PathVariable("id") Long id) {
+
+        var file = projectFileService.downloadFile(id);//получаем архив файлов проекта
+
+        if (Objects.isNull(file)) {
+            return ResponseEntity.ok(String.format("the project with id %d has no files to upload", id));
+        }
+        String downloadFileName = String.format("project_%d_files", id);
+        return ResponseEntity.ok().
+                header("Content-Disposition", String.format(" attachment; filename=%s.zip", downloadFileName)).
+                contentLength(file.length()).
+                body(projectFileService.getFileBytes(file));
+    }
+
+    @Operation(summary = "Сохранить файл для проекта",
+            description = "Сохраняет файл для указанного проекта")
+
+    @PostMapping(value = "/file/save/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProjectFilesDto> create(@Parameter(description = "id проекта, для которой сохраняем файл") @PathVariable("id") Long taskId,
+                                                  @RequestBody CreateProjectFileDto projectFileDto) {
+        var result = projectFileService.saveFile(projectFileDto, taskId);
+        return ResponseEntity.ok(result);
     }
 
 

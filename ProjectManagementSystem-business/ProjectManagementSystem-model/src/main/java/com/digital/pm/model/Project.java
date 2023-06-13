@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +25,9 @@ public class Project {
     private String description;//описание проекта
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;//статус, в котором находится проект
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id")
+    private List<ProjectFile> files;
 
 }

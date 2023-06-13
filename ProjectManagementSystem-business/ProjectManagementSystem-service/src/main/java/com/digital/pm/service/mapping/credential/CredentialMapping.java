@@ -1,4 +1,4 @@
-package com.digital.pm.service.mapping;
+package com.digital.pm.service.mapping.credential;
 
 import com.digital.pm.dto.credential.CreateCredentialDto;
 import com.digital.pm.dto.credential.CredentialDto;

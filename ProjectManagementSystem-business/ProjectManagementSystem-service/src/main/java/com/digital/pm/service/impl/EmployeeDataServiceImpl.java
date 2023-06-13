@@ -6,7 +6,7 @@ import com.digital.pm.dto.employee.EmployeeDto;
 import com.digital.pm.model.Employee;
 import com.digital.pm.repository.EmployeeDataRepository;
 import com.digital.pm.service.EmployeeDataService;
-import com.digital.pm.service.mapping.EmployeeMapper;
+import com.digital.pm.service.mapping.employee.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

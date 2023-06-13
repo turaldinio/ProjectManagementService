@@ -7,6 +7,7 @@ import com.digital.pm.model.ProjectFile;
 import java.io.File;
 import java.util.List;
 
+
 public interface ProjectFileService {
     ProjectFilesDto saveFile(CreateProjectFileDto projectFileDto, Long projectId);
 
@@ -14,5 +15,4 @@ public interface ProjectFileService {
 
     byte[] getFileBytes(File file);
 
-    ProjectFilesDto map(List<ProjectFile> files);
 }

@@ -7,7 +7,7 @@ import com.digital.pm.repository.TaskFileRepository;
 import com.digital.pm.service.TaskFileService;
 import com.digital.pm.service.TaskService;
 import com.digital.pm.service.exceptions.BadRequest;
-import com.digital.pm.service.mapping.TaskFileMapping;
+import com.digital.pm.service.mapping.task.TaskFileMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -110,8 +110,5 @@ public class TaskFileServiceImpl implements TaskFileService {
         }
     }
 
-    @Override
-    public TaskFilesDto map(List<TaskFile> files) {
-        return null;
-    }
+
 }

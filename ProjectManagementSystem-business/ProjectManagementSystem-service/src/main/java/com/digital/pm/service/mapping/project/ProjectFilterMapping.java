@@ -1,4 +1,4 @@
-package com.digital.pm.service.mapping;
+package com.digital.pm.service.mapping.project;
 
 import com.digital.pm.repository.filter.ProjectDaoFilter;
 import com.digital.pm.common.filters.project.ProjectDtoFilter;
