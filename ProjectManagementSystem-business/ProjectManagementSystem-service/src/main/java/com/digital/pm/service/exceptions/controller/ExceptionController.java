@@ -8,7 +8,6 @@ import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -48,7 +47,6 @@ public class ExceptionController {
                         toJson(Map.of("message", authenticationException.getMessage())));
 
     }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exception(Exception exception) {
         log.error(String.format("%s: %s",exception.getClass().getSimpleName(),exception.getMessage()));
