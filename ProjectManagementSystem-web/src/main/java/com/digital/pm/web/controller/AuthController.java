@@ -3,6 +3,7 @@ package com.digital.pm.web.controller;
 import com.digital.pm.service.auth.AuthorizationRequest;
 import com.digital.pm.service.auth.AuthorizationService;
 import com.digital.pm.service.auth.AuthorizationResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class AuthController {
     private final AuthorizationService authorizationService;
-
+@Operation(summary = "авторизация пользователя",
+        description = "Метод авторизации пользователя")
     @PostMapping("/login")
     public AuthorizationResponse login(@RequestBody AuthorizationRequest authorizationRequest) {
         return authorizationService.authorize(authorizationRequest);
