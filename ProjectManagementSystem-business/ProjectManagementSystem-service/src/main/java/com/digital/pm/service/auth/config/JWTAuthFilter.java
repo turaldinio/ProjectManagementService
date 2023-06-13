@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -86,7 +87,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);//передаем запрос дальше по фильтрам
         } catch (Exception e) {
-            resolver.resolveException(request, response, null, e);
+            resolver.resolveException(request, response, null, new AuthenticationException(e.getMessage()));
         }
     }
 
