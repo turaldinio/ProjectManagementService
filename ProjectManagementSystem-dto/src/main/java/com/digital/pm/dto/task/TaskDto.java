@@ -56,6 +56,7 @@ public class TaskDto {
     @Schema(description = "Статус задачи", defaultValue = "NEW")
 
     private TaskStatus status;
+    @Schema(description = "Файлы задачи")
 
     private List<TaskFilesDto> taskFilesDto;
 }

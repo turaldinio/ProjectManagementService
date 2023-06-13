@@ -37,6 +37,7 @@
         <jwt>0.11.5</jwt>
         <junit-jupiter-testcontainer>1.18.2</junit-jupiter-testcontainer>
         <psql-testcontainer>1.18.2</psql-testcontainer>
+        <slf4j2>2.0.7</slf4j2>
     </properties>
 
     <dependencyManagement>
@@ -159,6 +160,13 @@
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring-security}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j2}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

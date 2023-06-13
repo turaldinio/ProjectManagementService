@@ -27,9 +27,10 @@ public class TaskFileMapping {
     }
 
     public List<TaskFilesDto> map(List<TaskFile> files) {
-        return files.
-                stream().
-                map(this::map).
-                collect(Collectors.toList());
+        return files == null ? Collections.emptyList() :
+                files.
+                        stream().
+                        map(this::map).
+                        collect(Collectors.toList());
     }
 }

@@ -5,6 +5,7 @@ import com.digital.pm.dto.projectFiles.ProjectFilesDto;
 import com.digital.pm.model.ProjectFile;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +28,10 @@ public class ProjectFileMapping {
     }
 
     public List<ProjectFilesDto> map(List<ProjectFile> files) {
-        return files.
-                stream().
-                map(this::map).
-                collect(Collectors.toList());
+        return files == null ? Collections.emptyList() :
+                files.
+                        stream().
+                        map(this::map).
+                        collect(Collectors.toList());
     }
 }
