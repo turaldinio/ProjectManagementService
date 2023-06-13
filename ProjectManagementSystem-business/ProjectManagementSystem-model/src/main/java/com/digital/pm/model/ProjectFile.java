@@ -18,7 +18,7 @@ public class ProjectFile {
     private Long id;
 
     @Column(name = "project_id")
-    private Long taskId;
+    private Long projectId;
 
     @Column(name = "file_path")
     private String path;
