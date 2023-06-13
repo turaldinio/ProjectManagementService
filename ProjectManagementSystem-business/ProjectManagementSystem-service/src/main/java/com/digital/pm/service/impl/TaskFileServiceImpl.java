@@ -38,7 +38,7 @@ public class TaskFileServiceImpl implements TaskFileService {
             throw new BadRequest(String.format("the task with %d id is not found", taskId));
         }
 
-        if (taskFileRepository.existsByPath(createTaskFilesDto.getFilePath())) {
+        if (taskFileRepository.existsByPath(createTaskFilesDto.getFilePath())) {//проверка, что данный файл еще не привязан к задаче
             throw new BadRequest(String.format("file %s is already exists", createTaskFilesDto.getFilePath()));
         }
         log.info("mapping CreateTaskFilesDto to TaskFile");
