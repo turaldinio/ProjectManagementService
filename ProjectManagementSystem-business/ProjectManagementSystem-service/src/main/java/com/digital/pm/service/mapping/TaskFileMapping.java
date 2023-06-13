@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 @Component
 public class TaskFileMapping {
     public TaskFile create(CreateTaskFilesDto createTaskFilesDto, Long taskId) {
-        return TaskFile.builder().
+        return TaskFile.
+                builder().
                 taskId(taskId).
                 path(createTaskFilesDto.getFilePath()).
                 build();

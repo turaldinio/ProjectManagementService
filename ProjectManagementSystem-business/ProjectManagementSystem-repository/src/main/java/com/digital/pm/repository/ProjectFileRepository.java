@@ -11,5 +11,5 @@ public interface ProjectFileRepository extends JpaRepository<ProjectFile, Long> 
     List<ProjectFile> findByProjectId(Long projectId);
 
     Boolean existsByPath(String path);
-    
+
 }
