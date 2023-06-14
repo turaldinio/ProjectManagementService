@@ -41,7 +41,6 @@
             <column name="updated" type="timestamp"/>
 
             <column name="project_id" type="bigint">
-                <constraints nullable="false"/>
             </column>
 
         </createTable>

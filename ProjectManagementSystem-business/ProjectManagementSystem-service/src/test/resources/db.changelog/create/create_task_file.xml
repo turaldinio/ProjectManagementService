@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="create_table_task_file" author="Guluev">
+        <createTable tableName="task_file">
+
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="task_id" type="bigint">
+            </column>
+
+            <column name="file_path" type="text">
+                <constraints unique="true"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="task_file" baseColumnNames="task_id" constraintName="task_id"
+                                 referencedTableName="task"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>
