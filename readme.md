@@ -146,8 +146,8 @@
 
 Отношение между сущностями:
 
-![d](https://github.com/turaldinio/ProjectManagementService/assets/65041919/2e616d83-7991-44d4-8dcd-b97af83dd3d6)
 
+![Диаграмма без названия (5)](https://github.com/turaldinio/ProjectManagementService/assets/65041919/448f1a2c-9ec1-4b09-84a4-0bf0ca787b10)
 
 
 * Загрузка файлов
