@@ -16,6 +16,7 @@
             </column>
 
             <column name="file_path" type="text">
+                <constraints unique="true"/>
             </column>
 
         </createTable>

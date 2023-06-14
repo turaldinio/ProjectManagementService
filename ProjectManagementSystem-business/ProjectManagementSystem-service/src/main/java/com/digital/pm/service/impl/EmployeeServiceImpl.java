@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public EmployeeDto create(CreateEmployeeDto createEmployeeDto) {
         log.info("create method has started");
-        if (!checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
+        if (checkRequiredValue(createEmployeeDto)) {//проверка обязательных полей
             log.info("canceling the creation operation");
 
             throw invalidRequiredFields();
@@ -68,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info(String.format("created new employee %s", newEmployee));
 
         //проверка обязательных полей имя/фамилия
-        if (!checkRequiredValue(newEmployee)) {
+        if (checkRequiredValue(newEmployee)) {
             log.info("canceling the update operation");
             throw invalidRequiredFields();
         }
@@ -76,8 +77,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Credential credential = employee.getCredential();//создаем пустые уд
 
         //если в запросе нам передали уд на обновление
-        if (Objects.nonNull(createEmployeeDto.getCreateCredentialDto())) {
-            if (Objects.isNull(credential)) {//если уд у нас не было
+        if (!ObjectUtils.isEmpty(createEmployeeDto.getCreateCredentialDto())) {
+            if (ObjectUtils.isEmpty(credential)) {//если уд у нас не было
                 credential = credentialService.create(createEmployeeDto.getCreateCredentialDto());//создаем уд со всеми проверками (логин/пароль)
             } else {
                 //если уд у нас был
@@ -155,7 +156,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<EmployeeDto> findAll(EmployeeDtoFilter employeeFilter) {
         log.info("findAll with filter method has started");
-        
+
         log.info("mapping EmployeeDtoFilter to EmployeeDaoFilter");
 
         var employeeDaoFilter = employeeFilterMapping.create(employeeFilter);
@@ -191,18 +192,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("checking required fields for a employee");
 
         return
-                Objects.nonNull(createEmployeeDto.getFirstName()) &&
-                        Objects.nonNull(createEmployeeDto.getLastName()) &&
-                        !createEmployeeDto.getLastName().isBlank() &&
-                        !createEmployeeDto.getFirstName().isBlank();
+                ObjectUtils.isEmpty(createEmployeeDto.getFirstName()) ||
+                        ObjectUtils.isEmpty(createEmployeeDto.getLastName());
     }
 
     public boolean checkRequiredValue(Employee newEmployee) {
         log.info("checking required fields for a employee");
-        return Objects.nonNull(newEmployee.getFirstName()) &&
-                Objects.nonNull(newEmployee.getLastName()) &&
-                !newEmployee.getLastName().isBlank() &&
-                !newEmployee.getFirstName().isBlank();
+        return ObjectUtils.isEmpty(newEmployee.getFirstName()) ||
+                ObjectUtils.isEmpty(newEmployee.getLastName());
     }
 
 
