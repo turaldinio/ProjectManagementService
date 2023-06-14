@@ -1,5 +1,6 @@
 package com.digital.pm.service.impl;
 
+import com.digital.pm.common.enums.EmployeeStatus;
 import com.digital.pm.common.enums.TaskStatus;
 import com.digital.pm.common.filters.task.TaskDtoFilter;
 import com.digital.pm.dto.employee.EmployeeDto;
@@ -9,6 +10,7 @@ import com.digital.pm.model.Task;
 import com.digital.pm.repository.spec.TaskSpecification;
 import com.digital.pm.repository.TaskRepository;
 import com.digital.pm.service.EmployeeService;
+import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.TaskService;
 import com.digital.pm.service.TeamService;
 import com.digital.pm.service.amqp.MessageProduce;
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +39,8 @@ public class TaskServiceImpl implements TaskService {
     private final MessageProduce messageProduce;
     private final TaskFilterMapping taskFilterMapping;
 
+    private final ProjectService projectService;
+
 
     @Transactional
     @Override
@@ -43,17 +48,26 @@ public class TaskServiceImpl implements TaskService {
         log.info("create method has started");
 
         //проверка обязательных полей
-        if (!checkRequiredValues(createTaskDto)) {
+        if (checkRequiredValues(createTaskDto)) {
             log.info("canceling the creating operation");
             throw invalidRequiredValues();
         }
-        //проверка дедлайн>время на работу+тек время
-        if (createTaskDto.getDeadline().before(new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()))) {
+
+        if (checkLaborCost(createTaskDto.getLaborCost())) {//laborcost > 0?
             log.info("canceling the creating operation");
-            throw invalidDeadline(createTaskDto);
+            throw invalidLaborCost();
+        }
+        //проверка дедлайн>время на работу+тек время
+        if (checkDeadLineValues(createTaskDto)) {
+            log.info("canceling the creating operation");
+            throw invalidDeadline(createTaskDto.getLaborCost());
+        }
+        if (!projectService.existsById(createTaskDto.getProjectId())) {//существует ли переданный проект (projectId)?
+            log.info("canceling the creating operation");
+            throw invalidProjectId(createTaskDto.getProjectId());
         }
 
-        if (Objects.nonNull(createTaskDto.getExecutorId())) {
+        if (!ObjectUtils.isEmpty(createTaskDto.getExecutorId())) {
             //получим назначенного сотрудника
             var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
 
@@ -61,6 +75,11 @@ public class TaskServiceImpl implements TaskService {
             if (!teamService.existsByEmployeeIdAndProjectId(employeeDto.getId(), createTaskDto.getProjectId())) {
                 log.info("canceling the creating operation");
                 throw invalidEmployeeNotAPartTeam(createTaskDto, employeeDto);
+            }
+
+            if (employeeDto.getStatus().equals(EmployeeStatus.REMOTE)) {//проверка статуса исполнителя задачи
+                log.info("canceling the creating operation");
+                throw invalidEmployeeStatus();
             }
 
         }
@@ -83,9 +102,9 @@ public class TaskServiceImpl implements TaskService {
         var taskResult = taskRepository.save(task);
         log.info(String.format("task %s has been saved", createTaskDto));
 
-        if (Objects.nonNull(createTaskDto.getExecutorId())) {
+        if (!ObjectUtils.isEmpty(createTaskDto.getExecutorId())) {
             var employeeDto = employeeService.getById(createTaskDto.getExecutorId());
-            if (Objects.nonNull(employeeDto.getEmail())) {
+            if (ObjectUtils.isEmpty(employeeDto.getEmail())) {
                 messageProduce.notifyAnEmployee(taskResult.getId(), employeeDto.getEmail());
             }
         }
@@ -102,17 +121,35 @@ public class TaskServiceImpl implements TaskService {
         var task = taskRepository.findById(taskId).orElseThrow(() -> invalidTaskId(taskId));
         log.info(String.format(" task with %d id is found", taskId));
 
+        if (!ObjectUtils.isEmpty(createTaskDto.getExecutorId())) {//проверим, существует ли указанный employeeId
+            var executor = employeeService.getById(createTaskDto.getExecutorId());
+            if (executor.getStatus().equals(EmployeeStatus.REMOTE)) {//проверим статус employee
+                throw invalidEmployeeStatus();
+            }
+        }
+
+        if (!ObjectUtils.isEmpty(createTaskDto.getProjectId())) {//проверим, существует ли указанный projectId
+            if (!projectService.existsById(createTaskDto.getProjectId())) {
+                log.info("canceling the update operation");
+                throw invalidProjectId(createTaskDto.getProjectId());
+            }
+        }
+
         var newTask = taskMapper.update(task, createTaskDto);
         log.info(String.format("created new task %s", newTask));
 
-        if (checkRequiredValues(newTask)) {
+        if (checkRequiredValues(newTask)) {//проверка обязательных полей
             log.info("canceling the update operation");
             throw invalidRequiredValues();
         }
+        if (checkLaborCost(newTask.getLaborCost())) {//laborcost > 0?
+            log.info("canceling the creating operation");
+            throw invalidLaborCost();
+        }
 
-        if (!employeeService.existsById(createTaskDto.getExecutorId())) {
+        if (checkDeadLineValues(newTask)) {
             log.info("canceling the update operation");
-            throw invalidEmployeeId(createTaskDto.getExecutorId());
+            throw invalidDeadline(newTask.getLaborCost());
         }
 
         newTask.setUpdateTime(new Date());
@@ -124,6 +161,7 @@ public class TaskServiceImpl implements TaskService {
 
         return taskMapper.map(newTask);
     }
+
 
     @Override
     public List<TaskDto> findAll(TaskDtoFilter taskFilter) {
@@ -183,8 +221,12 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.existsById(id);
     }
 
-    public BadRequest invalidDeadline(CreateTaskDto createTaskDto) {
-        return new BadRequest("the deadline cannot come earlier than " + new Date(System.currentTimeMillis() + createTaskDto.getLaborCost()));
+    public BadRequest invalidDeadline(Long laborCost) {
+        return new BadRequest("the deadline cannot come earlier than " + new Date(System.currentTimeMillis() + laborCost * 60 * 60 * 1000));
+    }
+
+    public BadRequest invalidEmployeeStatus() {
+        return new BadRequest("the task executor cannot be in the REMOTE status");
     }
 
     public BadRequest invalidEmployeeNotAPartTeam(CreateTaskDto createTaskDto, EmployeeDto employeeDto) {
@@ -206,26 +248,51 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    public BadRequest invalidProjectId(Long id) {
+        return new BadRequest(String.format("the project with %d id is not found", id));
+
+    }
+
     public BadRequest invalidEmployeeId(Long id) {
         return new BadRequest(String.format("the employee with %d id is not found", id));
     }
 
+    public BadRequest invalidLaborCost() {
+        return new BadRequest("the laborCost cannot be < 0");
+    }
+
     public boolean checkRequiredValues(CreateTaskDto createTaskDto) {
         log.info("checking required fields for a task");
+        return ObjectUtils.isEmpty(createTaskDto.getName()) ||
+                ObjectUtils.isEmpty(createTaskDto.getLaborCost()) ||
+                ObjectUtils.isEmpty(createTaskDto.getProjectId()) ||
+                ObjectUtils.isEmpty(createTaskDto.getDeadline());
 
-        return Objects.nonNull(createTaskDto.getName()) &&
-                !createTaskDto.getName().isBlank() &&
-                Objects.nonNull(createTaskDto.getLaborCost()) &&
-                Objects.nonNull(createTaskDto.getProjectId()) &&
-                Objects.nonNull(createTaskDto.getDeadline());
     }
 
     public boolean checkRequiredValues(Task newTask) {
         log.info("checking required fields for a task");
 
-        return Objects.nonNull(newTask.getName()) &&
-                !newTask.getName().isBlank() &&
-                Objects.nonNull(newTask.getLaborCost()) &&
-                Objects.nonNull(newTask.getDeadline());
+        return ObjectUtils.isEmpty(newTask.getName()) ||
+                ObjectUtils.isEmpty(newTask.getLaborCost()) ||
+                ObjectUtils.isEmpty(newTask.getProjectId()) ||
+                ObjectUtils.isEmpty(newTask.getDeadline());
+
     }
+
+    public boolean checkLaborCost(Long laborCost) {
+        return laborCost < 0;
+    }
+
+
+    public boolean checkDeadLineValues(CreateTaskDto createTaskDto) {
+        return !createTaskDto.getDeadline().after(new Date(System.currentTimeMillis() + createTaskDto.getLaborCost() * 60 * 60 * 1000));
+    }
+
+    private boolean checkDeadLineValues(Task newTask) {
+        return !newTask.getDeadline().after(new Date(System.currentTimeMillis() + newTask.getLaborCost() * 60 * 60 * 1000));
+
+    }
+
+
 }

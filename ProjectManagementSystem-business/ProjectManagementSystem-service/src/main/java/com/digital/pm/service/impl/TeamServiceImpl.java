@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,9 +42,14 @@ public class TeamServiceImpl implements TeamService {
             throw invalidEmployeeId(createTeamDto.getEmployeeId());
         }
         //существует ли такой проект
-        if (projectService.existsById(createTeamDto.getProjectId())) {
+        if (!projectService.existsById(createTeamDto.getProjectId())) {
             log.info("canceling the creation operation");
             throw invalidProjectId(createTeamDto.getProjectId());
+        }
+
+        if (ObjectUtils.isEmpty(createTeamDto.getRole())) {//указана ли роль
+            log.info("canceling the creation operation");
+            throw invalidRole();
         }
 
         log.info(String.format("checking:is the employee %d involved in this project %d? ", createTeamDto.getEmployeeId(), createTeamDto.getProjectId()));
@@ -54,10 +60,7 @@ public class TeamServiceImpl implements TeamService {
             throw invalidEmployeeAlreadyInvolved(createTeamDto.getEmployeeId(), createTeamDto.getProjectId());
         }
 
-        if (Objects.isNull(createTeamDto.getRole())) {
-            log.info("canceling the creation operation");
-            throw invalidRole();
-        }
+
         var team = teamMapper.create(createTeamDto);
 
         log.info(String.format("the team %s is created", createTeamDto));
@@ -86,20 +89,19 @@ public class TeamServiceImpl implements TeamService {
         log.info(String.format("find project with %d id", projectId));
 
         //существует ли такой проект
-        if (projectService.existsById(projectId)) {
+        if (!projectService.existsById(projectId)) {
             log.info("canceling the delete operation");
 
             throw invalidProjectId(projectId);
         }
-        //сотрудник участвует в проекте
         log.info(String.format("checking:is the employee %d involved in this project %d? ", employeeId, projectId));
 
-        if (!teamRepository.existsByEmployeeIdAndProjectId(employeeId, projectId)) {
+        var result = teamRepository.findByEmployeeIdAndProjectId(employeeId, projectId).orElseThrow(() -> {//участвует ли сотрудник в проекте
             log.info("canceling the delete operation");
-
             throw invalidEmployeeNotParticipate(employeeId, projectId);
-        }
-        var result = teamRepository.deleteByEmployeeIdAndProjectId(employeeId, projectId);
+        });
+
+        teamRepository.removeTeamByEmployeeIdAndProjectId(employeeId, projectId);
 
         log.info(String.format("the employee %d was removed from the team", employeeId));
 
