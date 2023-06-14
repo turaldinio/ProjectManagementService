@@ -11,10 +11,12 @@ import com.digital.pm.service.ProjectService;
 import com.digital.pm.service.exceptions.BadRequest;
 import com.digital.pm.service.mapping.project.ProjectFilterMapping;
 import com.digital.pm.service.mapping.project.ProjectMapper;
+import liquibase.util.ObjectUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto create(CreateProjectDto createProjectDto) {
         log.info("create method has started");
 
-        if (!checkRequiredValue(createProjectDto)) {
+        if (checkRequiredValue(createProjectDto)) {
             log.info("canceling the creation operation");
             throw invalidRequiredValues();
         }
@@ -59,8 +61,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto update(Long projectId, CreateProjectDto createProjectDto) {
         log.info("update method has started");
-
         log.info(String.format("find project with %d id", projectId));
+
+        if (!ObjectUtils.isEmpty(createProjectDto.getProjectCode())) {
+            if (projectRepository.existsByProjectCode(createProjectDto.getProjectCode())) {
+                log.info("canceling the update operation");
+                throw invalidProjectCode(createProjectDto.getProjectCode());
+            }
+        }
 
         var project = projectRepository.findById(projectId).orElseThrow(() -> {
                     log.info("canceling the update operation");
@@ -74,16 +82,13 @@ public class ProjectServiceImpl implements ProjectService {
         log.info(String.format("project %s has been updated", newProject));
 
 
-        if (!checkRequiredValue(newProject)) {
+        if (checkRequiredValue(newProject)) {
             log.info("canceling the update operation");
 
             throw invalidRequiredValues();
 
         }
-        if (projectRepository.existsByProjectCode(newProject.getProjectCode())) {
-            log.info("canceling the update operation");
-            throw invalidProjectCode(createProjectDto.getProjectCode());
-        }
+
         projectRepository.save(newProject);
         log.info(String.format("project %s has been saved", createProjectDto));
 
@@ -153,7 +158,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     public BadRequest invalidRequiredValues() {
-        return new BadRequest("project name and project code are required fields");
+        return new BadRequest("project name or project code cannot be null/blank");
     }
 
     public BadRequest invalidId(Long id) {
@@ -161,7 +166,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     public BadRequest invalidProjectCode(String code) {
-        return new BadRequest(String.format("the %s code is already exists", code));
+        return new BadRequest(String.format("the %s projectCode is already exists", code));
 
     }
 
@@ -169,19 +174,15 @@ public class ProjectServiceImpl implements ProjectService {
     public boolean checkRequiredValue(CreateProjectDto createProjectDto) {
         log.info("checking required fields for a project");
 
-        return Objects.nonNull(createProjectDto.getProjectCode()) &&
-                Objects.nonNull(createProjectDto.getName()) &&
-                !createProjectDto.getProjectCode().isBlank() &&
-                !createProjectDto.getName().isBlank();
+        return ObjectUtils.isEmpty(createProjectDto.getProjectCode()) ||
+                ObjectUtils.isEmpty(createProjectDto.getName());
     }
 
     public boolean checkRequiredValue(Project newProject) {
         log.info("checking required fields for a project");
 
-        return Objects.nonNull(newProject.getProjectCode()) &&
-                Objects.nonNull(newProject.getName()) &&
-                !newProject.getProjectCode().isBlank() &&
-                !newProject.getName().isBlank();
+        return ObjectUtils.isEmpty(newProject.getProjectCode()) ||
+                ObjectUtils.isEmpty(newProject.getName());
     }
 }
 

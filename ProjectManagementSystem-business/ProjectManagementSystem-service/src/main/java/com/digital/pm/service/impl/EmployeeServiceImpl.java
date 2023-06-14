@@ -208,7 +208,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public BadRequest invalidEmployeeAlreadyRemoved(Long id) {
-        return new BadRequest(String.format("the %d account is already exists ", id));
+        return new BadRequest(String.format("the %d account is already deleted ", id));
     }
 
     public BadRequest invalidRequiredFields() {

@@ -21,9 +21,11 @@ public class ProjectSpecification {
             }
 
 
-
             if (!ObjectUtils.isEmpty(projectFilter.getProjectCode())) {
-                predicates.add(criteriaBuilder.equal(root.get("project_code"), projectFilter.getProjectCode()));
+                predicates.add(query.
+                        where(criteriaBuilder.
+                                like(criteriaBuilder.lower(root.get("projectCode")), SpecHandler.getFormatedString(projectFilter.getProjectCode()))).
+                        getRestriction());
             }
 
             if (!ObjectUtils.isEmpty(projectFilter.getName())) {
