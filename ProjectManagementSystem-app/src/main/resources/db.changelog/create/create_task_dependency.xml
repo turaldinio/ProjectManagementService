@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet id="create_table_employee" author="Guluev">
+
+        <createTable tableName="task_dependency">
+            <column name="id" type="bigserial"/>
+
+            <column name="task_id" type="bigint"/>
+
+            <column name="dependent_task_id" type="bigint"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="task_dependency" baseColumnNames="task_id" constraintName="task_id"
+                                 referencedTableName="task"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="task_dependency" baseColumnNames="dependent_task_id" constraintName="task_id"
+                                 referencedTableName="task"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
