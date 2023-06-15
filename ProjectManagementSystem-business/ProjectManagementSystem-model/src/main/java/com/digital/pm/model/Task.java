@@ -51,5 +51,6 @@ public class Task {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "task_id")
-    private List<DependentTask> dependentTasks;
+    @JoinTable(name = "task_dependency")
+    private List<Task> dependentTasks;
 }
