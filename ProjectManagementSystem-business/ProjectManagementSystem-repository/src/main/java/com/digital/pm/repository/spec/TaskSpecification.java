@@ -16,7 +16,7 @@ public class TaskSpecification {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (Objects.isNull(taskFilter)) {
+            if (ObjectUtils.isEmpty(taskFilter)) {
                 return query.where().orderBy(criteriaBuilder.desc(root.get("creationDate"))).getRestriction();
 
             }

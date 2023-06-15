@@ -166,6 +166,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> findAll(TaskDtoFilter taskFilter) {
         log.info("findAll with filter method has started");
+        if (ObjectUtils.isEmpty(taskFilter)) {
+            return taskMapper.map(taskRepository.findAll());
+        }
 
         log.info("mapping TaskDtoFilter to TaskDaoFilter");
 

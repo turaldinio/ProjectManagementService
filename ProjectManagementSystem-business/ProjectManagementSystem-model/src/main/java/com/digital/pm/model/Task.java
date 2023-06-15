@@ -49,8 +49,4 @@ public class Task {
     @JoinColumn(name = "task_id")
     private List<TaskFile> files;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "task_id")
-    @JoinTable(name = "task_dependency")
-    private List<Task> dependentTasks;
 }

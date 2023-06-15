@@ -134,6 +134,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> findAll(ProjectDtoFilter projectFilter) {
         log.info("findAll with filter method has started");
+        if (ObjectUtils.isEmpty(projectFilter)) {
+            return projectMapper.map(projectRepository.findAll());
+        }
 
         log.info("mapping ProjectDtoFilter to ProjectDaoFilter");
 

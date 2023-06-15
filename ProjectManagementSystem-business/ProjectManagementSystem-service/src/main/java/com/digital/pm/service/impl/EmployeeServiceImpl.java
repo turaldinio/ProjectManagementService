@@ -156,6 +156,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<EmployeeDto> findAll(EmployeeDtoFilter employeeFilter) {
         log.info("findAll with filter method has started");
+        if (ObjectUtils.isEmpty(employeeFilter)) {
+            return findAll();
+        }
 
         log.info("mapping EmployeeDtoFilter to EmployeeDaoFilter");
 
